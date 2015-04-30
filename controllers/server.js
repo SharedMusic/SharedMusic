@@ -1,20 +1,19 @@
-var express = require('express');
-var app = express();	
+var app = require('express')();
 app.set('view engine', 'jade');			// Sets the view engine to jade
 app.set('views', './views')			// Sets the standard view location to /views
-app.listen(1234);						// The localhost port of the server
-
+var http = require('http').Server(app);
 
 // ===========================================
 //			  Page request operations
 // ===========================================
 
 app.get('/', function (req, res) {
-	console.log('send index page');
 	res.render('index');
 });
 
-
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
 
 
 
