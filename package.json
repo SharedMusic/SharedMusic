@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "social jukebox",
   "main": "./controllers/server.js",
+  "scripts": {
+     "start": "node ./controllers/server.js"
+   },
   "dependencies": {
     "express": "^4.12.3",
     "jade": "^1.9.2",
