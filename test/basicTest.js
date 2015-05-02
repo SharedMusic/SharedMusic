@@ -9,12 +9,4 @@ describe("Basic Test",function(){
     flag.should.equal(true);
     done();
   });
-
-  it('This should NOT pass (for initial circleCI setup purposes)!',function(done){
-    var flag = true;
-
-
-    flag.should.equal(false);
-    done();
-  });
 });
