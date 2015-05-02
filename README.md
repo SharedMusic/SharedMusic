@@ -10,3 +10,12 @@ Reggie Jones - reggiej7
 Gunnar Onarheim - onarhg
 Adam Stephenson - jasteph
 Tanner Coval - tcoval
+
+Zero-Feature Release
+https://shared-music.herokuapp.com/zero.html
+
+User Documentation
+https://shared-music.herokuapp.com/user_documentation
+
+Developer Documentation
+https://shared-music.herokuapp.com/dev_documentation
