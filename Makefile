@@ -1,7 +1,8 @@
 test:
+	chmod +x ./node_modules/.bin/mocha
 	@./node_modules/.bin/mocha
 
 run:
-	node controllers/server.js
+	npm start
 
 .PHONY: test
