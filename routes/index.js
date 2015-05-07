@@ -27,7 +27,7 @@ router.get('/user_documentation', function(req, res) {
 });
 
 // GET app page
-router.get('/app', function (req, res) {
+router.get('/app.html', function (req, res) {
         res.sendFile(path.join(__dirname, '../views/app.html'))
 });
 module.exports = router;
