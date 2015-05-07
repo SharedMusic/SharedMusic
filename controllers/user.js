@@ -1,9 +1,10 @@
-angular.module('users', [])
-	.controller('UserController', ['$scope', function($scope){
-		var userList = this;
-		userList.users = [];
+var userList = angular.module('users', []);
 
-		userList.addUser = function(){
-			userList.users.push({name:userList.temp, id:userList.users.length})
-		};
-	}]);
+userList.controller('UserController', ['$scope', 'roomstate' function($scope, roomstate){
+	var userList = this;
+	userList.users = roomstate.users;
+
+	userList.addUser = function(){
+		userList.users.push({name:userList.temp, id:userList.users.length})
+	};
+}]);
