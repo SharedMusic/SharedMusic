@@ -13,17 +13,18 @@
 
 		<!-- Default theme -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" type="text/css" href="css/index.css">
+		<!-- <link rel="stylesheet" type="text/css" href="../css/index.css"> -->
 		
 		<!-- Angular -->
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-		<script src="controllers/user.js"></script>
+		<script data-main="../js/main.js" src="../js/require.js"></script>
+
 	</head>
 
 	<body>
 		<h1>Shared Music</h1>
 		<hr>
-		<div ng-app="users" ng-controller="UserController as userList">
+		<div ng-controller="UserController as userList">
 			<label>Name:</label>
 			<form ng-submit="userList.addUser()">
 				<input type="text" ng-model="userList.temp"  size="30"
