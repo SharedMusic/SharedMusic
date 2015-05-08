@@ -31,10 +31,16 @@ router.get('/app.html', function (req, res) {
 	res.sendFile(path.join(__dirname, '../views/app.html'))
 });
 
+// GET angular controllers
 router.get('/controllers/user.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/user.js'))
 });
 
+router.get('/controllers/music.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/music.js'))
+});
+
+// GET other js files
 router.get('/js/simplesets.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/simplesets.js'))
 });
@@ -47,5 +53,8 @@ router.get('/js/require.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/require.js'))
 });
 
+router.get('/js/queue.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../js/queue.js'))
+});
 
 module.exports = router;
