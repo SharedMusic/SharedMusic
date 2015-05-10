@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var request = require('request');
 var router = express.Router();
 
 
@@ -31,6 +32,14 @@ router.get('/app.html', function (req, res) {
 	res.sendFile(path.join(__dirname, '../views/app.html'))
 });
 
+router.get('/tiletest.html', function (req, res) {
+	res.sendFile(path.join(__dirname, '../views/tiletest.html'))
+});
+
+router.get('/tile.html', function (req, res) {
+	res.sendFile(path.join(__dirname, '../views/tile.html'))
+});
+
 // GET angular controllers
 router.get('/controllers/user.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/user.js'))
@@ -40,7 +49,19 @@ router.get('/controllers/music.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/music.js'))
 });
 
+router.get('/controllers/exploreTiles.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/exploreTiles.js'))
+});
+
 // GET other js files
+router.get('/js/metrojs.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../js/metrojs.js'))
+});
+
+router.get('/js/tiles.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../js/tiles.js'))
+});
+
 router.get('/js/simplesets.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/simplesets.js'))
 });
@@ -55,6 +76,61 @@ router.get('/js/require.js', function (req, res) {
 
 router.get('/js/queue.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/queue.js'))
+});
+
+router.get('/js/metrojs.js', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(__dirname + '/js/metrojs.js');
+});
+
+// GET other css files
+router.get('/style/metrojs.css', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname, '../style/metrojs.css'));
+});
+
+router.get('/style/tiletest.css', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname, '../style/tiletest.css'));
+});
+
+// GET images
+router.get('/images/addsong.png', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname,'../images/AddSong.png'));
+});
+
+router.get('/images/soundcloud.png', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname,'../images/SoundCloud.png'));
+});
+
+router.get('/images/addsong_dark.png', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname,'../images/AddSong_Dark.png'));
+});
+
+router.get('/images/soundcloud_dark.png', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname, '../images/SoundCloud_Dark.png'));
+});
+
+router.get('/scrape', function (req, res) {
+	url = 'https://api-v2.soundcloud.com/explore/Popular+Music?tag=out-of-experiment&limit=200&offset=0';
+
+	request(url, function(error, response, html) {
+		if(!error) {
+			res.setHeader('Content-Type', 'application/json');
+			res.end(html);
+		}
+	})
 });
 
 module.exports = router;

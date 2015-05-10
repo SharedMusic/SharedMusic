@@ -1,0 +1,62 @@
+.shading {  
+    position: absolute;
+    height:150px;
+    width:150px;  
+    /* styling bellow */  
+    background-color:black;  
+    font-family: 'tahoma';  
+    font-size:15px;  
+    color:white;  
+    opacity:0.6; /* transparency */  
+    filter:alpha(opacity=60); /* IE transparency */  
+}  
+
+.trackInfo {
+  font-family: 'Segoe UI';
+  font-size:15px;
+  position:absolute;
+  z-index: 30;
+}
+
+.trackInfoContainer {
+  position : relative;
+  margin-top: 105px;
+}
+
+.trackInfo span {
+  margin-left: 5px;
+}
+
+.trackLinkContainer {
+  margin-top: 10px;
+}
+
+.imageLeft {
+  margin-left: 30px;
+  padding-right: 5px;
+}
+
+.imageRight {
+  padding-left: 5px;
+}
+
+.imageLeft:hover, .imageRight:hover {
+  cursor: pointer;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tileImage {
+  background-size: 150px 150px;
+}
+
+.noselect span {
+  cursor: default;
+}

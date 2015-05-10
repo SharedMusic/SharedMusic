@@ -5,7 +5,7 @@ requirejs.config({
 	}
 });
 
-requirejs(['simplesets', 'queue', 'controllers/user', 'controllers/music'],
+requirejs(['simplesets', 'queue', 'controllers/user', 'controllers/music', 'controllers/exploreTiles'],
 function(simplesets, queue, user, music){
-	angular.bootstrap(document, ['users', 'music']);
+	angular.bootstrap(document, ['users', 'music', 'exploreTiles']);
 });

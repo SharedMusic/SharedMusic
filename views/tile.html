@@ -1,0 +1,19 @@
+<div class="tileImage" style="background-image: url('https://i1.sndcdn.com/artworks-000098893510-iflwo1-t300x300.jpg'); background-size: 150px 150px;">
+  <div class="trackInfoContainer">
+    <div class='shading'>
+    </div>
+    <div class="trackInfo noselect" onselectstart="return false">
+      <span>{{track.artist | cut:true:20:' ...'}}</span>
+      </br>
+      <span>{{track.title | cut:true:20:' ...'}}</span>
+      </br>
+      <span>{{track.genre | cut:true:20:' ...'}}</span>
+      </br>
+      <span>{{track.duration}}</span>
+      <div class="trackLinkContainer">
+        <img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
+        <img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">                
+      </div>
+    </div>
+  </div>
+</div>
