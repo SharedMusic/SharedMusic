@@ -4,7 +4,7 @@
  */
 
 SC.initialize({
-    client_id: '337bccb696d7b8442deedde76fae5c10'
+    client_id: '337bccb696d7b8442deedde76fae5c10' // out client ID
 });
 
 angular.module('search', [])
@@ -21,6 +21,8 @@ angular.module('search', [])
         search.genre = "";
         search.title = "";
         search.user = "";
+
+        // Duration sort order
         search.ascending= false;
 
         // Default page size
@@ -49,6 +51,7 @@ angular.module('search', [])
             search.display = temp;
         };
 
+        // Sorts the current displayed results by order of duration
         search.sortByDuration = function() {
             search.display = search.display.sort(function(track1, track2) {
                 if (track1.duration < track2.duration) {
@@ -61,12 +64,14 @@ angular.module('search', [])
             });
         };
 
+        // Converts the given time in milliseconds to a string representing that time in minutes and seconds
         search.millisToMinutesAndSeconds = function(millis) {
             var minutes = Math.floor(millis / 60000);
             var seconds = ((millis % 60000) / 1000).toFixed(0);
             return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
         };
 
+        // Stub for adding search result to  the room
         search.addSong = function(n) {
             // call add song function with the given name
             // socket.io?
