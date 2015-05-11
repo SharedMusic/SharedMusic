@@ -40,6 +40,10 @@ router.get('/tile.html', function (req, res) {
 	res.sendFile(path.join(__dirname, '../views/tile.html'))
 });
 
+router.get('/search.html', function (req, res) {
+	res.sendFile(path.join(__dirname, '../views/search.html'))
+});
+
 // GET angular controllers
 router.get('/controllers/user.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/user.js'))
@@ -51,6 +55,10 @@ router.get('/controllers/music.js', function (req, res) {
 
 router.get('/controllers/exploreTiles.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/exploreTiles.js'))
+});
+
+router.get('/controllers/search.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/search.js'))
 });
 
 // GET other js files

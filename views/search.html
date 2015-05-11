@@ -1,0 +1,66 @@
+<!doctype html>
+<html ng-app="search">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="http://connect.soundcloud.com/sdk.js"></script>
+    <script src="../controllers/search.js"></script>
+</head>
+<body>
+<h2>Search</h2>
+<div ng-controller="SearchController as search">
+
+    <form ng-submit="search.search(search.query)">
+        <input type="text" ng-model="search.query"  size="30"
+               placeholder="Enter Query">
+        <input class="btn-primary" type="submit" value="Search">
+    </form>
+
+    <div>
+        <table style="width:100%">
+            <!-- Headings for each column in the table-->
+            <tr>
+                <th>Title</th>
+                <th>Username</th>
+                <th>Genre</th>
+            </tr>
+
+            <!-- Filter fields for each column-->
+            <tr>
+                <td>
+                    <form ng-submit="search.filter()">
+                        <input type="text" ng-model="search.title"  size="30"
+                               placeholder="Title filter">
+                        <input class="btn-primary" type="submit" value="Filter">
+                    </form>
+                </td>
+                <td>
+                    <form ng-submit="search.filter()">
+                        <input type="text" ng-model="search.user"  size="30"
+                               placeholder="User filter">
+                        <input class="btn-primary" type="submit" value="Filter">
+                    </form>
+                </td>
+                <td>
+                    <form ng-submit="search.filter()">
+                        <input type="text" ng-model="search.genre"  size="30"
+                               placeholder="Genre filter">
+                        <input class="btn-primary" type="submit" value="Filter">
+                    </form>
+                </td>
+            </tr>
+
+            <tr ng-repeat="track in search.display">
+                <td>{{track.title}} </td>
+                <td>{{track.user.username}}</td>
+                <td>{{track.genre}}</td>
+                <td>
+                    <form ng-submit="search.addSong($index)">
+                        <input class="btn-primary" type="submit" value="Add">
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
