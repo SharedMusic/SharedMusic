@@ -20,6 +20,7 @@
             <!-- Headings for each column in the table-->
             <tr>
                 <th>Title</th>
+                <th>Duration</th>
                 <th>Username</th>
                 <th>Genre</th>
             </tr>
@@ -33,6 +34,15 @@
                         <input class="btn-primary" type="submit" value="Filter">
                     </form>
                 </td>
+
+                <td>
+                    <form ng-submit="search.filter()">
+                        <input type="checkbox" ng-model="search.ascending">
+                        Ascending?
+                        <input class="btn-primary" type="submit" value="Sort">
+                    </form>
+                </td>
+
                 <td>
                     <form ng-submit="search.filter()">
                         <input type="text" ng-model="search.user"  size="30"
@@ -51,6 +61,7 @@
 
             <tr ng-repeat="track in search.display">
                 <td>{{track.title}} </td>
+                <td>{{track.duration}}</td>
                 <td>{{track.user.username}}</td>
                 <td>{{track.genre}}</td>
                 <td>

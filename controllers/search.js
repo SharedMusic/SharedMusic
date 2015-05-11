@@ -21,6 +21,7 @@ angular.module('search', [])
         search.genre = "";
         search.title = "";
         search.user = "";
+        search.ascending= false;
 
         // Default page size
         search.pageSize = 100;
@@ -39,13 +40,32 @@ angular.module('search', [])
             var results = search.results;
 
             for (i = 0; i < results.length; i++) {
-                if ((results[i].title.indexOf(search.title) > -1) &&
-                    (results[i].genre.indexOf(search.genre) > -1) &&
-                    (results[i].user.username.indexOf(search.user) > -1)) {
+                if ((results[i].title.toLocaleLowerCase().indexOf(search.title.toLocaleLowerCase()) > -1) &&
+                    (results[i].genre.toLowerCase().indexOf(search.genre.toLocaleLowerCase()) > -1) &&
+                    (results[i].user.username.toLocaleLowerCase().indexOf(search.user.toLocaleLowerCase()) > -1)) {
                     temp.push(results[i]);
                 }
             }
+            temp = sortByDuration(temp);
             search.display = temp;
+        };
+
+        var sortByDuration = function(tracks) {
+            return tracks.sort(function(track1, track2) {
+                if (search.ascending) {
+                    if (track1.duration <= track2.duration) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                } else {
+                    if (track1.duration >= track2.duration) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                }
+            });
         };
 
         search.addSong = function(n) {
