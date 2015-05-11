@@ -40,9 +40,9 @@ angular.module('search', [])
             var results = search.results;
 
             for (i = 0; i < results.length; i++) {
-                if ((results[i].title.toLocaleLowerCase().indexOf(search.title.toLocaleLowerCase()) > -1) &&
-                    (results[i].genre.toLowerCase().indexOf(search.genre.toLocaleLowerCase()) > -1) &&
-                    (results[i].user.username.toLocaleLowerCase().indexOf(search.user.toLocaleLowerCase()) > -1)) {
+                if ((results[i].title.toLowerCase().indexOf(search.title.toLowerCase()) > -1) &&
+                    (results[i].genre.toLowerCase().indexOf(search.genre.toLowerCase()) > -1) &&
+                    (results[i].user.username.toLowerCase().indexOf(search.user.toLowerCase()) > -1)) {
                     temp.push(results[i]);
                 }
             }
