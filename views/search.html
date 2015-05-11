@@ -36,7 +36,7 @@
                 </td>
 
                 <td>
-                    <form ng-submit="search.filter()">
+                    <form ng-submit="search.sortByDuration()">
                         Ascending?
                         <input type="checkbox" ng-model="search.ascending">
                         <input class="btn-primary" type="submit" value="Sort">
@@ -61,7 +61,7 @@
 
             <tr ng-repeat="track in search.display">
                 <td>{{track.title}} </td>
-                <td>{{track.duration}}</td>
+                <td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
                 <td>{{track.user.username}}</td>
                 <td>{{track.genre}}</td>
                 <td>
