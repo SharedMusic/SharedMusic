@@ -45,6 +45,10 @@ router.get('/search.html', function (req, res) {
 });
 
 // GET angular controllers
+router.get('/controllers/socket.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/socket.js'))
+});
+
 router.get('/controllers/user.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/user.js'))
 });
@@ -62,6 +66,10 @@ router.get('/controllers/search.js', function (req, res) {
 });
 
 // GET other js files
+router.get('/js/socketio.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../js/socketio.js'))
+});
+
 router.get('/js/metrojs.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/metrojs.js'))
 });

@@ -1,4 +1,4 @@
-var userList = angular.module('users', []);
+var userList = angular.module('socket', []);
 
 // Need to remove this as soon as we figure out how to get the roomstate in as a dependency
 userList.service('roomstate', function(){
