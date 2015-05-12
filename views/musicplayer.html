@@ -27,11 +27,14 @@
 		-->
 		<div ng-controller="MusicPlayer as musicplayer">
 			<div>
+				<button ng-click="musicplayer.updateSong()">Test Button</button>
+			</div>
+
+			<div>
 				<h2>Current Song:</h2>
 				<img ng-src="{{musicplayer.trackInfo.artwork_url}}">
 				<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
 				<a href="{{musicplayer.currentSongURL}}">Song Link</a>
-
 			</div>
 
 			<div>
