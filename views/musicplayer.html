@@ -27,7 +27,10 @@
 		-->
 		<div ng-controller="MusicPlayer as musicplayer">
 			<div>
-				<button ng-click="musicplayer.updateSong()">Test Button</button>
+				<form ng-submit="musicplayer.updateSong(musicplayer.newSongURL, -1)">
+					<input type="text" ng-model="musicplayer.newSongURL">
+					<input class="btn-primary" type="submit" value="Play">
+				</form>
 			</div>
 
 			<div>
