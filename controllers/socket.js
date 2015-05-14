@@ -1,22 +1,62 @@
-var userList = angular.module('socket', []);
+var socketio = angular.module('socketio', []);
 
-// Need to remove this as soon as we figure out how to get the roomstate in as a dependency
-userList.service('roomstate', function(){
+// Roomstate Factory
+// Uncomment the 'socket' dependency once we have socketio able to run
+socketio.factory('roomstateFactory', [/*'socket',*/ function(){
 	var rs = this;
-	this.users = [];
-	// this.test = new Set();
-});
+	var users = [];
+	var queue = [];
+	return {
+		// Returns list of users in current room
+		getUsers: function (){
+			return users;
+		},
 
-// User List Controller
-userList.controller('UserController', ['$scope', 'roomstate', function($scope, roomstate){
-	var uL = this;
-	uL.users = roomstate.users;
+		// Test function, will remove later
+		addUser: function (name){
+			users.push({name:name, id:users.length})
+		},
 
-	// Add a new user to the room
-	uL.addUser = function(){
-		// This currently just pushes to an array in roomstate, this will need to make a request to the server
-		for(var i = 0; i < 10; i++){
-			uL.users.push({name:i, id:uL.users.length})
+		// Returns song Queue
+		getQueue: function(){
+			return queue;
+		},
+
+		// Returns current song
+		getSong: function(){
+			if(queue.length > 0){
+				return queue[0];
+			}else{
+				// No songs in queue
+			}
+		} 
+	}
+}]);
+
+// Socketio factory
+// This essentially exposes an API that we can use to set
+// on: and emit: functions for anything on any page we want
+socketio.factory('socket', function ($rootScope) {
+	var socket = io();
+	return {
+		on: function (eventName, callback) {
+			socket.on(eventName, function () {  
+				var args = arguments;
+				$rootScope.$apply(function () {
+					callback.apply(socket, args);
+				});
+			});
+		},
+		
+		emit: function (eventName, data, callback) {
+			socket.emit(eventName, data, function () {
+				var args = arguments;
+				$rootScope.$apply(function () {
+					if (callback) {
+						callback.apply(socket, args);
+					}
+				});
+			})
 		}
 	};
-}]);
+});
