@@ -1,10 +1,11 @@
-var musicPlayer = angular.module('musicplayer', []);
+var musicPlayer = angular.module('musicplayer', ['socketio']);
 
-musicPlayer.controller('MusicPlayer', ['$scope', function($scope){
+musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($scope, roomstateFactory){
 	var mP = this;
-	mP.currentSongEpoch = null;
-	mP.currentSongURL = null;
+	mP.currentSongEpoch = -1;
+	// mP.currentSongURL = roomstateFactory.getSong().permalink_url;
 	mP.currentSong = null;
+	
 
 	mP.muted = false;
 	mP.muteStatus = "Mute"
@@ -45,6 +46,7 @@ musicPlayer.controller('MusicPlayer', ['$scope', function($scope){
 
 	// play the song
 	mP.playSong = function() {
+		mP.trackInfo = roomstateFactory.getSong();
 		if (mP.trackInfo != null) {
 			// SC.stream(trackPath, [options], [callback])
 			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){
@@ -60,9 +62,9 @@ musicPlayer.controller('MusicPlayer', ['$scope', function($scope){
 					onload: function() {
 						// TODO - uncomment and test with epoch
 						//mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch)
-						mP.currentSong.setPosition(100000);
+						//mP.currentSong.setPosition(100000);
 						mP.currentSong.play();
-						console.log(mP.currentSong.position);
+						//console.log(mP.currentSong.position);
 					}
 				});
 			});

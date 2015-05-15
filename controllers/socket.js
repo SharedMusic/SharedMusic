@@ -2,9 +2,10 @@ var socketio = angular.module('socketio', []);
 
 // Roomstate Factory
 // Uncomment the 'socket' dependency once we have socketio able to run
-socketio.factory('roomstateFactory', [/*'socket',*/ function(){
+socketio.factory('roomstateFactory', [/*'socket',*/ function(musicController){
 	var rs = this;
 	var user = -1; // This should be set to the user's ID
+	var current;
 	var users = [];
 	var queue = [];
 	var epoch = -1;
@@ -28,8 +29,8 @@ socketio.factory('roomstateFactory', [/*'socket',*/ function(){
 
 		// Returns current song
 		getSong: function(){
-			if(queue.length > 0){
-				return queue[0];
+			if(current != null){
+				return current;
 			}else{
 				// No songs in queue
 			}
@@ -46,7 +47,11 @@ socketio.factory('roomstateFactory', [/*'socket',*/ function(){
 		},
 
 		// Tells the server to add a song to the queue
-		addSong: function(){
+		addSong: function(song){
+			queue.push(song);
+			if(current == null){
+				current = queue.shift();
+			}
 			// Socket io call
 		},
 

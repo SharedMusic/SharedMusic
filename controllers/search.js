@@ -7,8 +7,8 @@ SC.initialize({
     client_id: '337bccb696d7b8442deedde76fae5c10' // out client ID
 });
 
-angular.module('search', [])
-    .controller('SearchController', function() {
+angular.module('search', ['socketio'])
+    .controller('SearchController', ['$scope', 'roomstateFactory', function($scope, roomstateFactory) {
         var search = this;
 
         // Result of the most recent search
@@ -75,6 +75,7 @@ angular.module('search', [])
         search.addSong = function(n) {
             // call add song function with the given name
             // socket.io?
-            alert('Added song: ' + search.display[n].title);
+            roomstateFactory.addSong(search.display[n]);
+            alert('Added song: ' + search.display[n].permalink_url);
         };
-    });
+    }]);

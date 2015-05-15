@@ -4,7 +4,7 @@ var musicList = angular.module('music', ['socketio']);
 // Depends on roomstateFactory to see the current roomstate
 musicList.controller('MusicController', ['$scope', 'roomstateFactory', function($scope, roomstateFactory){
 	var mL = this;
-	mL.queue = [];
+	mL.queue = roomstateFactory.getQueue();
 
 	// Add a new user to the room
 	mL.addUser = function(){
