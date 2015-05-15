@@ -44,6 +44,10 @@ router.get('/search.html', function (req, res) {
 	res.sendFile(path.join(__dirname, '../views/search.html'))
 });
 
+router.get('/musicplayer.html', function (req, res) {
+	res.sendFile(path.join(__dirname, '../views/musicplayer.html'))
+});
+
 // GET angular controllers
 router.get('/controllers/socket.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/socket.js'))
@@ -63,6 +67,10 @@ router.get('/controllers/exploreTiles.js', function (req, res) {
 
 router.get('/controllers/search.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/search.js'))
+});
+
+router.get('/controllers/musicplayer.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/musicplayer.js'))
 });
 
 // GET other js files
