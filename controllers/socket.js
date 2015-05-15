@@ -50,7 +50,7 @@ socketio.factory('roomstateFactory', [/*'socket',*/ function(musicController){
 		addSong: function(song){
 			queue.push(song);
 			if(current == null){
-				current = queue.shift();
+				current = queue[0]; // Change to queue.shift later
 			}
 			// Socket io call
 		},
