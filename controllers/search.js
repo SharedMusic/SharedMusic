@@ -33,6 +33,7 @@ angular.module('search', ['socketio'])
             SC.get('/tracks', { q: search.query, limit: search.pageSize}, function(tracks) {
                 search.results = tracks;
                 search.display = tracks;
+                $scope.$apply();
             });
         };
 
@@ -76,6 +77,7 @@ angular.module('search', ['socketio'])
             // call add song function with the given name
             // socket.io?
             roomstateFactory.addSong(search.display[n]);
-            alert('Added song: ' + search.display[n].permalink_url);
+            $scope.$apply();
+            //alert('Added song: ' + search.display[n].permalink_url);
         };
     }]);
