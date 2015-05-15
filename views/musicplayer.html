@@ -35,6 +35,9 @@
 
 			<div>
 				<h2>Current Song:</h2>
+
+				<button ng-click="musicplayer.muteSong()" class="btn">{{musicplayer.muteStatus}}</button>
+
 				<img ng-src="{{musicplayer.trackInfo.artwork_url}}">
 				<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
 				<a href="{{musicplayer.currentSongURL}}">Song Link</a>
