@@ -12,4 +12,9 @@ userList.controller('UserController', ['$scope', 'roomstateFactory', function($s
 		roomstateFactory.addUser(uL.temp);
 		uL.users = roomstateFactory.getUsers();
 	};
+
+	// Updates the user list
+	uL.update = function(nUsers){
+		this.users = nUsers;
+	}
 }]);

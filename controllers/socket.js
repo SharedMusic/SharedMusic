@@ -4,8 +4,12 @@ var socketio = angular.module('socketio', []);
 // Uncomment the 'socket' dependency once we have socketio able to run
 socketio.factory('roomstateFactory', [/*'socket',*/ function(){
 	var rs = this;
+	var user = -1; // This should be set to the user's ID
 	var users = [];
 	var queue = [];
+	var epoch = -1;
+	var bootVotes = [];
+
 	return {
 		// Returns list of users in current room
 		getUsers: function (){
@@ -29,7 +33,27 @@ socketio.factory('roomstateFactory', [/*'socket',*/ function(){
 			}else{
 				// No songs in queue
 			}
-		} 
+		},
+
+		// Returns current song epoch
+		getEpoch: function(){
+			return epoch;
+		},
+
+		// Returns list of boot votes
+		getBootVotes: function(){
+			return bootVotes;
+		},
+
+		// Tells the server to add a song to the queue
+		addSong: function(){
+			// Socket io call
+		},
+
+		// Tells the server the current user wants to vote
+		addBootVote: function(){
+			// Socket io clal
+		}
 	}
 }]);
 
