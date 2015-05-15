@@ -48,21 +48,24 @@
 		</div>
 	</div>
 	<hr>
+
 	<!-- Music list proof of concept test -->
 	<div ng-controller="MusicController as musicList">
 		<div>
 			<h2>Songs in Queue:</h2>
-			<ul>
+			<ol>
 				<li ng-repeat="song in musicList.queue">{{song.title}} as song id: {{song.id}}</li>
-			</ul>
+			</ol>
 		</div>
 	</div>
+
 	<hr>
+
+	<!-- Music Player -->
 	<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
 		<div>
 			<form ng-submit="musicplayer.playSong()">
-				<input type="text" ng-model="musicplayer.newSongURL">
-				<input class="btn btn-primary btn-xs" type="submit" value="Play">
+				<input class="btn btn-primary btn-xs" type="submit" value="Play Next Song">
 			</form>
 		</div>
 
@@ -84,15 +87,18 @@
 	</div>
 
 	<hr>
+
+	<!-- Search -->
 	<h1>Search</h1>
 	<div ng-controller="SearchController as search">
 		<!-- Search box and submit button-->
-		<form ng-submit="search.search(search.query)">
-			<input type="text" ng-model="search.query"  size="30"
-			placeholder="Enter Query">
-			<input class="btn btn-primary btn-xs" type="submit" value="Search">
-		</form>
-
+			<form ng-submit="search.search(search.query)">
+				<div class="form-group">
+					<input type="text" ng-model="search.query"  size="30"
+					placeholder="Enter Query">
+					<input class="btn btn-primary btn-xs" type="submit" value="Search">
+				</div>
+			</form>
 		<div>
 			<table class="table table-hover table-condensed" style="width:100%">
 				<!-- Headings for each column in the table-->
