@@ -1,156 +1,156 @@
 <!DOCTYPE html>
 
 <html>
-	<head>
-		<title>Shared Music</title>
+<head>
+	<title>Shared Music</title>
 
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-		<!-- Bootstrap -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-		<!-- Default theme -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-		<!-- <link rel="stylesheet" type="text/css" href="../css/index.css"> -->
-		
-		<!-- Angular -->
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="../css/index.css"> -->
 
-		<!-- socket.io -->
-		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<!-- Angular -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
 
-		<!-- SoundCloud -->
-		<script src="http://connect.soundcloud.com/sdk.js"></script>
+	<!-- socket.io -->
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 
-		<!-- Requirejs script importing -->
-		<script data-main="../js/main.js" src="../js/require.js"></script>
-		<link rel="stylesheet" href="style/app.css">
-	</head>
+	<!-- SoundCloud -->
+	<script src="http://connect.soundcloud.com/sdk.js"></script>
 
-	<body>
-		<h1>Shared Music</h1>
-		<hr>
-		<!-- User list proof of concept test -->
-		<div ng-controller="UserController as userList">
-			<label>Name:</label>
-			<form ng-submit="userList.addUser()">
-				<input type="text" ng-model="userList.temp"  ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
-				<input ng-click="button = true" id="enterRoom" class="btn btn-primary" type="submit" value="enter room">
-				<!-- onclick="document.getElementById('enterRoom').disabled = true" -->
-			</form>
-			<div>
-				<h2>Users in room:</h2>
-				<ul>
-					<li ng-repeat="user in userList.users">{{user.name}} as user id: {{user.id}}</li>
-				</ul>
-			</div>
+	<!-- Requirejs script importing -->
+	<script data-main="../js/main.js" src="../js/require.js"></script>
+	<link rel="stylesheet" href="style/app.css">
+</head>
+
+<body>
+	<h1>Shared Music</h1>
+	<hr>
+	<!-- User list proof of concept test -->
+	<div ng-controller="UserController as userList">
+		<label>Name:</label>
+		<form ng-submit="userList.addUser()">
+			<input type="text" ng-model="userList.temp"  ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
+			<input ng-click="button = true" id="enterRoom" class="btn btn-primary" type="submit" value="enter room">
+			<!-- onclick="document.getElementById('enterRoom').disabled = true" -->
+		</form>
+		<div>
+			<h2>Users in room:</h2>
+			<ul>
+				<li ng-repeat="user in userList.users">{{user.name}} as user id: {{user.id}}</li>
+			</ul>
 		</div>
-		<hr>
-		<!-- Music list proof of concept test -->
-		<div ng-controller="MusicController as musicList">
-			<div>
-				<h2>Songs in Queue:</h2>
-				<ul>
-					<li ng-repeat="song in musicList.queue">{{song.title}} as song id: {{song.id}}</li>
-				</ul>
-			</div>
-		</div>
-		<hr>
-		<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
-			<div>
-				<form ng-submit="musicplayer.playSong()">
-					<input type="text" ng-model="musicplayer.newSongURL">
-					<input class="btn btn-primary" type="submit" value="Play">
-				</form>
-			</div>
-
-			<div>
-				<h2>Current Song:</h2>
-
-				<button ng-click="musicplayer.muteSong()" class="btn btn-primary">{{musicplayer.muteStatus}}</button>
-
-				<img ng-src="{{musicplayer.trackInfo.artwork_url}}">
-				<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
-				<a href="{{musicplayer.currentSongURL}}">Song Link</a>
-			</div>
-
-			<div>
-				<a href="https://soundcloud.com">
-					<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
-				</a>
-			</div>
-		</div>
-
-<hr>
-<h1>Search</h1>
-		<div ng-controller="SearchController as search">
-	<!-- Search box and submit button-->
-	<form ng-submit="search.search(search.query)">
-		<input type="text" ng-model="search.query"  size="30"
-			   placeholder="Enter Query">
-		<input class="btn-primary" type="submit" value="Search">
-	</form>
-
-	<div>
-		<table style="width:100%">
-			<!-- Headings for each column in the table-->
-			<tr>
-				<th>Title</th>
-				<th>Duration</th>
-				<th>Username</th>
-				<th>Genre</th>
-			</tr>
-
-			<!-- Filter fields for each column-->
-			<tr>
-				<td>
-					<form ng-submit="search.filter()">
-						<input type="text" ng-model="search.title"  size="30"
-							   placeholder="Title filter">
-						<input class="btn-primary" type="submit" value="Filter">
-					</form>
-				</td>
-
-				<td>
-					<form ng-submit="search.sortByDuration()">
-						Ascending?
-						<input type="checkbox" ng-model="search.ascending">
-						<input class="btn-primary" type="submit" value="Sort">
-					</form>
-				</td>
-
-				<td>
-					<form ng-submit="search.filter()">
-						<input type="text" ng-model="search.user"  size="30"
-							   placeholder="User filter">
-						<input class="btn-primary" type="submit" value="Filter">
-					</form>
-				</td>
-				<td>
-					<form ng-submit="search.filter()">
-						<input type="text" ng-model="search.genre"  size="30"
-							   placeholder="Genre filter">
-						<input class="btn-primary" type="submit" value="Filter">
-					</form>
-				</td>
-			</tr>
-
-			<!-- Display the results-->
-			<tr ng-repeat="track in search.display">
-				<td>{{track.title}} </td>
-				<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
-				<td>{{track.user.username}}</td>
-				<td>{{track.genre}}</td>
-				<td>
-					<form ng-submit="search.addSong($index)">
-						<input class="btn-primary" type="submit" value="Add">
-					</form>
-				</td>
-			</tr>
-		</table>
 	</div>
-</div>
-	</body>
+	<hr>
+	<!-- Music list proof of concept test -->
+	<div ng-controller="MusicController as musicList">
+		<div>
+			<h2>Songs in Queue:</h2>
+			<ul>
+				<li ng-repeat="song in musicList.queue">{{song.title}} as song id: {{song.id}}</li>
+			</ul>
+		</div>
+	</div>
+	<hr>
+	<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
+		<div>
+			<form ng-submit="musicplayer.playSong()">
+				<input type="text" ng-model="musicplayer.newSongURL">
+				<input class="btn btn-primary" type="submit" value="Play">
+			</form>
+		</div>
+
+		<div>
+			<h2>Current Song:</h2>
+
+			<button ng-click="musicplayer.muteSong()" class="btn btn-primary">{{musicplayer.muteStatus}}</button>
+
+			<img ng-src="{{musicplayer.trackInfo.artwork_url}}">
+			<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
+			<a href="{{musicplayer.currentSongURL}}">Song Link</a>
+		</div>
+
+		<div>
+			<a href="https://soundcloud.com">
+				<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
+			</a>
+		</div>
+	</div>
+
+	<hr>
+	<h1>Search</h1>
+	<div ng-controller="SearchController as search">
+		<!-- Search box and submit button-->
+		<form ng-submit="search.search(search.query)">
+			<input type="text" ng-model="search.query"  size="30"
+			placeholder="Enter Query">
+			<input class="btn btn-primary" type="submit" value="Search">
+		</form>
+
+		<div>
+			<table class="table" style="width:100%">
+				<!-- Headings for each column in the table-->
+				<tr>
+					<th>Title</th>
+					<th>Duration</th>
+					<th>Username</th>
+					<th>Genre</th>
+				</tr>
+
+				<!-- Filter fields for each column-->
+				<tr>
+					<td>
+						<form ng-submit="search.filter()">
+							<input type="text" ng-model="search.title"  size="30"
+							placeholder="Title filter">
+							<input class="btn btn-primary" type="submit" value="Filter">
+						</form>
+					</td>
+
+					<td>
+						<form ng-submit="search.sortByDuration()">
+							Ascending?
+							<input type="checkbox" ng-model="search.ascending">
+							<input class="btn btn-primary" type="submit" value="Sort">
+						</form>
+					</td>
+
+					<td>
+						<form ng-submit="search.filter()">
+							<input type="text" ng-model="search.user"  size="30"
+							placeholder="User filter">
+							<input class="btn btn-primary" type="submit" value="Filter">
+						</form>
+					</td>
+					<td>
+						<form ng-submit="search.filter()">
+							<input type="text" ng-model="search.genre"  size="30"
+							placeholder="Genre filter">
+							<input class="btn btn-primary" type="submit" value="Filter">
+						</form>
+					</td>
+				</tr>
+
+				<!-- Display the results-->
+				<tr ng-repeat="track in search.display">
+					<td>{{track.title}} </td>
+					<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
+					<td>{{track.user.username}}</td>
+					<td>{{track.genre}}</td>
+					<td>
+						<form ng-submit="search.addSong($index)">
+							<input class="btn btn-primary" type="submit" value="Add">
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
 </html>
