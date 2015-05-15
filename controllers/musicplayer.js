@@ -52,9 +52,19 @@ musicPlayer.controller('MusicPlayer', ['$scope', function($scope){
 					// stop the previous playing song
 					mP.currentSong.stop();
 				}
-				// update and play the new song
+				// update to the new song
 				mP.currentSong = sound;
-				mP.currentSong.play();
+
+				// load the song and set position before playing
+				mP.currentSong.load({
+					onload: function() {
+						// TODO - uncomment and test with epoch
+						//mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch)
+						mP.currentSong.setPosition(100000);
+						mP.currentSong.play();
+						console.log(mP.currentSong.position);
+					}
+				});
 			});
 		}
 	}
