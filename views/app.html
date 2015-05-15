@@ -37,7 +37,7 @@
 		<label>Name:</label>
 		<form ng-submit="userList.addUser()">
 			<input type="text" ng-model="userList.temp"  ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
-			<input ng-click="button = true" id="enterRoom" class="btn btn-primary" type="submit" value="enter room">
+			<input ng-click="button = true" id="enterRoom" class="btn btn-primary btn-xs" type="submit" value="enter room">
 			<!-- onclick="document.getElementById('enterRoom').disabled = true" -->
 		</form>
 		<div>
@@ -62,14 +62,14 @@
 		<div>
 			<form ng-submit="musicplayer.playSong()">
 				<input type="text" ng-model="musicplayer.newSongURL">
-				<input class="btn btn-primary" type="submit" value="Play">
+				<input class="btn btn-primary btn-xs" type="submit" value="Play">
 			</form>
 		</div>
 
 		<div>
 			<h2>Current Song:</h2>
 
-			<button ng-click="musicplayer.muteSong()" class="btn btn-primary">{{musicplayer.muteStatus}}</button>
+			<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
 
 			<img ng-src="{{musicplayer.trackInfo.artwork_url}}">
 			<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
@@ -90,11 +90,11 @@
 		<form ng-submit="search.search(search.query)">
 			<input type="text" ng-model="search.query"  size="30"
 			placeholder="Enter Query">
-			<input class="btn btn-primary" type="submit" value="Search">
+			<input class="btn btn-primary btn-xs" type="submit" value="Search">
 		</form>
 
 		<div>
-			<table class="table" style="width:100%">
+			<table class="table table-hover table-condensed" style="width:100%">
 				<!-- Headings for each column in the table-->
 				<tr>
 					<th>Title</th>
@@ -109,7 +109,7 @@
 						<form ng-submit="search.filter()">
 							<input type="text" ng-model="search.title"  size="30"
 							placeholder="Title filter">
-							<input class="btn btn-primary" type="submit" value="Filter">
+							<input class="btn btn-primary btn-xs" type="submit" value="Filter">
 						</form>
 					</td>
 
@@ -117,7 +117,7 @@
 						<form ng-submit="search.sortByDuration()">
 							Ascending?
 							<input type="checkbox" ng-model="search.ascending">
-							<input class="btn btn-primary" type="submit" value="Sort">
+							<input class="btn btn-primary btn-xs" type="submit" value="Sort">
 						</form>
 					</td>
 
@@ -125,14 +125,14 @@
 						<form ng-submit="search.filter()">
 							<input type="text" ng-model="search.user"  size="30"
 							placeholder="User filter">
-							<input class="btn btn-primary" type="submit" value="Filter">
+							<input class="btn btn-primary btn-xs" type="submit" value="Filter">
 						</form>
 					</td>
 					<td>
 						<form ng-submit="search.filter()">
 							<input type="text" ng-model="search.genre"  size="30"
 							placeholder="Genre filter">
-							<input class="btn btn-primary" type="submit" value="Filter">
+							<input class="btn btn-primary btn-xs" type="submit" value="Filter">
 						</form>
 					</td>
 				</tr>
@@ -145,7 +145,7 @@
 					<td>{{track.genre}}</td>
 					<td>
 						<form ng-submit="search.addSong($index)">
-							<input class="btn btn-primary" type="submit" value="Add">
+							<input class="btn btn-primary btn-xs" type="submit" value="Add">
 						</form>
 					</td>
 				</tr>

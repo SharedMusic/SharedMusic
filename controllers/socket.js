@@ -48,11 +48,17 @@ socketio.factory('roomstateFactory', [/*'socket',*/ function(musicController){
 
 		// Tells the server to add a song to the queue
 		addSong: function(song){
-			queue.push(song);
-			if(current == null){
-				current = queue[0]; // Change to queue.shift later
+			if(queue.indexOf(song) == -1){
+				queue.push(song);
 			}
 			// Socket io call
+		},
+
+		nextSong: function(){
+			if(queue[0] != null){
+				current = queue[0];
+				queue.shift();
+			}
 		},
 
 		// Tells the server the current user wants to vote

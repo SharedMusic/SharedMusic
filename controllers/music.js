@@ -5,6 +5,7 @@ var musicList = angular.module('music', ['socketio']);
 musicList.controller('MusicController', ['$scope', 'roomstateFactory', function($scope, roomstateFactory){
 	var mL = this;
 	mL.queue = roomstateFactory.getQueue();
+	current = roomstateFactory.getSong();
 
 	// Add a new user to the room
 	mL.addUser = function(){

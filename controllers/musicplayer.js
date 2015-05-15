@@ -46,8 +46,12 @@ musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($s
 
 	// play the song
 	mP.playSong = function() {
+		var old = mP.trackInfo;
+		// if(roomstateFactory.getSong() != null){
+			roomstateFactory.nextSong();
+		// }
 		mP.trackInfo = roomstateFactory.getSong();
-		if (mP.trackInfo != null) {
+		if (mP.trackInfo != null && mP.trackInfo != old) {
 			// SC.stream(trackPath, [options], [callback])
 			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){
 				if (mP.currentSong != null) {
