@@ -19,3 +19,6 @@ https://shared-music.herokuapp.com/user_documentation
 
 Developer Documentation
 https://shared-music.herokuapp.com/dev_documentation
+
+Beta Release
+Documents can be found in documentation/updates_5-15
