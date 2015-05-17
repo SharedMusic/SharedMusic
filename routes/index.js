@@ -146,10 +146,10 @@ router.get('/js/tiles.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/tiles.js'))
 });
 
-router.get('/js/metrojs.js', function (req, res) {
+router.get('/js/MetroJs.js', function (req, res) {
 	var room = req.room;
 	// Pass room to the view and return view to client
-	res.sendFile(__dirname + '../js/Metrojs.js');
+	res.sendFile(path.join(__dirname, '../js/MetroJs.js'));
 });
 
 // GET other css files
