@@ -4,8 +4,12 @@ var musicList = angular.module('music', ['socketio']);
 // Depends on roomstateFactory to see the current roomstate
 musicList.controller('MusicController', ['$scope', 'roomstateFactory', function($scope, roomstateFactory){
 	var mL = this;
-	mL.queue = roomstateFactory.getQueue();
-	current = roomstateFactory.getSong();
+	mL.queue = [];
+	current = [];
+
+	roomstateFactory.setupGetQueue(function(queue) {
+		mL.queue = queue;
+	});
 
 	// Add a new user to the room
 	mL.addUser = function(){
@@ -16,6 +20,6 @@ musicList.controller('MusicController', ['$scope', 'roomstateFactory', function(
 
 	// Updates the song queue
 	mL.update = function(nQueue){
-		this.queue = nQueue;
+		this.queue = [{title:'heyo', id:1}];
 	}
 }]);

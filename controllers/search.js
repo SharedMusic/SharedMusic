@@ -77,7 +77,7 @@ angular.module('search', ['socketio'])
             // call add song function with the given name
             // socket.io?
             roomstateFactory.addSong(search.display[n]);
-            $scope.$apply();
+            //$scope.$apply();
             //alert('Added song: ' + search.display[n].permalink_url);
         };
     }]);

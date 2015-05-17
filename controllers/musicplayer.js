@@ -1,14 +1,17 @@
 var musicPlayer = angular.module('musicplayer', ['socketio']);
 
-musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($scope, roomstateFactory){
+musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($scope, roomstateFactory, $timeout){
 	var mP = this;
 	mP.currentSongEpoch = -1;
 	// mP.currentSongURL = roomstateFactory.getSong().permalink_url;
 	mP.currentSong = null;
 	
+	roomstateFactory.setupGetEpoch(function(newEpoch) {
+		mP.currentSongEpoch = newEpoch;
+	});
 
 	mP.muted = false;
-	mP.muteStatus = "Mute"
+	mP.muteStatus = "Mute";
 
 	SC.initialize({
 	  client_id: '337bccb696d7b8442deedde76fae5c10'
@@ -45,13 +48,11 @@ musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($s
 	};
 
 	// play the song
-	mP.playSong = function() {
+	roomstateFactory.setupGetSong(function(newTrackInfo) {
 		var old = mP.trackInfo;
-		// if(roomstateFactory.getSong() != null){
-			roomstateFactory.nextSong();
-		// }
-		mP.trackInfo = roomstateFactory.getSong();
-		if (mP.trackInfo != null && mP.trackInfo != old) {
+		mP.trackInfo = newTrackInfo;
+
+		if ((old == null && mP.trackInfo != null) || (old != null && mP.trackInfo != null && mP.trackInfo.id != old.id)) {
 			// SC.stream(trackPath, [options], [callback])
 			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){
 				if (mP.currentSong != null) {
@@ -65,6 +66,7 @@ musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($s
 				mP.currentSong.load({
 					onload: function() {
 						// TODO - uncomment and test with epoch
+
 						//mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch)
 						//mP.currentSong.setPosition(100000);
 						mP.currentSong.play();
@@ -73,7 +75,7 @@ musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($s
 				});
 			});
 		}
-	}
+	});
 
 	mP.muteSong = function() {
 		if (mP.currentSong != null) {

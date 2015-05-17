@@ -2,17 +2,39 @@ var express = require('express');
 var path = require('path');
 var request = require('request');
 var router = express.Router();
-
+var architecture = require('../architecture'),
+	Room = architecture.Room,
+	User = architecture.User;
+var io = require('../app.js');
+var uuid = require('uuid');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.sendFile(path.join(__dirname, '../views/index.html'))
 });
 
 router.get('/', function (req, res) {
-	res.render('index');
+	res.sendFile(path.join(__dirname, '../views/index.html'))
 });
 
+router.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
+
+router.get('/createRoom', function(req, res){
+	var uRoomID = uuid.v4();
+	var newRoom = new Room('NewRoom', uRoomID, io.onRoomChange(uRoomID));
+
+	io.rooms[uRoomID] = newRoom;
+	console.log('redirecting');
+	res.redirect('/room/?roomID=' + uRoomID);
+})
+
+router.get('/room', function (req, res) {
+	var room = io.rooms[req.param.roomID];
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname, '../views/app.html'));
+});
 
 //adding next 3 get() for zero release / product page
 router.get('/zero.html', function (req, res) {
@@ -73,18 +95,36 @@ router.get('/controllers/musicplayer.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/musicplayer.js'))
 });
 
+router.get('/room/controllers/socket.js', function (req, res) {
+	console.log(__dirname);
+	res.sendFile(path.join(__dirname, '../controllers/socket.js'))
+});
+
+router.get('/room/controllers/user.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/user.js'))
+});
+
+router.get('/room/controllers/music.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/music.js'))
+});
+
+router.get('/room/controllers/exploreTiles.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/exploreTiles.js'))
+});
+
+router.get('/room/controllers/search.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/search.js'))
+});
+
+router.get('/room/controllers/musicplayer.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/musicplayer.js'))
+});
+
 // GET other js files
 router.get('/js/socketio.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/socketio.js'))
 });
 
-router.get('/js/metrojs.js', function (req, res) {
-	res.sendFile(path.join(__dirname, '../js/metrojs.js'))
-});
-
-router.get('/js/tiles.js', function (req, res) {
-	res.sendFile(path.join(__dirname, '../js/tiles.js'))
-});
 
 router.get('/js/simplesets.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/simplesets.js'))
@@ -102,10 +142,14 @@ router.get('/js/queue.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/queue.js'))
 });
 
+router.get('/js/tiles.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../js/tiles.js'))
+});
+
 router.get('/js/metrojs.js', function (req, res) {
 	var room = req.room;
 	// Pass room to the view and return view to client
-	res.sendFile(__dirname + '/js/metrojs.js');
+	res.sendFile(__dirname + '../js/Metrojs.js');
 });
 
 // GET other css files
@@ -116,6 +160,12 @@ router.get('/style/metrojs.css', function (req, res) {
 });
 
 router.get('/style/app.css', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname, '../style/app.css'));
+});
+
+router.get('/room/style/app.css', function (req, res) {
 	var room = req.room;
 	// Pass room to the view and return view to client
 	res.sendFile(path.join(__dirname, '../style/app.css'));

@@ -27,6 +27,34 @@
 	<!-- Requirejs script importing -->
 	<script data-main="../js/main.js" src="../js/require.js"></script>
 	<link rel="stylesheet" href="style/app.css">
+
+	<script>
+		$(document).ready(function(){
+
+			function getParameterByName(name) {
+			    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+			    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+			        results = regex.exec(location.search);
+			    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+			}
+
+			$('#roomID').hide();
+			var count = 0;
+			var timer = setInterval(function () {
+				count++;
+	    		//$("#roomID").val(getParameterByName('roomID'));
+	    		//$("roomID").trigger('input');
+
+			    var input = $('#roomID');
+			    input.val(getParameterByName('roomID'));
+			    input.trigger('input');
+
+	    		if(count > 10) {
+	    			clearInterval(timer);
+	    		}
+		    }, 100);
+		}); 
+	</script>
 </head>
 
 <body>
@@ -36,7 +64,8 @@
 	<div ng-controller="UserController as userList">
 		<label>Name:</label>
 		<form ng-submit="userList.addUser()">
-			<input type="text" ng-model="userList.temp"  ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
+			<input type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
+			<input id="roomID" type="text" ng-model="userList.temp.roomID">
 			<input ng-click="button = true" id="enterRoom" class="btn btn-primary btn-xs" type="submit" value="enter room">
 			<!-- onclick="document.getElementById('enterRoom').disabled = true" -->
 		</form>
@@ -64,9 +93,9 @@
 	<!-- Music Player -->
 	<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
 		<div>
-			<form ng-submit="musicplayer.playSong()">
+			<!--<form ng-submit="musicplayer.playSong()">
 				<input class="btn btn-primary btn-xs" type="submit" value="Play Next Song">
-			</form>
+			</form>-->
 		</div>
 
 		<div>

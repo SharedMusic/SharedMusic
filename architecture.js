@@ -141,18 +141,21 @@ var RoomPrototype = {
 	// Removes the head of the room's track queue
 	// and clears any votes for the song.
 	nextTrack: function () {
-		this._state.bootVotes = new sets.Set();
+		// The room might have been reaped :^)
+		if(this._state != null) {
+			this._state.bootVotes = new sets.Set();
 
-		if(this._state.trackQueue.isEmpty()) {
-			this._onChange(null, 'TrackQueue is empty!', null);
-		} else {
-			this._state.trackQueue.dequeue();
-			if (this._state.trackQueue.isEmpty()) {
-				this._state.currentSongEpoch = -1;
+			if(this._state.trackQueue.isEmpty()) {
+				this._onChange(null, 'TrackQueue is empty!', null);
 			} else {
-				this._playSong(this._state.trackQueue.peek());
+				this._state.trackQueue.dequeue();
+				if (this._state.trackQueue.isEmpty()) {
+					this._state.currentSongEpoch = -1;
+				} else {
+					this._playSong(this._state.trackQueue.peek());
+				}
+				this._onChange(this._state, null, null);
 			}
-			this._onChange(this._state, null, null);
 		}
 	},
 

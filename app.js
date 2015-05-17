@@ -1,4 +1,5 @@
 var express = require('express');
+var socket_io = require('socket.io');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -9,6 +10,162 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+var io           = socket_io();
+app.io           = io;
+
+
+var architecture = require('./architecture.js'),
+  Room = architecture.Room,
+  User = architecture.User;
+var _ = require('underscore')._;
+var uuid = require('uuid');
+
+var userIDToUser = {};
+var rooms = {};
+
+var roomReaper = setInterval(function() {
+  for(var roomID in rooms) {
+    if(rooms.hasOwnProperty(roomID)) {
+      if(rooms[roomID].isEmpty()) {
+        rooms[roomID].closeRoom();
+        delete rooms[roomID];
+      }
+    } 
+  }
+}, 5*60*1000);
+
+io.sockets.on('connection', function(socket) {
+  console.log("A socket with id:" + socket.id + " has connected.");
+
+  socket.on('disconnect', function() {
+    var user = userIDToUser[socket.id];
+    if(user != null) {
+      var room = rooms[user.roomID];
+
+      room.removeUser(user);
+
+      delete userIDToUser[socket.id];
+
+      if(room.isEmpty()) {
+        delete rooms[room.id];
+        room.closeRoom();
+      }
+    }
+  });
+
+  socket.on('helloworld', function(data) {
+    console.log(data);
+  });
+
+  socket.on('joinRoom', function(data) {
+    var roomID = data.roomID;
+    var name = data.name;
+
+    console.log(name + ' is joining ' + roomID)
+    var room = rooms[roomID];
+
+    if(!room) {
+      socket.emit('onError', 'Room does not exist for roomID.');
+      return;
+    }
+    
+    var uName = room.getUniqueName(name);
+    var uID = socket.id;
+
+    var newUser = new User(uName, uID, roomID);
+
+
+    console.log(newUser.id);
+    io.to(socket.id).emit('userInfo', newUser.name, newUser.id);
+
+    socket.join(roomID);
+
+    room.addUser(newUser);
+    userIDToUser[newUser.id] = newUser;
+  })
+
+  socket.on('addTrack', function(data) {
+    var roomID = data.roomID;
+    var userID = data.userID;
+    var track = data.track;
+
+    var room = rooms[roomID];
+    console.log(userID + 'requested a track');
+    if(!room) {
+      socket.emit('onError', 'Room does not exist for roomID.');
+      return;
+    }
+
+    var user = userIDToUser[userID];
+    if(!user) {
+      socket.emit('onError', 'User does not exist for userID');
+      return;
+    }
+
+    console.log('sucessfully added track!');
+
+    
+    room.addTrack(user, track);
+  });
+
+  socket.on('bootTrack', function(data) {
+    var roomID = data.roomID;
+    var userID = data.userID;
+    
+    var room = rooms[roomID];
+    if(!room) {
+      socket.emit('onError', 'Room does not exist for roomID.');
+      return;
+    }
+
+    var user = userIDToUser[userID];
+    if(!user) {
+      socket.emit('onError', 'User does not exist for userID');
+      return;
+    }
+
+    room.bootTrack(user);
+  })
+
+  socket.on('getRoomState', function(roomID, fn) {
+    var room = rooms[roomID];
+    if(!room) {
+      socket.emit('onError', 'Room does not exist for roomID.');
+      return;
+    }
+
+
+    socket.emit('onRoomUpdate', room.getRoomState());
+  })  
+});
+
+var onRoomChange = function(roomID) {
+  return function(roomState, error, userID) {
+    if(roomState) {
+      io.to(roomID).emit('onRoomUpdate', 
+      { 
+          name: roomState.name,
+          users: roomState.users.array(),
+          currentSongEpoch: roomState.currentSongEpoch,
+          trackQueue: roomState.trackQueue.getQueue(),
+          bootVotes: roomState.bootVotes.array()
+      });
+    } else if(error) {
+      if(userID) {
+        io.to(userID).emit('onError', error);
+      } else {
+        io.to(roomID).emit('onError', error);
+      }
+    } else {
+      io.to(roomID).emit('onClose');
+    }
+  };
+}
+
+exports.rooms = rooms;
+exports.onRoomChange = onRoomChange;
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -83,16 +240,5 @@ app.get('/user_documentation', function(req, res) {
 	res.sendFile(path.join(__dirname, '../documentation/user_documentation.pdf'))
 });
 */
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = app;
