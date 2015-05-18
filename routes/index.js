@@ -175,6 +175,12 @@ router.get('/room/Metrojs.css', function (req, res) {
 	res.sendFile(path.join(__dirname, '../style/metrojs.css'));
 });
 
+router.get('/style/Metrojs.css', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname, '../style/metrojs.css'));
+});
+
 router.get('/style/tiletest.css', function (req, res) {
 	var room = req.room;
 	// Pass room to the view and return view to client
