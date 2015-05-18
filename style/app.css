@@ -3,5 +3,6 @@ body{
 }
 
 #tileControl {
-	height: 300px;
+	height: auto;
+	overflow: hidden;
 }
