@@ -44,25 +44,7 @@ function cleanTrack(track) {
 
 exploreTiles.controller('TileCtrl', function($scope, $http) {
 	$scope.tracks = 
-	[ 
-		{
-		'frontTrack':
-		{
-			'artist': 'Drake',
-			'title': 'Trophies',
-			'genre': 'Hip-Hop',
-			'duration': '3m 45s'
-		},
-		'backTrack':
-		{
-			'artist': 'Uppermost',
-			'title': 'Beaufitul Life',
-			'genre': 'Electronic',
-			'duration': '2m 50s'
-		}
-		}
-
-		];
+	[];
 
 	// Adds a song to the queue
 	$scope.retrieveTracks = function() {
@@ -73,7 +55,7 @@ exploreTiles.controller('TileCtrl', function($scope, $http) {
 
 			$scope.tracks = [];
 
-          	for(var i = 0; i < 24; i++) {
+          	for(var i = 0; i < 22; i++) {
             	$scope.tracks.push(
             	{
         			'frontTrack': cleanTrack(tracks[i]),
@@ -85,6 +67,8 @@ exploreTiles.controller('TileCtrl', function($scope, $http) {
       		$scope.$apply();
 		});
 	};
+
+	$scope.retrieveTracks();
 });
 
 exploreTiles.directive('tile', function() {

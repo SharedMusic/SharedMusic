@@ -4,6 +4,9 @@
 <head>
 	<title>Shared Music</title>
 
+    <link rel="stylesheet" type="text/css" href="Metrojs.css">
+    <link rel="stylesheet" type="text/css" href="/style/tileTest.css">
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
@@ -27,6 +30,9 @@
 	<!-- Requirejs script importing -->
 	<script data-main="../js/main.js" src="../js/require.js"></script>
 	<link rel="stylesheet" href="style/app.css">
+
+    <script src="/js/MetroJs.js"></script>
+    <script src="/js/tiles.js"></script>
 
 	<script>
 		$(document).ready(function(){
@@ -117,9 +123,62 @@
 
 	<hr>
 
+	<!-- tiles !-->
+    <div id="tileControl" ng-controller="TileCtrl">
+        <div ng-repeat="track in tracks" class="live-tile" data-mode="flip">
+          <div class="tileImage" ng-style="{'background-image': 'url(' + track.frontTrack.artwork_url + ')'}">
+            <div class="trackInfoContainer">
+              <div class='shading'>
+              </div>
+              <div class="trackInfo noselect" onselectstart="return false">
+                <span>{{track.frontTrack.artist | cut:true:17:' ...'}}</span>
+                </br>
+                <span>{{track.frontTrack.title | cut:true:17:' ...'}}</span>
+                </br>
+                <span>{{track.frontTrack.genre | cut:true:17:' ...'}}</span>
+                </br>
+                <span>{{track.frontTrack.duration}}</span>
+                <div class="trackLinkContainer">
+                  <img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
+                  <img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">                
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tileImage" ng-style="{'background-image': 'url(' + track.backTrack.artwork_url + ')'}">
+            <div class="trackInfoContainer">
+              <div class='shading'>
+              </div>
+              <div class="trackInfo noselect" onselectstart="return false">
+                <span>{{track.backTrack.artist | cut:true:17:' ...'}}</span>
+                </br>
+                <span>{{track.backTrack.title | cut:true:17:' ...'}}</span>
+                </br>
+                <span>{{track.backTrack.genre | cut:true:17:' ...'}}</span>
+                </br>
+                <span>{{track.backTrack.duration}}</span>
+                <div class="trackLinkContainer">
+                  <img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
+                  <img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- No need for retrieval 
+      <form ng-submit="retrieveTracks()">
+        <input type="submit" value="Get Tracks">
+      </form>
+      !-->
+    </div>
+
+	<hr>
+
 	<!-- Search -->
-	<h1>Search</h1>
+
 	<div ng-controller="SearchController as search">
+		<h1>Search</h1>
 		<!-- Search box and submit button-->
 			<form ng-submit="search.search(search.query)">
 				<div class="form-group">
@@ -187,5 +246,6 @@
 			</table>
 		</div>
 	</div>
+
 </body>
 </html>

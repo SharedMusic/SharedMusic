@@ -1,3 +1,7 @@
 body{
 	padding: 5px;
 }
+
+#tileControl {
+	height: 300px;
+}

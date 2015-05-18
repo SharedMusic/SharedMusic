@@ -24,11 +24,11 @@ $( document ).ready(function() {
 	});
 	
 	$('body').on('DOMNodeInserted', '.live-tile', function () {
-		var randomInitDelay = Math.random() * (3000);
+		var randomInitDelay = Math.random() * (10000);
 
 		$(this).liveTile({ 
 			pauseOnHover: true,
-            delay: 3000,
+            delay: 10000,
             speed: 1000, 
             initDelay: randomInitDelay
         })

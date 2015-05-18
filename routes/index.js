@@ -147,9 +147,8 @@ router.get('/js/tiles.js', function (req, res) {
 });
 
 router.get('/js/metrojs.js', function (req, res) {
-	var room = req.room;
-	// Pass room to the view and return view to client
-	res.sendFile(__dirname + '../js/Metrojs.js');
+	console.log('helloworld');
+	res.sendFile(path.join(__dirname, '../js/Metrojs.js'));
 });
 
 // GET other css files
@@ -169,6 +168,12 @@ router.get('/room/style/app.css', function (req, res) {
 	var room = req.room;
 	// Pass room to the view and return view to client
 	res.sendFile(path.join(__dirname, '../style/app.css'));
+});
+
+router.get('/room/Metrojs.css', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname, '../style/metrojs.css'));
 });
 
 router.get('/style/tiletest.css', function (req, res) {
@@ -203,6 +208,17 @@ router.get('/images/soundcloud_dark.png', function (req, res) {
 });
 
 router.get('/scrape', function (req, res) {
+	url = 'https://api-v2.soundcloud.com/explore/Popular+Music?tag=out-of-experiment&limit=200&offset=0';
+
+	request(url, function(error, response, html) {
+		if(!error) {
+			res.setHeader('Content-Type', 'application/json');
+			res.end(html);
+		}
+	})
+});
+
+router.get('/room/scrape', function (req, res) {
 	url = 'https://api-v2.soundcloud.com/explore/Popular+Music?tag=out-of-experiment&limit=200&offset=0';
 
 	request(url, function(error, response, html) {
