@@ -146,9 +146,8 @@ router.get('/js/tiles.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/tiles.js'))
 });
 
-router.get('/js/metrojs.js', function (req, res) {
-	console.log('helloworld');
-	res.sendFile(path.join(__dirname, '../js/Metrojs.js'));
+router.get('/js/MetroJs.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../js/MetroJs.js'));
 });
 
 // GET other css files
