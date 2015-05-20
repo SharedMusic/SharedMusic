@@ -145,7 +145,12 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		client1.on('onRoomUpdate', function(roomState) {
 			count++;
 			if(count == 1) {
-				client1.emit('addTrack', newRoomID, userID1, { title: trackName, duration: trackDuration});
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID1,
+					track: {title: trackName, duration: trackDuration}
+				};
+				client1.emit('addTrack', addTrackData);
 			} else if(count == 2) {
 				roomState.trackQueue.length.should.equal(1);
 				
@@ -190,7 +195,12 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		client1.on('onRoomUpdate', function(roomState) {
 			count++;
 			if(count == 1) {
-				client1.emit('addTrack', newRoomID, userID1, { title: trackName, duration: trackDuration});
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID1,
+					track: {title: trackName, duration: trackDuration}
+				};
+				client1.emit('addTrack', addTrackData);
 			} else if(count == 2) {
 				roomState.trackQueue.length.should.equal(1);
 				
@@ -253,13 +263,33 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		client1.on('onRoomUpdate', function(roomState) {
 			client1UpdateCount++;
 			if(client1UpdateCount == 2) {
-				client1.emit('addTrack', newRoomID, userID1, testTrackQueue[0]);
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID1,
+					track: testTrackQueue[0]
+				};
+				client1.emit('addTrack', addTrackData);
 			} else if(client1UpdateCount == 4) {
-				client1.emit('addTrack', newRoomID, userID1, testTrackQueue[2]);
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID1,
+					track: testTrackQueue[2]
+				};
+				client1.emit('addTrack', addTrackData);
 			} else if(client1UpdateCount == 6) {
-				client1.emit('addTrack', newRoomID, userID1, testTrackQueue[4]);
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID1,
+					track: testTrackQueue[4]
+				};
+				client1.emit('addTrack', addTrackData);
 			} else if(client1UpdateCount == 8) {
-				client1.emit('addTrack', newRoomID, userID1, testTrackQueue[6]);
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID1,
+					track: testTrackQueue[6]
+				};
+				client1.emit('addTrack', addTrackData);
 			}
 		});
 
@@ -273,13 +303,33 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		client2.on('onRoomUpdate', function(roomState) {
 			client2UpdateCount++;
 			if(client2UpdateCount == 2) {
-				client1.emit('addTrack', newRoomID, userID2, testTrackQueue[1]);
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID2,
+					track: testTrackQueue[1]
+				};
+				client1.emit('addTrack', addTrackData);
 			} else if(client2UpdateCount == 4) {
-				client1.emit('addTrack', newRoomID, userID2, testTrackQueue[3]);
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID2,
+					track: testTrackQueue[3]
+				};
+				client1.emit('addTrack', addTrackData);
 			} else if(client2UpdateCount == 6) {
-				client1.emit('addTrack', newRoomID, userID2, testTrackQueue[5]);
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID2,
+					track: testTrackQueue[5]
+				};
+				client1.emit('addTrack', addTrackData);
 			} else if(client2UpdateCount == 8) {
-				client1.emit('addTrack', newRoomID, userID2, testTrackQueue[7]);
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID2,
+					track: testTrackQueue[7]
+				};
+				client1.emit('addTrack', addTrackData);
 			}
 
 			if(client2UpdateCount >= 9) {
@@ -344,7 +394,12 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		  	count++;
 			if(count == 2) {
 		    	// add track after second user is in room
-				client1.emit('addTrack', newRoomID, userID1, { title: trackName, duration: trackDuration});
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID1,
+					track: { title: trackName, duration: trackDuration}
+				};
+				client1.emit('addTrack', addTrackData);
 			}
 		});
 
@@ -413,7 +468,12 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		  	count++;
 			if(count == 3) {
 				// add track after second user is in room
-				client1.emit('addTrack', newRoomID, userID1, { title: trackName, recommender: actualName1, duration: trackDuration});
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID1,
+					track: { title: trackName, recommender: actualName1, duration: trackDuration}
+				};
+				client1.emit('addTrack', addTrackData);
 			} else if(count == 4) {
 				// boot track after both users are in room and
 				// track has been added to queue
@@ -505,7 +565,12 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		  	client1UpdateCount++;
 			if(client1UpdateCount == 2) {
 				// add track after second user is in room
-				client1.emit('addTrack', newRoomID, userID1, { title: trackName, recommender: actualName1, duration: trackDuration});
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: userID1,
+					track: { title: trackName, recommender: actualName1, duration: trackDuration}
+				};
+				client1.emit('addTrack', addTrackData);
 			} else if(client1UpdateCount == 3) {
 				// boot track after both users are in room and
 				// track has been added to queue
@@ -633,7 +698,12 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		  	client1UpdateCount++;
 			if(client1UpdateCount == 2) {
 				// disconnect after second user is in room
-				client1.emit('addTrack', newRoomID, 1234, {title:'testTrack1', duration:60*60*1000});
+				var addTrackData = {
+					roomID: newRoomID,
+					userID: 1234,
+					track: {title:'testTrack1', duration:60*60*1000}
+				};
+				client1.emit('addTrack', addTrackData);
 			}
 		});
 
@@ -843,7 +913,8 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		});
 
 		client3.on('onRoomUpdate', function(roomState) {
-			client1.emit('addTrack', newRoomID, userID3, {title:'testTrack1', duration:60*60*1000});
+			client1.emit('addTrack', 	{roomID: newRoomID, userID: userID3, track:
+							{title:'testTrack1', duration:60*60*1000}});
 		});
 
 		client3.on('userInfo', function(actualName, userID) {
