@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Shared Music</title>
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+		<!-- Default theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		<!-- <link rel="stylesheet" type="text/css" href="../css/index.css"> -->
+		
+		<!-- Angular -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+
+		<!-- socket.io -->
+		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+		<!-- Requirejs script importing -->
+		<script data-main="../js/main.js" src="../js/require.js"></script>
+
+	</head>
+
+	<body>
+		
+		<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+				 <a class="navbar-brand" href="#">
+					<text>SharedMusic</text>
+				</a>
+			</div>
+		  </div>
+		</nav>
+		
+		<div class="container">
+				<div class="row">
+					<div class="col-md-3">
+						<div>
+							<h3>Users in room:</h3>
+							<ul>
+								<li ng-repeat="user in userList.users">{{user.name}} as user id: {{user.id}}</li>
+							</ul>
+						</div>
+						
+						<div>
+							<h3>Songs in Queue:</h3>
+							<ul>
+								<li ng-repeat="song in musicList.queue">{{song.name}} as song id: {{song.id}}</li>
+							</ul>
+						</div>
+						
+						<div>
+							<h3>Currently Playing</h3>
+						</div>
+					</div>
+					
+					<div class="col-md-9">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search">
+							<button type="submit" class="btn btn-default">Submit</button>
+						</div>
+					</div>	
+				</div>
+			
+		</div>
+		
+		
+		
+		
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
