@@ -805,7 +805,7 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 	it('Should prevent users from joining rooms that are not created.', function(done) {
 		var proposedName = 'testUser';
-		var room = roomID;
+		var room = null;
 
 		var client1 = io.connect(socketUrl, socketOptions);
 
@@ -816,6 +816,7 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 				name: proposedName
 			};
 			client1.emit('joinRoom', data1);
+			done()
 		});
 
 		client1.on('userInfo', function(actualName, userID) {
