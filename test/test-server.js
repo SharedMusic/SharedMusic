@@ -781,6 +781,7 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 				name: proposedName
 			};
 			client1.emit('joinRoom', data1);
+			done()
 		});
 
 		client1.on('onError', function(error) {
