@@ -837,8 +837,7 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 			client1.emit('joinRoom', data1);
 		});
 	});
-
-	/*	
+	
 	it('Should prevent users from joining with the same username.', function(done) {
 		var proposedName = 'testUser';
 		var room = roomID;
@@ -850,8 +849,8 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 			actualName.should.equal(proposedName);
 		});
 
-		client2.on('onError', function(error) {
-			//error.should.equal('');
+		client2.on('userInfo', function(actualName, userID) {
+			actualName.should.not.equal(proposedName);
 			done();
 		});
 
@@ -864,7 +863,6 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 			client2.emit('joinRoom', data1);
 		});
 	});
-	*/
 
 	/*
 	it('Should not allow user with existant userID (but not part of room) to add track to room.', function(done) {
