@@ -477,7 +477,7 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 			} else if(count == 4) {
 				// boot track after both users are in room and
 				// track has been added to queue
-				client1.emit('bootTrack', newRoomID, userID1);
+				client1.emit('bootTrack', {roomID: newRoomID, userID: userID1});
 			}
 		});
 
@@ -574,7 +574,7 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 			} else if(client1UpdateCount == 3) {
 				// boot track after both users are in room and
 				// track has been added to queue
-				client1.emit('bootTrack', newRoomID, userID1);
+				client1.emit('bootTrack', {roomID: newRoomID, userID: userID1});
 			}
 		});
 
