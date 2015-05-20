@@ -50,7 +50,11 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		});
 
 		requestNewRoom(function(roomID) {
-			client1.emit('joinRoom', roomID, proposedName);
+			var data1 = {
+				roomID: roomID,
+				name: proposedName
+			};
+			client1.emit('joinRoom', data1);
 		});
 	});
 
@@ -112,8 +116,16 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		});
 
 		requestNewRoom(function(roomID) {
-			client1.emit('joinRoom', roomID, proposedName1);
-			client2.emit('joinRoom', roomID, proposedName2)
+			var data1 = {
+				roomID: roomID,
+				name: proposedName1
+			};
+			var data2 = {
+				roomID: roomID,
+				name: proposedName2
+			};
+			client1.emit('joinRoom', data1);
+			client2.emit('joinRoom', data2)
 		});
 	});
 
@@ -153,7 +165,11 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			newRoomID = roomID;
-			client1.emit('joinRoom', newRoomID, proposedName1);
+			var data1 = {
+				roomID: newRoomID,
+				name: proposedName1
+			};
+			client1.emit('joinRoom', data1);
 
 		});
 	});
@@ -194,7 +210,11 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			newRoomID = roomID;
-			client1.emit('joinRoom', newRoomID, proposedName1);
+			var data1 = {
+				roomID: newRoomID,
+				name: proposedName1
+			};
+			client1.emit('joinRoom', data1);
 
 		});
 	});
@@ -287,8 +307,16 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			newRoomID = roomID;
-			client1.emit('joinRoom', newRoomID, proposedName1);
-			client2.emit('joinRoom', newRoomID, proposedName2);
+			var data1 = {
+				roomID: newRoomID,
+				name: proposedName1
+			};
+			var data2 = {
+				roomID: newRoomID,
+				name: proposedName2
+			};
+			client1.emit('joinRoom', data1);
+			client2.emit('joinRoom', data2);
 
 		});
 	});
@@ -344,8 +372,16 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			newRoomID = roomID;
-			client1.emit('joinRoom', newRoomID, proposedName1);
-		  	client2.emit('joinRoom', newRoomID, proposedName2);
+			var data1 = {
+				roomID: newRoomID,
+				name: proposedName1
+			};
+			var data2 = {
+				roomID: newRoomID,
+				name: proposedName2
+			};
+			client1.emit('joinRoom', data1);
+		  	client2.emit('joinRoom', data2);
 		});
 
 	});
@@ -428,9 +464,21 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			newRoomID = roomID;
-			client1.emit('joinRoom', newRoomID, proposedName1);
-		  	client2.emit('joinRoom', newRoomID, proposedName2);
-		  	client3.emit('joinRoom', newRoomID, proposedName3);
+			var data1 = {
+				roomID: newRoomID,
+				name: proposedName1
+			};
+			var data2 = {
+				roomID: newRoomID,
+				name: proposedName2
+			};
+			var data3 = {
+				roomID: newRoomID,
+				name: proposedName3
+			};
+			client1.emit('joinRoom', data1);
+		  	client2.emit('joinRoom', data2);
+		  	client3.emit('joinRoom', data3);
 		});
 	});
 
@@ -487,8 +535,16 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			newRoomID = roomID;
-			client1.emit('joinRoom', newRoomID, proposedName1);
-		  	client2.emit('joinRoom', newRoomID, proposedName2);
+			var data1 = {
+				roomID: newRoomID,
+				name: proposedName1
+			};
+			var data2 = {
+				roomID: newRoomID,
+				name: proposedName2
+			};
+			client1.emit('joinRoom', data1);
+		  	client2.emit('joinRoom', data2);
 		});
 		});
 
@@ -541,8 +597,16 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			newRoomID = roomID;
-			client1.emit('joinRoom', newRoomID, proposedName1);
-		  	client2.emit('joinRoom', newRoomID, proposedName2);
+			var data1 = {
+				roomID: newRoomID,
+				name: proposedName1
+			};
+			var data2 = {
+				roomID: newRoomID,
+				name: proposedName2
+			};
+			client1.emit('joinRoom', data1);
+		  	client2.emit('joinRoom', data2);
 		});
 	});
 
@@ -595,8 +659,16 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			newRoomID = roomID;
-			client1.emit('joinRoom', newRoomID, proposedName1);
-		  	client2.emit('joinRoom', newRoomID, proposedName2);
+			var data1 = {
+				roomID: newRoomID,
+				name: proposedName1
+			};
+			var data2 = {
+				roomID: newRoomID,
+				name: proposedName2
+			};
+			client1.emit('joinRoom', data1);
+		  	client2.emit('joinRoom', data2);
 		});
 	});
 
@@ -617,7 +689,11 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		});
 
 		requestNewRoom(function(roomID) {
-			client1.emit('joinRoom', roomID, proposedName);
+			var data1 = {
+				roomID: roomID,
+				name: proposedName
+			};
+			client1.emit('joinRoom', data1);
 		});
 	});
 
@@ -630,7 +706,11 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		client1.on('onRoomUpdate', function(roomState) {
 			client1.disconnect();
-			client1.emit('joinRoom', room, proposedName);
+			var data1 = {
+				roomID: room,
+				name: proposedName
+			};
+			client1.emit('joinRoom', data1);
 		});
 
 		client1.on('onError', function(error) {
@@ -644,7 +724,11 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			room = roomID;
-			client1.emit('joinRoom', roomID, proposedName);
+			var data1 = {
+				roomID: roomID,
+				name: proposedName
+			};
+			client1.emit('joinRoom', data1);
 		});
 	});
 
@@ -656,7 +740,11 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		client1.on('onRoomUpdate', function(roomState) {
 			client1.disconnect();
-			client1.emit('joinRoom', room, proposedName);
+			var data1 = {
+				roomID: room,
+				name: proposedName
+			};
+			client1.emit('joinRoom', data1);
 		});
 
 		client1.on('userInfo', function(actualName, userID) {
@@ -670,7 +758,11 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			room = roomID;
-			client1.emit('joinRoom', roomID, proposedName);
+			var data1 = {
+				roomID: roomID,
+				name: proposedName
+			};
+			client1.emit('joinRoom', data1);
 		});
 	});
 
@@ -692,8 +784,12 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		});
 
 		requestNewRoom(function(roomID) {
-			client1.emit('joinRoom', roomID, proposedName);
-			client2.emit('joinRoom', roomID, proposedName);
+			var data1 = {
+				roomID: roomID,
+				name: proposedName
+			};
+			client1.emit('joinRoom', data1);
+			client2.emit('joinRoom', data1);
 		});
 	});
 	*/
@@ -757,11 +853,23 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 
 		requestNewRoom(function(roomID) {
 			newRoomID = roomID;
-			client1.emit('joinRoom', newRoomID, proposedName1);
-		  	client2.emit('joinRoom', newRoomID, proposedName2);
+			var data1 = {
+				roomID: newRoomID,
+				name: proposedName1
+			};
+			var data2 = {
+				roomID: newRoomID,
+				name: proposedName2
+			};
+			client1.emit('joinRoom', data1);
+		  	client2.emit('joinRoom', data2);
 			
 		  	requestNewRoom(function(roomID) {
-				client3.emit('joinRoom', roomID, proposedName3);
+				var data3 = {
+					roomID: roomID,
+					name: proposedName3
+				};
+				client3.emit('joinRoom', data3);
 			});
 		});
 	});
