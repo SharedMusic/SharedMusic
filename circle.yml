@@ -1,3 +1,4 @@
 test:
    pre:
       - npm start
+         background: true
