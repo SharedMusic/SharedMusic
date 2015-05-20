@@ -36,6 +36,70 @@ router.get('/room', function (req, res) {
 	res.sendFile(path.join(__dirname, '../views/app.html'));
 });
 
+
+/*
+	For UI Testing and app2.html
+*/
+
+router.get('/createRoom2', function(req, res){
+	var uRoomID = uuid.v4();
+	var newRoom = new Room('NewRoom', uRoomID, io.onRoomChange(uRoomID));
+
+	io.rooms[uRoomID] = newRoom;
+	console.log('redirecting');
+	res.redirect('/room2/?roomID=' + uRoomID);
+})
+
+router.get('/room2', function (req, res) {
+	var room = io.rooms[req.param.roomID];
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname, '../views/app2.html'));
+});
+
+
+router.get('/room2/controllers/socket.js', function (req, res) {
+	console.log(__dirname);
+	res.sendFile(path.join(__dirname, '../controllers/socket.js'))
+});
+
+router.get('/room2/controllers/user.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/user.js'))
+});
+
+router.get('/room2/controllers/music.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/music.js'))
+});
+
+router.get('/room2/controllers/exploreTiles.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/exploreTiles.js'))
+});
+
+router.get('/room2/controllers/search.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/search.js'))
+});
+
+router.get('/room2/controllers/musicplayer.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/musicplayer.js'))
+});
+
+router.get('/room2/style/app.css', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname, '../style/app.css'));
+});
+
+router.get('/room2/Metrojs.css', function (req, res) {
+	var room = req.room;
+	// Pass room to the view and return view to client
+	res.sendFile(path.join(__dirname, '../style/Metrojs.css'));
+});
+
+
+
+/*
+	End UI Testing and app2.html
+*/
+
 //adding next 3 get() for zero release / product page
 router.get('/zero.html', function (req, res) {
 	res.sendFile(path.join(__dirname, '../views/zero.html'))

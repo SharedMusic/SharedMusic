@@ -30,7 +30,7 @@ angular.module('search', ['socketio'])
 
         // Searches sound hound with the given query
         search.search = function(query) {
-            SC.get('/tracks', { q: search.query, limit: search.pageSize}, function(tracks) {
+            SC.get('/tracks', { q: search.query, limit: search.pageSize, streamable: true}, function(tracks) {
                 search.results = tracks;
                 search.display = tracks;
                 $scope.$apply();
