@@ -43,8 +43,7 @@ function cleanTrack(track) {
 }
 
 exploreTiles.controller('TileCtrl', function($scope, $http) {
-	$scope.tracks = 
-	[];
+	$scope.tracks =	[];
 
 	// Adds a song to the queue
 	$scope.retrieveTracks = function() {
@@ -58,13 +57,13 @@ exploreTiles.controller('TileCtrl', function($scope, $http) {
           	for(var i = 0; i < 22; i++) {
             	$scope.tracks.push(
             	{
-        			'frontTrack': cleanTrack(tracks[i]),
-    				'backTrack' : cleanTrack(tracks[half+i])
+        			  'frontTrack': cleanTrack(tracks[i]),
+  				      'backTrack' : cleanTrack(tracks[half+i])
             	});
           	}
 
           	
-      		$scope.$apply();
+  		$scope.$apply();
 		});
 	};
 

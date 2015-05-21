@@ -144,7 +144,9 @@
 								<span>{{track.frontTrack.duration}}</span>
 								<div class="trackLinkContainer">
 									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
-									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">                
+									<a href="{{track.frontTrack.permalink_url}}">
+									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px" ng-click="window.location.href = 'www.stackoverflow.com';">        
+									</a>        
 								</div>
 							</div>
 						</div>
