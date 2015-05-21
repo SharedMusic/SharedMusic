@@ -118,6 +118,10 @@ router.get('/app.html', function (req, res) {
 	res.sendFile(path.join(__dirname, '../views/app.html'))
 });
 
+router.get('/autoComplete.html', function (req, res) {
+	res.sendFile(path.join(__dirname, '../views/autoComplete.html'))
+});
+
 router.get('/tiletest.html', function (req, res) {
 	res.sendFile(path.join(__dirname, '../views/tiletest.html'))
 });
@@ -189,6 +193,10 @@ router.get('/js/socketio.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/socketio.js'))
 });
 
+// GET other js files
+router.get('/js/massautocomplete.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../js/massautocomplete.js'))
+});
 
 router.get('/js/simplesets.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../js/simplesets.js'))
@@ -231,6 +239,10 @@ router.get('/room/style/app.css', function (req, res) {
 	var room = req.room;
 	// Pass room to the view and return view to client
 	res.sendFile(path.join(__dirname, '../style/app.css'));
+});
+
+router.get('/style/massautocomplete.theme.css', function (req, res) {
+	res.sendFile(path.join(__dirname, '../style/massautocomplete.theme.css'));
 });
 
 router.get('/room/Metrojs.css', function (req, res) {

@@ -28,13 +28,17 @@ angular.module('search', ['socketio'])
         // Default page size
         search.pageSize = 100;
 
-        // Searches sound hound with the given query
+        // Searches sound clound with the given query
         search.search = function(query) {
             SC.get('/tracks', { q: search.query, limit: search.pageSize, streamable: true}, function(tracks) {
                 search.results = tracks;
                 search.display = tracks;
                 $scope.$apply();
             });
+        };
+
+        $scope.filter = function (query) {
+            search.filter();
         };
 
         // Applies all the filters to the current search result and sorts according to duration
@@ -49,6 +53,17 @@ angular.module('search', ['socketio'])
                     temp.push(results[i]);
                 }
             }
+
+            temp.sort(function(track1, track2) {
+                if (track1.duration < track2.duration) {
+                    return search.ascending ? -1 : 1;
+                } else if (track1.duration > track2.duration) {
+                    return search.ascending ? 1 : -1;
+                } else {
+                    return 0;
+                }
+            });
+
             search.display = temp;
         };
 
