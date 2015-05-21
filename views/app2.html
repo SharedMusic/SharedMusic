@@ -77,8 +77,15 @@
 		
 		<div class="container">
 				<div class="row">
-					<div class="col-md-3">
-						<div>
+					<div ng-controller="UserController as userList" class="col-md-3">
+						<label>Name:</label>
+						<form ng-submit="userList.addUser()">
+							<input type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
+							<input id="roomID" type="text" ng-model="userList.temp.roomID">
+							<input ng-click="button = true" id="enterRoom" class="btn btn-primary btn-xs" type="submit" value="enter room">
+							<!-- onclick="document.getElementById('enterRoom').disabled = true" -->
+						</form>
+						<div ng-controller="MusicController as musicList">
 							<h3>Users in room:</h3>
 							<ul>
 								<li ng-repeat="user in userList.users">{{user.name}} as user id: {{user.id}}</li>
@@ -92,17 +99,151 @@
 							</ul>
 						</div>
 						
-						<div>
-							<h3>Currently Playing</h3>
+						<!-- Music Player -->
+						<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
+							<div>
+								<!--<form ng-submit="musicplayer.playSong()">
+									<input class="btn btn-primary btn-xs" type="submit" value="Play Next Song">
+								</form>-->
+							</div>
+
+							<div>
+								<h2>Current Song:</h2>
+
+								<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
+
+								<img ng-src="{{musicplayer.trackInfo.artwork_url}}">
+								<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
+								<a href="{{musicplayer.currentSongURL}}">Song Link</a>
+							</div>
+
+							<div>
+								<a href="https://soundcloud.com">
+									<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
+								</a>
+							</div>
 						</div>
 					</div>
 					
-					<div class="col-md-9">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Search">
-							<button type="submit" class="btn btn-default">Submit</button>
+					
+					<div class="col-md-9" ng-controller="SearchController as search">
+						<h1>Search</h1>
+						<!-- Search box and submit button-->
+							<form ng-submit="search.search(search.query)">
+								<div class="form-group">
+									<input type="text" ng-model="search.query"  size="30"
+									placeholder="Enter Query">
+									<input class="btn btn-primary btn-xs" type="submit" value="Search">
+								</div>
+							</form>
+						<div>
+							<table class="table table-hover table-condensed" style="width:100%">
+								<!-- Headings for each column in the table-->
+								<tr>
+									<th>Title</th>
+									<th>Duration</th>
+									<th>Username</th>
+									<th>Genre</th>
+								</tr>
+
+								<!-- Filter fields for each column-->
+								<tr>
+									<td>
+										<form ng-submit="search.filter()">
+											<input type="text" ng-model="search.title"  size="30"
+											placeholder="Title filter">
+											<input class="btn btn-primary btn-xs" type="submit" value="Filter">
+										</form>
+									</td>
+
+									<td>
+										<form ng-submit="search.sortByDuration()">
+											Ascending?
+											<input type="checkbox" ng-model="search.ascending">
+											<input class="btn btn-primary btn-xs" type="submit" value="Sort">
+										</form>
+									</td>
+
+									<td>
+										<form ng-submit="search.filter()">
+											<input type="text" ng-model="search.user"  size="30"
+											placeholder="User filter">
+											<input class="btn btn-primary btn-xs" type="submit" value="Filter">
+										</form>
+									</td>
+									<td>
+										<form ng-submit="search.filter()">
+											<input type="text" ng-model="search.genre"  size="30"
+											placeholder="Genre filter">
+											<input class="btn btn-primary btn-xs" type="submit" value="Filter">
+										</form>
+									</td>
+								</tr>
+
+								<!-- Display the results-->
+								<tr ng-repeat="track in search.display">
+									<td>{{track.title}} </td>
+									<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
+									<td>{{track.user.username}}</td>
+									<td>{{track.genre}}</td>
+									<td>
+										<form ng-submit="search.addSong($index)">
+											<input class="btn btn-primary btn-xs" type="submit" value="Add">
+										</form>
+									</td>
+								</tr>
+							</table>
 						</div>
-					</div>	
+					</div>
+					
+				 
+
+					<!-- tiles !-->
+					<hr>
+						<div id="tileControl" ng-controller="TileCtrl">
+							<div ng-repeat="track in tracks" class="live-tile" data-mode="flip">
+								<div class="tileImage" ng-style="{'background-image': 'url(' + track.frontTrack.artwork_url + ')'}">
+									<div class="trackInfoContainer">
+										<div class='shading'>
+										</div>
+										<div class="trackInfo noselect" onselectstart="return false">
+											<span>{{track.frontTrack.artist | cut:true:17:' ...'}}</span>
+											</br>
+											<span>{{track.frontTrack.title | cut:true:17:' ...'}}</span>
+											</br>
+											<span>{{track.frontTrack.genre | cut:true:17:' ...'}}</span>
+											</br>
+											<span>{{track.frontTrack.duration}}</span>
+											<div class="trackLinkContainer">
+												<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
+												<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">                
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tileImage" ng-style="{'background-image': 'url(' + track.backTrack.artwork_url + ')'}">
+									<div class="trackInfoContainer">
+										<div class='shading'>
+										</div>
+										<div class="trackInfo noselect" onselectstart="return false">
+											<span>{{track.backTrack.artist | cut:true:17:' ...'}}</span>
+											</br>
+											<span>{{track.backTrack.title | cut:true:17:' ...'}}</span>
+											</br>
+											<span>{{track.backTrack.genre | cut:true:17:' ...'}}</span>
+											</br>
+											<span>{{track.backTrack.duration}}</span>
+											<div class="trackLinkContainer">
+												<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
+												<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					<hr>
 				</div>
 			
 		</div>
