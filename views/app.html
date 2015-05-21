@@ -143,9 +143,9 @@
 								</br>
 								<span>{{track.frontTrack.duration}}</span>
 								<div class="trackLinkContainer">
-									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
+									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.frontTrack)">
 									<a href="{{track.frontTrack.permalink_url}}">
-									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px" ng-click="window.location.href = 'www.stackoverflow.com';">        
+									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">        
 									</a>        
 								</div>
 							</div>
@@ -164,8 +164,10 @@
 								</br>
 								<span>{{track.backTrack.duration}}</span>
 								<div class="trackLinkContainer">
-									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
-									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.backTrack)">
+									<a href="{{track.backTrack.permalink_url}}">
+										<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+									</a>
 								</div>
 							</div>
 						</div>

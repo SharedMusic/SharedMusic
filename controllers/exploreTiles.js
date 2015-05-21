@@ -42,7 +42,7 @@ function cleanTrack(track) {
 	return track;
 }
 
-exploreTiles.controller('TileCtrl', function($scope, $http) {
+exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', function($scope, $http, roomstateFactory) {
 	$scope.tracks =	[];
 
 	// Adds a song to the queue
@@ -67,8 +67,13 @@ exploreTiles.controller('TileCtrl', function($scope, $http) {
 		});
 	};
 
+  $scope.addTrack = function(track) {
+    console.log('helloworld');
+    roomstateFactory.addSong(track);
+  }
+
 	$scope.retrieveTracks();
-});
+}]);
 
 exploreTiles.directive('tile', function() {
   return {
