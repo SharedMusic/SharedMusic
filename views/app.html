@@ -59,6 +59,10 @@
 						clearInterval(timer);
 					}
 				}, 100);
+
+			$('.searchFilter').change(function() {
+				angular.element(this).scope().filter();
+			});
 		}); 
 	</script>
 </head>
@@ -139,8 +143,10 @@
 								</br>
 								<span>{{track.frontTrack.duration}}</span>
 								<div class="trackLinkContainer">
-									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
-									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">                
+									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.frontTrack)">
+									<a href="{{track.frontTrack.permalink_url}}">
+									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">        
+									</a>        
 								</div>
 							</div>
 						</div>
@@ -158,8 +164,10 @@
 								</br>
 								<span>{{track.backTrack.duration}}</span>
 								<div class="trackLinkContainer">
-									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
-									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.backTrack)">
+									<a href="{{track.backTrack.permalink_url}}">
+										<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+									</a>
 								</div>
 							</div>
 						</div>
@@ -187,6 +195,7 @@
 					<input class="btn btn-primary btn-xs" type="submit" value="Search">
 				</div>
 			</form>
+
 		<div>
 			<table class="table table-hover table-condensed" style="width:100%">
 				<!-- Headings for each column in the table-->
@@ -200,33 +209,29 @@
 				<!-- Filter fields for each column-->
 				<tr>
 					<td>
-						<form ng-submit="search.filter()">
-							<input type="text" ng-model="search.title"  size="30"
+						<div>
+				        	<input type="text" ng-model="search.title" ng-change='filter()' size="50"
 							placeholder="Title filter">
-							<input class="btn btn-primary btn-xs" type="submit" value="Filter">
-						</form>
+				      	</div>
 					</td>
 
 					<td>
 						<form ng-submit="search.sortByDuration()">
 							Ascending?
-							<input type="checkbox" ng-model="search.ascending">
-							<input class="btn btn-primary btn-xs" type="submit" value="Sort">
+							<input type="checkbox" ng-model="search.ascending" ng-click='filter()'>
 						</form>
 					</td>
 
 					<td>
 						<form ng-submit="search.filter()">
-							<input type="text" ng-model="search.user"  size="30"
+							<input class="searchFilter" type="text" ng-model="search.user" ng-change='filter()' size="30"
 							placeholder="User filter">
-							<input class="btn btn-primary btn-xs" type="submit" value="Filter">
 						</form>
 					</td>
 					<td>
 						<form ng-submit="search.filter()">
-							<input type="text" ng-model="search.genre"  size="30"
+							<input class="searchFilter" type="text" ng-model="search.genre" ng-change='filter()' size="30"
 							placeholder="Genre filter">
-							<input class="btn btn-primary btn-xs" type="submit" value="Filter">
 						</form>
 					</td>
 				</tr>

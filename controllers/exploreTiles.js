@@ -42,9 +42,8 @@ function cleanTrack(track) {
 	return track;
 }
 
-exploreTiles.controller('TileCtrl', function($scope, $http) {
-	$scope.tracks = 
-	[];
+exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', function($scope, $http, roomstateFactory) {
+	$scope.tracks =	[];
 
 	// Adds a song to the queue
 	$scope.retrieveTracks = function() {
@@ -58,18 +57,23 @@ exploreTiles.controller('TileCtrl', function($scope, $http) {
           	for(var i = 0; i < 22; i++) {
             	$scope.tracks.push(
             	{
-        			'frontTrack': cleanTrack(tracks[i]),
-    				'backTrack' : cleanTrack(tracks[half+i])
+        			  'frontTrack': cleanTrack(tracks[i]),
+  				      'backTrack' : cleanTrack(tracks[half+i])
             	});
           	}
 
           	
-      		$scope.$apply();
+  		$scope.$apply();
 		});
 	};
 
+  $scope.addTrack = function(track) {
+    console.log('helloworld');
+    roomstateFactory.addSong(track);
+  }
+
 	$scope.retrieveTracks();
-});
+}]);
 
 exploreTiles.directive('tile', function() {
   return {
