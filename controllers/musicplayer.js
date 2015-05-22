@@ -67,7 +67,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){
 				// Streamable check testing
 				// Does not currently work ($http undefined?)
-				$http.get('/tracks/'+mP.trackInfo.id+'stream?client_id=337bccb696d7b8442deedde76fae5c10').
+				$http.get('http://api.soundcloud.com/tracks/'+mP.trackInfo.id+'/stream?client_id=337bccb696d7b8442deedde76fae5c10').
 				success(function(data, status, headers, config) {
 					// this callback will be called asynchronously
 					// when the response is available
