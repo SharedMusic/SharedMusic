@@ -1,6 +1,6 @@
 var musicPlayer = angular.module('musicplayer', ['socketio']);
 
-musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory', function($scope, roomstateFactory, $timeout){
+musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '$http', function($scope, roomstateFactory, $timeout, $http){
 	var mP = this;
 	mP.currentSongEpoch = -1;
 	// mP.currentSongURL = roomstateFactory.getSong().permalink_url;
@@ -18,7 +18,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory', function($sc
 	mP.trackTimeUpdater = null;
 
 	SC.initialize({
-	  client_id: '337bccb696d7b8442deedde76fae5c10'
+		client_id: '337bccb696d7b8442deedde76fae5c10'
 	});
 
 	mP.updateVolume = function() {
@@ -65,76 +65,90 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory', function($sc
 		if ((old == null && mP.trackInfo != null) || (old != null && mP.trackInfo != null && mP.trackInfo.id != old.id)) {
 			// SC.stream(trackPath, [options], [callback])
 			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){
-				if (mP.currentSong != null) {
-					// stop the previous playing song
-					mP.currentSong.stop();
-				}
-				// update to the new song
-				mP.currentSong = sound;
-
-				// stop the old song timer
-				if (mP.trackTimeUpdater != null) {
-					clearInterval(mP.trackTimeUpdater);
-				}
-				// updates the song time
-				mP.trackTimeUpdater = setInterval(function(){
-					mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch + 2000;
-					if 	(mP.currentTrackTime < 0) {
-						mP.currentTrackTime = 0;
+				// Streamable check testing
+				// Does not currently work ($http undefined?)
+				$http.get('/tracks/'+mP.trackInfo.id+'stream?client_id=337bccb696d7b8442deedde76fae5c10').
+				success(function(data, status, headers, config) {
+					// this callback will be called asynchronously
+					// when the response is available
+					console.log(status);
+					console.log(data);
+					if (mP.currentSong != null) {
+						// stop the previous playing song
+						mP.currentSong.stop();
 					}
-					$scope.$apply();
+					// update to the new song
+					mP.currentSong = sound;
 
-					if (mP.trackInfo == null || mP.currentTrackTime > mP.trackInfo.duration) {
-						mP.currentTrackTime = 0;
+					// stop the old song timer
+					if (mP.trackTimeUpdater != null) {
 						clearInterval(mP.trackTimeUpdater);
 					}
-				}, 500);
+					// updates the song time
+					mP.trackTimeUpdater = setInterval(function(){
+						mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch + 2000;
+						if 	(mP.currentTrackTime < 0) {
+							mP.currentTrackTime = 0;
+						}
+						$scope.$apply();
 
-				// load the song and set position before playing
-				mP.currentSong.load({
-					onload: function() {
-						mP.muted = false;
-						mP.muteStatus = "Mute";
-						mP.currentSong.unmute();
+						if (mP.trackInfo == null || mP.currentTrackTime > mP.trackInfo.duration) {
+							mP.currentTrackTime = 0;
+							clearInterval(mP.trackTimeUpdater);
+						}
+					}, 500);
 
-						mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
-						mP.currentSong.setVolume(mP.volume);
-						mP.currentSong.play();
-						console.log(mP.currentSong.position);
-					}
+					// load the song and set position before playing
+					mP.currentSong.load({
+						onload: function() {
+							mP.muted = false;
+							mP.muteStatus = "Mute";
+							mP.currentSong.unmute();
+
+							mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
+							mP.currentSong.setVolume(mP.volume);
+							mP.currentSong.play();
+							console.log(mP.currentSong.position);
+						}
+					});
+				}).
+				error(function(data, status, headers, config) {
+					// called asynchronously if an error occurs
+					// or server returns response with an error status.
+					console.log(status);
 				});
-			});
-		}
-	});
+});
+}
+});
 
-	mP.millisToMinutesAndSeconds = function(millis) {
-		if (millis == null) {
-			return "0:00";
-		}
-		var minutes = Math.floor(millis / 60000);
-		var seconds = ((millis % 60000) / 1000).toFixed(0);
-		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-	};
+mP.millisToMinutesAndSeconds = function(millis) {
+	if (millis == null) {
+		return "0:00";
+	}
+	var minutes = Math.floor(millis / 60000);
+	var seconds = ((millis % 60000) / 1000).toFixed(0);
+	return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+};
 
-	mP.getAlbumArt = function() {
-		if (mP.trackInfo == null || mP.trackInfo.artwork_url == null) {
-			return "../images/tempAlbum.png";
+mP.getAlbumArt = function() {
+	if (mP.trackInfo == null || mP.trackInfo.artwork_url == null) {
+		return "../images/tempAlbum.png";
+	} else {
+		return mP.trackInfo.artwork_url;
+	}
+}
+
+mP.muteSong = function() {
+	if (mP.currentSong != null) {
+		if (mP.muted) {
+			mP.muted = false;
+			mP.muteStatus = "Mute";
+			mP.currentSong.unmute();
 		} else {
-			return mP.trackInfo.artwork_url;
+			mP.muted = true;
+			mP.muteStatus = "Unmute";
+			mP.currentSong.mute();
 		}
 	}
-
-	mP.muteSong = function() {
-		if (mP.currentSong != null) {
-			if (mP.muted) {
-				mP.muted = false;
-				mP.muteStatus = "Mute";
-				mP.currentSong.unmute();
-			} else {
-				mP.muted = true;
-				mP.muteStatus = "Unmute";
-				mP.currentSong.mute();
-			}
-		}
-	}
+}
 }]);
