@@ -8,7 +8,7 @@ SC.initialize({
 });
 
 angular.module('search', ['socketio'])
-    .controller('SearchController', ['$scope', 'roomstateFactory', function($scope, roomstateFactory) {
+    .controller('SearchController', ['$scope', 'roomstateFactory', '$http', '$document', '$compile', function($scope, roomstateFactory, $http, $document, $compile) {
         var search = this;
 
         // Result of the most recent search
@@ -91,8 +91,24 @@ angular.module('search', ['socketio'])
         search.addSong = function(n) {
             // call add song function with the given name
             // socket.io?
-            roomstateFactory.addSong(search.display[n]);
+            $http.get('http://api.soundcloud.com/tracks/' + search.display[n].id+ '/stream?client_id=337bccb696d7b8442deedde76fae5c10').
+                success(function(data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    console.log(status);
+                    console.log(data);
+                    roomstateFactory.addSong(search.display[n]);
             //$scope.$apply();
             //alert('Added song: ' + search.display[n].permalink_url);
+            }).
+            error(function(data, status, headers, config) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                var newDirective = angular.element('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>OH GOD AN ERROR OCCURED!</div>');
+                var body = $document.find('body').eq(0);
+                body.append(newDirective);
+                $compile(newDirective)($scope);
+                console.log(status);
+            });
         };
     }]);

@@ -67,12 +67,12 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){
 				// Streamable check testing
 				// Does not currently work ($http undefined?)
-				$http.get('http://api.soundcloud.com/tracks/'+mP.trackInfo.id+'/stream?client_id=337bccb696d7b8442deedde76fae5c10').
-				success(function(data, status, headers, config) {
+				// $http.get('http://api.soundcloud.com/tracks/'+mP.trackInfo.id+'/stream?client_id=337bccb696d7b8442deedde76fae5c10').
+				// success(function(data, status, headers, config) {
 					// this callback will be called asynchronously
 					// when the response is available
-					console.log(status);
-					console.log(data);
+					// console.log(status);
+					// console.log(data);
 					if (mP.currentSong != null) {
 						// stop the previous playing song
 						mP.currentSong.stop();
@@ -111,44 +111,44 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 							console.log(mP.currentSong.position);
 						}
 					});
-				}).
-				error(function(data, status, headers, config) {
-					// called asynchronously if an error occurs
-					// or server returns response with an error status.
-					console.log(status);
-				});
-});
-}
-});
+				// }).
+				// error(function(data, status, headers, config) {
+				// 	// called asynchronously if an error occurs
+				// 	// or server returns response with an error status.
+				// 	console.log(status);
+				// });
+			});
+		}
+	});
 
-mP.millisToMinutesAndSeconds = function(millis) {
-	if (millis == null) {
-		return "0:00";
-	}
-	var minutes = Math.floor(millis / 60000);
-	var seconds = ((millis % 60000) / 1000).toFixed(0);
-	return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-};
+	mP.millisToMinutesAndSeconds = function(millis) {
+		if (millis == null) {
+			return "0:00";
+		}
+		var minutes = Math.floor(millis / 60000);
+		var seconds = ((millis % 60000) / 1000).toFixed(0);
+		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+	};
 
-mP.getAlbumArt = function() {
-	if (mP.trackInfo == null || mP.trackInfo.artwork_url == null) {
-		return "../images/tempAlbum.png";
-	} else {
-		return mP.trackInfo.artwork_url;
-	}
-}
-
-mP.muteSong = function() {
-	if (mP.currentSong != null) {
-		if (mP.muted) {
-			mP.muted = false;
-			mP.muteStatus = "Mute";
-			mP.currentSong.unmute();
+	mP.getAlbumArt = function() {
+		if (mP.trackInfo == null || mP.trackInfo.artwork_url == null) {
+			return "../images/tempAlbum.png";
 		} else {
-			mP.muted = true;
-			mP.muteStatus = "Unmute";
-			mP.currentSong.mute();
+			return mP.trackInfo.artwork_url;
 		}
 	}
-}
+
+	mP.muteSong = function() {
+		if (mP.currentSong != null) {
+			if (mP.muted) {
+				mP.muted = false;
+				mP.muteStatus = "Mute";
+				mP.currentSong.unmute();
+			} else {
+				mP.muted = true;
+				mP.muteStatus = "Unmute";
+				mP.currentSong.mute();
+			}
+		}
+	}
 }]);

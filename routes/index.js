@@ -94,7 +94,16 @@ router.get('/room2/Metrojs.css', function (req, res) {
 	res.sendFile(path.join(__dirname, '../style/Metrojs.css'));
 });
 
+router.get('/room2/scrape', function (req, res) {
+	url = 'https://api-v2.soundcloud.com/explore/Popular+Music?tag=out-of-experiment&limit=200&offset=0';
 
+	request(url, function(error, response, html) {
+		if(!error) {
+			res.setHeader('Content-Type', 'application/json');
+			res.end(html);
+		}
+	})
+});
 
 /*
 	End UI Testing and app2.html
