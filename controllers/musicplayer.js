@@ -5,7 +5,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory', function($sc
 	mP.currentSongEpoch = -1;
 	// mP.currentSongURL = roomstateFactory.getSong().permalink_url;
 	mP.currentSong = null;
-	
+
 	roomstateFactory.setupGetEpoch(function(newEpoch) {
 		mP.currentSongEpoch = newEpoch;
 	});
@@ -115,6 +115,14 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory', function($sc
 		var seconds = ((millis % 60000) / 1000).toFixed(0);
 		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 	};
+
+	mP.getAlbumArt = function() {
+		if (mP.trackInfo == null || mP.trackInfo.artwork_url == null) {
+			return "../images/tempAlbum.png";
+		} else {
+			return mP.trackInfo.artwork_url;
+		}
+	}
 
 	mP.muteSong = function() {
 		if (mP.currentSong != null) {

@@ -63,7 +63,7 @@
 			$('.searchFilter').change(function() {
 				angular.element(this).scope().filter();
 			});
-		}); 
+		});
 	</script>
 </head>
 
@@ -113,7 +113,8 @@
 
 			<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
 
-			<img ng-src="{{musicplayer.trackInfo.artwork_url}}">
+			<img ng-src="{{musicplayer.getAlbumArt()}}">
+
 			<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
 			<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
 
@@ -150,8 +151,8 @@
 								<div class="trackLinkContainer">
 									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.frontTrack)">
 									<a href="{{track.frontTrack.permalink_url}}">
-									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">        
-									</a>        
+									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+									</a>
 								</div>
 							</div>
 						</div>
@@ -179,7 +180,7 @@
 					</div>
 				</div>
 
-			<!-- No need for retrieval 
+			<!-- No need for retrieval
 			<form ng-submit="retrieveTracks()">
 				<input type="submit" value="Get Tracks">
 			</form>

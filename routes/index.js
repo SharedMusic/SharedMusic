@@ -288,6 +288,11 @@ router.get('/images/soundcloud_dark.png', function (req, res) {
 	res.sendFile(path.join(__dirname, '../images/SoundCloud_Dark.png'));
 });
 
+router.get('/images/tempAlbum.png', function (req, res) {
+	var room = req.room;
+	res.sendFile(path.join(__dirname,'../images/tempAlbum.png'));
+});
+
 router.get('/scrape', function (req, res) {
 	url = 'https://api-v2.soundcloud.com/explore/Popular+Music?tag=out-of-experiment&limit=200&offset=0';
 
