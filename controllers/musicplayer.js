@@ -108,6 +108,9 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory', function($sc
 	});
 
 	mP.millisToMinutesAndSeconds = function(millis) {
+		if (millis == null) {
+			return "0:00";
+		}
 		var minutes = Math.floor(millis / 60000);
 		var seconds = ((millis % 60000) / 1000).toFixed(0);
 		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
