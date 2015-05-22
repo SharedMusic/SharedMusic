@@ -12,6 +12,7 @@ musicPlayer.controller('MusicPlayer', ['$scope', '$interval','roomstateFactory',
 
 	mP.muted = false;
 	mP.muteStatus = "Mute";
+	mP.volume = 50;
 
 	mP.currentTrackTime = 0;
 	mP.trackTimeUpdater = null;
@@ -19,6 +20,12 @@ musicPlayer.controller('MusicPlayer', ['$scope', '$interval','roomstateFactory',
 	SC.initialize({
 	  client_id: '337bccb696d7b8442deedde76fae5c10'
 	});
+
+	mP.updateVolume = function() {
+		if (mP.currentSong != null) {
+			mP.currentSong.setVolume(mP.volume);
+		}
+	}
 
 	// update the currently playing song
 	mP.updateSong = function(songURL, epoch){
@@ -90,7 +97,8 @@ musicPlayer.controller('MusicPlayer', ['$scope', '$interval','roomstateFactory',
 						mP.muteStatus = "Mute";
 						mP.currentSong.unmute();
 
-						mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch)
+						mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
+						mP.currentSong.setVolume(mP.volume);
 						mP.currentSong.play();
 						console.log(mP.currentSong.position);
 					}

@@ -116,6 +116,10 @@
 			<img ng-src="{{musicplayer.trackInfo.artwork_url}}">
 			<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
 			<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
+
+			<input ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
+			<p>{{musicplayer.volume}}</p>
+
 			<a href="{{musicplayer.currentSongURL}}">Song Link</a>
 		</div>
 
