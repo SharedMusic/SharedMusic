@@ -65,6 +65,10 @@ musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($s
 				// load the song and set position before playing
 				mP.currentSong.load({
 					onload: function() {
+						mP.muted = false;
+						mP.muteStatus = "Mute";
+						mP.currentSong.unmute();
+
 						mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch)
 						mP.currentSong.play();
 						console.log(mP.currentSong.position);
@@ -77,15 +81,14 @@ musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($s
 	mP.muteSong = function() {
 		if (mP.currentSong != null) {
 			if (mP.muted) {
-				mP.muted = false
-				mP.muteStatus = "Mute"
-				mP.currentSong.unmute()
+				mP.muted = false;
+				mP.muteStatus = "Mute";
+				mP.currentSong.unmute();
 			} else {
-				mP.muted = true
-				mP.muteStatus = "Unmute"
-				mP.currentSong.mute()
+				mP.muted = true;
+				mP.muteStatus = "Unmute";
+				mP.currentSong.mute();
 			}
-
 		}
 	}
 }]);
