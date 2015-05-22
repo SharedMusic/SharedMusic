@@ -65,12 +65,9 @@ musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($s
 				// load the song and set position before playing
 				mP.currentSong.load({
 					onload: function() {
-						// TODO - uncomment and test with epoch
-
-						//mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch)
-						//mP.currentSong.setPosition(100000);
+						mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch)
 						mP.currentSong.play();
-						//console.log(mP.currentSong.position);
+						console.log(mP.currentSong.position);
 					}
 				});
 			});
