@@ -1,6 +1,6 @@
 var musicPlayer = angular.module('musicplayer', ['socketio']);
 
-musicPlayer.controller('MusicPlayer', ['$scope', '$interval','roomstateFactory', function($scope, $interval, roomstateFactory, $timeout){
+musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory', function($scope, roomstateFactory, $timeout){
 	var mP = this;
 	mP.currentSongEpoch = -1;
 	// mP.currentSongURL = roomstateFactory.getSong().permalink_url;
