@@ -115,6 +115,7 @@
 
 			<img ng-src="{{musicplayer.trackInfo.artwork_url}}">
 			<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
+			<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
 			<a href="{{musicplayer.currentSongURL}}">Song Link</a>
 		</div>
 

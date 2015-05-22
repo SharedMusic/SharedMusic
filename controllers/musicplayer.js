@@ -1,6 +1,6 @@
 var musicPlayer = angular.module('musicplayer', ['socketio']);
 
-musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($scope, roomstateFactory, $timeout){
+musicPlayer.controller('MusicPlayer', ['$scope', '$interval','roomstateFactory', function($scope, $interval, roomstateFactory, $timeout){
 	var mP = this;
 	mP.currentSongEpoch = -1;
 	// mP.currentSongURL = roomstateFactory.getSong().permalink_url;
@@ -12,6 +12,9 @@ musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($s
 
 	mP.muted = false;
 	mP.muteStatus = "Mute";
+
+	mP.currentTrackTime = 0;
+	mP.trackTimeUpdater = null;
 
 	SC.initialize({
 	  client_id: '337bccb696d7b8442deedde76fae5c10'
@@ -62,6 +65,24 @@ musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($s
 				// update to the new song
 				mP.currentSong = sound;
 
+				// stop the old song timer
+				if (mP.trackTimeUpdater != null) {
+					clearInterval(mP.trackTimeUpdater);
+				}
+				// updates the song time
+				mP.trackTimeUpdater = setInterval(function(){
+					mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch + 2000;
+					if 	(mP.currentTrackTime < 0) {
+						mP.currentTrackTime = 0;
+					}
+					$scope.$apply();
+
+					if (mP.trackInfo == null || mP.currentTrackTime > mP.trackInfo.duration) {
+						mP.currentTrackTime = 0;
+						clearInterval(mP.trackTimeUpdater);
+					}
+				}, 500);
+
 				// load the song and set position before playing
 				mP.currentSong.load({
 					onload: function() {
@@ -77,6 +98,12 @@ musicPlayer.controller('MusicPlayer', ['$scope', 'roomstateFactory', function($s
 			});
 		}
 	});
+
+	mP.millisToMinutesAndSeconds = function(millis) {
+		var minutes = Math.floor(millis / 60000);
+		var seconds = ((millis % 60000) / 1000).toFixed(0);
+		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+	};
 
 	mP.muteSong = function() {
 		if (mP.currentSong != null) {
