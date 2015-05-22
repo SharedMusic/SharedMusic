@@ -121,7 +121,7 @@
 			<input ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
 			<p>{{musicplayer.volume}}</p>
 
-			<a href="{{musicplayer.currentSongURL}}">Song Link</a>
+			<a href="{{musicplayer.trackInfo.permalink_url}}">Song Link</a>
 		</div>
 
 		<div>
