@@ -187,69 +187,69 @@
 					<div id="div3" class="col-md-9">
 						<div ng-controller="SearchController as search" id="searchControl">
 							<h1>Search</h1>
-		<!-- Search box and submit button-->
-			<form ng-submit="search.search(search.query)">
-				<div class="form-group">
-					<input type="text" ng-model="search.query"  size="30"
-					placeholder="Enter Query">
-					<input class="btn btn-primary btn-xs" type="submit" value="Search">
-				</div>
-			</form>
+							<!-- Search box and submit button-->
+							<form ng-submit="search.search(search.query)">
+								<div class="form-group">
+									<input type="text" ng-model="search.query"  size="30"
+									placeholder="Enter Query">
+									<input class="btn btn-primary btn-xs" type="submit" value="Search">
+								</div>
+							</form>
 
-		<div>
-			<table class="table table-hover table-condensed" style="width:100%">
-				<!-- Headings for each column in the table-->
-				<tr>
-					<th>Title</th>
-					<th>Duration</th>
-					<th>Username</th>
-					<th>Genre</th>
-				</tr>
+							<div>
+								<table class="table table-hover table-condensed" style="width:100%">
+									<!-- Headings for each column in the table-->
+									<tr>
+										<th>Title</th>
+										<th>Duration</th>
+										<th>Username</th>
+										<th>Genre</th>
+									</tr>
 
-				<!-- Filter fields for each column-->
-				<tr>
-					<td>
-						<div>
-				        	<input type="text" ng-model="search.title" ng-change='filter()' size="30"
-							placeholder="Title filter">
-				      	</div>
-					</td>
+									<!-- Filter fields for each column-->
+									<tr>
+										<td>
+											<div>
+									        	<input type="text" ng-model="search.title" ng-change='filter()' size="30"
+												placeholder="Title filter">
+									      	</div>
+										</td>
 
-					<td>
-						<form ng-submit="search.sortByDuration()">
-							Sort 
-							<input type="checkbox" ng-model="search.ascending" ng-click='filter()'>
-						</form>
-					</td>
+										<td>
+											<form ng-submit="search.sortByDuration()">
+												Sort 
+												<input type="checkbox" ng-model="search.ascending" ng-click='filter()'>
+											</form>
+										</td>
 
-					<td>
-						<form ng-submit="search.filter()">
-							<input class="searchFilter" type="text" ng-model="search.user" ng-change='filter()' size="30"
-							placeholder="User filter">
-						</form>
-					</td>
-					<td>
-						<form ng-submit="search.filter()">
-							<input class="searchFilter" type="text" ng-model="search.genre" ng-change='filter()' size="30"
-							placeholder="Genre filter">
-						</form>
-					</td>
-				</tr>
+										<td>
+											<form ng-submit="search.filter()">
+												<input class="searchFilter" type="text" ng-model="search.user" ng-change='filter()' size="30"
+												placeholder="User filter">
+											</form>
+										</td>
+										<td>
+											<form ng-submit="search.filter()">
+												<input class="searchFilter" type="text" ng-model="search.genre" ng-change='filter()' size="30"
+												placeholder="Genre filter">
+											</form>
+										</td>
+									</tr>
 
-				<!-- Display the results-->
-				<tr ng-repeat="track in search.display">
-					<td>{{track.title}} </td>
-					<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
-					<td>{{track.user.username}}</td>
-					<td>{{track.genre}}</td>
-					<td>
-						<form ng-submit="search.addSong($index)">
-							<input class="btn btn-primary btn-xs" type="submit" value="Add">
-						</form>
-					</td>
-				</tr>
-			</table>
-		</div>
+									<!-- Display the results-->
+									<tr ng-repeat="track in search.display">
+										<td>{{track.title}} </td>
+										<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
+										<td>{{track.user.username}}</td>
+										<td>{{track.genre}}</td>
+										<td>
+											<form ng-submit="search.addSong($index)">
+												<input class="btn btn-primary btn-xs" type="submit" value="Add">
+											</form>
+										</td>
+									</tr>
+								</table>
+							</div>
 						</div>
 						
 					 
@@ -269,7 +269,7 @@
 												</br>
 												<span>{{track.frontTrack.genre | cut:true:17:' ...'}}</span>
 												</br>
-												<span>{{track.frontTrack.duration}}</span>
+												<span>{{msToTime(track.frontTrack.duration)}}</span>
 												<div class="trackLinkContainer">
 													<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.frontTrack)">
 													<a href="{{track.frontTrack.permalink_url}}">
@@ -290,7 +290,7 @@
 												</br>
 												<span>{{track.backTrack.genre | cut:true:17:' ...'}}</span>
 												</br>
-												<span>{{track.backTrack.duration}}</span>
+												<span>{{msToTime(track.backTrack.duration)}}</span>
 												<div class="trackLinkContainer">
 													<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.backTrack)">
 													<a href="{{track.backTrack.permalink_url}}">

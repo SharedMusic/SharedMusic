@@ -57,8 +57,10 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', func
           	for(var i = 0; i < 22; i++) {
             	$scope.tracks.push(
             	{
-        			  'frontTrack': cleanTrack(tracks[i]),
-  				      'backTrack' : cleanTrack(tracks[half+i])
+                //'frontTrack': cleanTrack(tracks[i]),
+                //'backTrack' : cleanTrack(tracks[half+i])
+                'frontTrack': tracks[i],
+                'backTrack' : tracks[half+i]
             	});
           	}
 
@@ -70,6 +72,15 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', func
   $scope.addTrack = function(track) {
     console.log('helloworld');
     roomstateFactory.addSong(track);
+  }
+
+  $scope.msToTime = function(duration) {
+    var milliseconds = parseInt((duration%1000)/100)
+        , seconds = parseInt((duration/1000)%60)
+        , minutes = parseInt((duration/(1000*60))%60)
+        , hours = parseInt((duration/(1000*60*60))%24);
+
+    return minutes + "m " + seconds + "s";
   }
 
 	$scope.retrieveTracks();
