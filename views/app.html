@@ -151,7 +151,7 @@
 								</br>
 								<span>{{track.frontTrack.genre | cut:true:17:' ...'}}</span>
 								</br>
-								<span>{{track.frontTrack.duration}}</span>
+								<span>{{msToTime(track.frontTrack.duration)}}</span>
 								<div class="trackLinkContainer">
 									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.frontTrack)">
 									<a href="{{track.frontTrack.permalink_url}}">
@@ -172,7 +172,7 @@
 								</br>
 								<span>{{track.backTrack.genre | cut:true:17:' ...'}}</span>
 								</br>
-								<span>{{track.backTrack.duration}}</span>
+								<span>{{msToTime(track.backTrack.duration)}}</span>
 								<div class="trackLinkContainer">
 									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.backTrack)">
 									<a href="{{track.backTrack.permalink_url}}">
