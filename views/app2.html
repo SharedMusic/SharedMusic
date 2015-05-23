@@ -72,6 +72,13 @@
 				}, 100);
 		}); 
 	</script>
+	
+	<script type="text/javascript">
+		$(window).load(function(){
+			$('#myModal').modal('show');
+		});
+	</script>
+	
 </head>
 
 	<body>
@@ -86,16 +93,29 @@
 		  </div>
 		</nav>
 		
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+			  <div class="modal-body">
+				<label>Name:</label>
+				<form ng-submit="userList.addUser()">
+					<input type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
+					<input id="roomID" type="text" ng-model="userList.temp.roomID">
+					<input data-dismiss="modal" ng-click="button = true" id="enterRoom" class="btn btn-primary btn-xs" type="submit" value="enter room">
+					<!-- onclick="document.getElementById('enterRoom').disabled = true" -->
+				</form>
+			  </div>
+			</div>
+
+		  </div>
+		</div>
+		
 		<div id="div1" class="container">
 				<div id="div2" class="row">
 					<div id="userControl" ng-controller="UserController as userList" class="col-md-3">
-						<label>Name:</label>
-						<form ng-submit="userList.addUser()">
-							<input type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
-							<input id="roomID" type="text" ng-model="userList.temp.roomID">
-							<input ng-click="button = true" id="enterRoom" class="btn btn-primary btn-xs" type="submit" value="enter room">
-							<!-- onclick="document.getElementById('enterRoom').disabled = true" -->
-						</form>
 						<div ng-controller="MusicController as musicList">
 							<h3>Users in room:</h3>
 							<ul>
