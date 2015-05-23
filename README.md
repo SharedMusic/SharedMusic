@@ -26,3 +26,5 @@ https://shared-music.herokuapp.com/app.html
 Updated documents for beta can be found in documentation/updates_5-15
 
 Updated documents for feature-complete can be found in documentation/updates_5-22
+
+For the feature-complete release there is an issue of being able to play song that cannot be streamed correctly that we are still working on, the issue can be found at https://github.com/SharedMusic/SharedMusic/issues/7
