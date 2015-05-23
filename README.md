@@ -11,11 +11,15 @@ Gunnar Onarheim - onarhg
 Adam Stephenson - jasteph
 Tanner Coval - tcoval
 
+## Documents:
+
 User Documentation:
 https://shared-music.herokuapp.com/user_documentation
 
 Developer Documentation:
 https://shared-music.herokuapp.com/dev_documentation
+
+## Progress:
 
 Zero-Feature Release:
 https://shared-music.herokuapp.com/zero.html
