@@ -70,6 +70,18 @@
 						clearInterval(timer);
 					}
 				}, 100);
+
+			$("#enterRoom").click(function() {
+				$('#myModal').modal('hide');
+
+			});
+
+			$("#volumeControl").on("input change", function() { 
+				var percent = this.value/100;
+				var marginLeft = 5+percent * (125);
+
+				document.getElementById("volumeText").style.marginLeft = marginLeft + "px";
+			});
 		}); 
 	</script>
 	
@@ -82,7 +94,6 @@
 </head>
 
 	<body>
-		
 		<nav class="navbar navbar-inverse">
 		  <div class="container-fluid">
 			<div class="navbar-header">
@@ -99,12 +110,12 @@
 
 			<!-- Modal content-->
 			<div class="modal-content">
-			  <div class="modal-body">
+			  <div ng-controller="UserController as userList" class="modal-body">
 				<label>Name:</label>
 				<form ng-submit="userList.addUser()">
 					<input type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
 					<input id="roomID" type="text" ng-model="userList.temp.roomID">
-					<input data-dismiss="modal" ng-click="button = true" id="enterRoom" class="btn btn-primary btn-xs" type="submit" value="enter room">
+					<input ng-click="button = true" id="enterRoom" class="btn btn-primary btn-xs" type="submit" value="enter room">
 					<!-- onclick="document.getElementById('enterRoom').disabled = true" -->
 				</form>
 			  </div>
@@ -115,19 +126,21 @@
 		
 		<div id="div1" class="container">
 				<div id="div2" class="row">
-					<div id="userControl" ng-controller="UserController as userList" class="col-md-3">
-						<div ng-controller="MusicController as musicList">
-							<h3>Users in room:</h3>
-							<ul>
-								<li ng-repeat="user in userList.users">{{user.name}}</li>
-							</ul>
-						</div>
-						
-						<div>
-							<h3>Songs in Queue:</h3>
-							<ul>
-								<li ng-repeat="song in musicList.queue">{{song.name}}</li>
-							</ul>
+					<div id="userControl"  class="col-md-3">
+						<div id="dataContainer">
+							<div ng-controller="UserController as userList">
+								<h3>Users</h3>
+								<ul>
+									<li ng-repeat="user in userList.users track by $index">{{user.name}}</li>
+								</ul>
+							</div>
+							
+							<div ng-controller="MusicController as musicList">
+								<h3>Songs Queue</h3>
+								<ul>
+									<li ng-repeat="song in musicList.queue track by $index">{{song.title}}</li>
+								</ul>
+							</div>
 						</div>
 						
 						<!-- Music Player -->
@@ -139,19 +152,34 @@
 							</div>
 
 							<div>
-								<h2>Current Song:</h2>
+								<h3>Current Song</h3>
+									<div id="currentSongContainer">
+									<div id="bootVotes" ng-controller="BootVotes as bootVotes">
+										<div id="bootVoteButtonContainer">
+											<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
+											<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
+										</div>
+										<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}} required to boot</p>
+									</div>
 
-								<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
+									<img ng-src="{{musicplayer.getAlbumArt()}}">
 
-								<img ng-src="{{musicplayer.trackInfo.artwork_url}}">
-								<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
-								<a href="{{musicplayer.currentSongURL}}">Song Link</a>
-							</div>
+									<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
+									<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
 
-							<div>
-								<a href="https://soundcloud.com">
-									<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
-								</a>
+									<input id="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
+									<p id="volumeText">{{musicplayer.volume}}</p>
+
+									<div id="iconContainer">
+										<a href="{{musicplayer.trackInfo.permalink_url}}">
+											<img src="/images/soundcloud_dark.png" alt="SoundCloud" style="width:80px;height:80px;display:inline-block;">
+										</a>
+
+										<a id="iconLink" href="https://soundcloud.com">
+											<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -159,72 +187,69 @@
 					<div id="div3" class="col-md-9">
 						<div ng-controller="SearchController as search" id="searchControl">
 							<h1>Search</h1>
-							<!-- Search box and submit button-->
-								<form ng-submit="search.search(search.query)">
-									<div class="form-group">
-										<input type="text" ng-model="search.query"  size="30"
-										placeholder="Enter Query">
-										<input class="btn btn-primary btn-xs" type="submit" value="Search">
-									</div>
-								</form>
-							<div>
-								<table class="table table-hover table-condensed" style="width:100%">
-									<!-- Headings for each column in the table-->
-									<tr>
-										<th>Title</th>
-										<th>Duration</th>
-										<th>Username</th>
-										<th>Genre</th>
-									</tr>
+		<!-- Search box and submit button-->
+			<form ng-submit="search.search(search.query)">
+				<div class="form-group">
+					<input type="text" ng-model="search.query"  size="30"
+					placeholder="Enter Query">
+					<input class="btn btn-primary btn-xs" type="submit" value="Search">
+				</div>
+			</form>
 
-									<!-- Filter fields for each column-->
-									<tr>
-										<td>
-											<form ng-submit="search.filter()">
-												<input type="text" ng-model="search.title"  size="30"
-												placeholder="Title filter">
-												<input class="btn btn-primary btn-xs" type="submit" value="Filter">
-											</form>
-										</td>
+		<div>
+			<table class="table table-hover table-condensed" style="width:100%">
+				<!-- Headings for each column in the table-->
+				<tr>
+					<th>Title</th>
+					<th>Duration</th>
+					<th>Username</th>
+					<th>Genre</th>
+				</tr>
 
-										<td>
-											<form ng-submit="search.sortByDuration()">
-												Ascending?
-												<input type="checkbox" ng-model="search.ascending">
-												<input class="btn btn-primary btn-xs" type="submit" value="Sort">
-											</form>
-										</td>
+				<!-- Filter fields for each column-->
+				<tr>
+					<td>
+						<div>
+				        	<input type="text" ng-model="search.title" ng-change='filter()' size="30"
+							placeholder="Title filter">
+				      	</div>
+					</td>
 
-										<td>
-											<form ng-submit="search.filter()">
-												<input type="text" ng-model="search.user"  size="30"
-												placeholder="User filter">
-												<input class="btn btn-primary btn-xs" type="submit" value="Filter">
-											</form>
-										</td>
-										<td>
-											<form ng-submit="search.filter()">
-												<input type="text" ng-model="search.genre"  size="30"
-												placeholder="Genre filter">
-												<input class="btn btn-primary btn-xs" type="submit" value="Filter">
-											</form>
-										</td>
-									</tr>
+					<td>
+						<form ng-submit="search.sortByDuration()">
+							Sort 
+							<input type="checkbox" ng-model="search.ascending" ng-click='filter()'>
+						</form>
+					</td>
 
-									<!-- Display the results-->
-									<tr ng-repeat="track in search.display">
-										<td>{{track.title}} </td>
-										<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
-										<td>{{track.user.username}}</td>
-										<td>{{track.genre}}</td>
-										<td>
-											<form ng-submit="search.addSong($index)">
-												<input class="btn btn-primary btn-xs" type="submit" value="Add">
-											</form>
-										</td>
-									</tr>
-								</table>
-							</div>
+					<td>
+						<form ng-submit="search.filter()">
+							<input class="searchFilter" type="text" ng-model="search.user" ng-change='filter()' size="30"
+							placeholder="User filter">
+						</form>
+					</td>
+					<td>
+						<form ng-submit="search.filter()">
+							<input class="searchFilter" type="text" ng-model="search.genre" ng-change='filter()' size="30"
+							placeholder="Genre filter">
+						</form>
+					</td>
+				</tr>
+
+				<!-- Display the results-->
+				<tr ng-repeat="track in search.display">
+					<td>{{track.title}} </td>
+					<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
+					<td>{{track.user.username}}</td>
+					<td>{{track.genre}}</td>
+					<td>
+						<form ng-submit="search.addSong($index)">
+							<input class="btn btn-primary btn-xs" type="submit" value="Add">
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
 						</div>
 						
 					 
@@ -246,8 +271,10 @@
 												</br>
 												<span>{{track.frontTrack.duration}}</span>
 												<div class="trackLinkContainer">
-													<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
-													<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">                
+													<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.frontTrack)">
+													<a href="{{track.frontTrack.permalink_url}}">
+													<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+													</a>
 												</div>
 											</div>
 										</div>
@@ -265,32 +292,19 @@
 												</br>
 												<span>{{track.backTrack.duration}}</span>
 												<div class="trackLinkContainer">
-													<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px">
-													<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+													<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.backTrack)">
+													<a href="{{track.backTrack.permalink_url}}">
+														<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+													</a>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-
 						<hr>
 					</div>
-				</div>
-			
+				</div>	
 		</div>
-		
-		
-		
-		
 	</body>
 </html>
-
-
-
-
-
-
-
-
-

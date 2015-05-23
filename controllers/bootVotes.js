@@ -11,7 +11,7 @@ bootVotes.controller('BootVotes', ['$scope', 'roomstateFactory', function($scope
 	//What to do here...
 	roomstateFactory.setupBootVote(function(bootVotesCount, userCount) {
 		bV.bootCount = bootVotesCount;
-		bV.userCount = userCount;
+		bV.userCount = Math.ceil(userCount / 2);
 	});
 
 	// Add a new user to the room

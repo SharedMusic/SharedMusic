@@ -7,6 +7,17 @@
 	<link rel="stylesheet" type="text/css" href="Metrojs.css">
 	<link rel="stylesheet" type="text/css" href="/style/tileTest.css">
 
+	<style>
+		html, body, #div1, #div2, #div3 {
+			height: 100%;
+		}
+		
+		#searchControl {
+			max-height: 50%;
+			overflow: auto;
+		}
+	</style>
+	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
@@ -60,143 +71,122 @@
 					}
 				}, 100);
 
-			$('.searchFilter').change(function() {
-				angular.element(this).scope().filter();
+			$("#enterRoom").click(function() {
+				$('#myModal').modal('hide');
+
 			});
+
+			$("#volumeControl").on("input change", function() { 
+				var percent = this.value/100;
+				var marginLeft = 5+percent * (125);
+
+				document.getElementById("volumeText").style.marginLeft = marginLeft + "px";
+			});
+		}); 
+	</script>
+	
+	<script type="text/javascript">
+		$(window).load(function(){
+			$('#myModal').modal('show');
 		});
 	</script>
+	
 </head>
 
-<body>
-	<h1>Shared Music</h1>
-	<hr>
-	<!-- User list proof of concept test -->
-	<div ng-controller="UserController as userList">
-		<label>Name:</label>
-		<form ng-submit="userList.addUser()">
-			<input type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
-			<input id="roomID" type="text" ng-model="userList.temp.roomID">
-			<input ng-click="button = true" id="enterRoom" class="btn btn-primary btn-xs" type="submit" value="enter room">
-			<!-- onclick="document.getElementById('enterRoom').disabled = true" -->
-		</form>
-		<div>
-			<h2>Users in room:</h2>
-			<ul>
-				<li ng-repeat="user in userList.users">{{user.name}} as user id: {{user.id}}</li>
-			</ul>
-		</div>
-	</div>
-	<hr>
+	<body>
+		<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+				 <a class="navbar-brand" href="#">
+					<text>SharedMusic</text>
+				</a>
+			</div>
+		  </div>
+		</nav>
+		
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
 
-	<!-- Music list proof of concept test -->
-	<div ng-controller="MusicController as musicList">
-		<div>
-			<h2>Songs in Queue:</h2>
-			<ol>
-				<li ng-repeat="song in musicList.queue">{{song.title}} as song id: {{song.id}}</li>
-			</ol>
-		</div>
-	</div>
-
-	<hr>
-
-	<!-- Music Player -->
-	<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
-		<div>
-			<!--<form ng-submit="musicplayer.playSong()">
-				<input class="btn btn-primary btn-xs" type="submit" value="Play Next Song">
-			</form>-->
-		</div>
-
-		<div>
-			<h2>Current Song:</h2>
-
-			<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
-			<div id="bootVotes" ng-controller="BootVotes as bootVotes">
-				<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot Song</button>
-				<p> {{bootVotes.bootCount}} \ {{bootVotes.userCount}}</p>
+			<!-- Modal content-->
+			<div class="modal-content">
+			  <div ng-controller="UserController as userList" class="modal-body">
+				<label>Name:</label>
+				<form ng-submit="userList.addUser()">
+					<input type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="30" placeholder="type your name here">
+					<input id="roomID" type="text" ng-model="userList.temp.roomID">
+					<input ng-click="button = true" id="enterRoom" class="btn btn-primary btn-xs" type="submit" value="enter room">
+					<!-- onclick="document.getElementById('enterRoom').disabled = true" -->
+				</form>
+			  </div>
 			</div>
 
-			<img ng-src="{{musicplayer.getAlbumArt()}}">
-
-			<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
-			<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
-
-			<input ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
-			<p>{{musicplayer.volume}}</p>
-
-			<a href="{{musicplayer.trackInfo.permalink_url}}">Song Link</a>
+		  </div>
 		</div>
-
-		<div>
-			<a href="https://soundcloud.com">
-				<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
-			</a>
-		</div>
-	</div>
-
-	<hr>
-
-	<!-- tiles !-->
-		<div id="tileControl" ng-controller="TileCtrl">
-				<div ng-repeat="track in tracks" class="live-tile" data-mode="flip">
-					<div class="tileImage" ng-style="{'background-image': 'url(' + track.frontTrack.artwork_url + ')'}">
-						<div class="trackInfoContainer">
-							<div class='shading'>
+		
+		<div id="div1" class="container">
+				<div id="div2" class="row">
+					<div id="userControl"  class="col-md-3">
+						<div id="dataContainer">
+							<div ng-controller="UserController as userList">
+								<h3>Users</h3>
+								<ul>
+									<li ng-repeat="user in userList.users track by $index">{{user.name}}</li>
+								</ul>
 							</div>
-							<div class="trackInfo noselect" onselectstart="return false">
-								<span>{{track.frontTrack.artist | cut:true:17:' ...'}}</span>
-								</br>
-								<span>{{track.frontTrack.title | cut:true:17:' ...'}}</span>
-								</br>
-								<span>{{track.frontTrack.genre | cut:true:17:' ...'}}</span>
-								</br>
-								<span>{{track.frontTrack.duration}}</span>
-								<div class="trackLinkContainer">
-									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.frontTrack)">
-									<a href="{{track.frontTrack.permalink_url}}">
-									<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
-									</a>
+							
+							<div ng-controller="MusicController as musicList">
+								<h3>Songs Queue</h3>
+								<ul>
+									<li ng-repeat="song in musicList.queue track by $index">{{song.title}}</li>
+								</ul>
+							</div>
+						</div>
+						
+						<!-- Music Player -->
+						<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
+							<div>
+								<!--<form ng-submit="musicplayer.playSong()">
+									<input class="btn btn-primary btn-xs" type="submit" value="Play Next Song">
+								</form>-->
+							</div>
+
+							<div>
+								<h3>Current Song</h3>
+									<div id="currentSongContainer">
+									<div id="bootVotes" ng-controller="BootVotes as bootVotes">
+										<div id="bootVoteButtonContainer">
+											<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
+											<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
+										</div>
+										<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}} required to boot</p>
+									</div>
+
+									<img ng-src="{{musicplayer.getAlbumArt()}}">
+
+									<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
+									<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
+
+									<input id="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
+									<p id="volumeText">{{musicplayer.volume}}</p>
+
+									<div id="iconContainer">
+										<a href="{{musicplayer.trackInfo.permalink_url}}">
+											<img src="/images/soundcloud_dark.png" alt="SoundCloud" style="width:80px;height:80px;display:inline-block;">
+										</a>
+
+										<a id="iconLink" href="https://soundcloud.com">
+											<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="tileImage" ng-style="{'background-image': 'url(' + track.backTrack.artwork_url + ')'}">
-						<div class="trackInfoContainer">
-							<div class='shading'>
-							</div>
-							<div class="trackInfo noselect" onselectstart="return false">
-								<span>{{track.backTrack.artist | cut:true:17:' ...'}}</span>
-								</br>
-								<span>{{track.backTrack.title | cut:true:17:' ...'}}</span>
-								</br>
-								<span>{{track.backTrack.genre | cut:true:17:' ...'}}</span>
-								</br>
-								<span>{{track.backTrack.duration}}</span>
-								<div class="trackLinkContainer">
-									<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.backTrack)">
-									<a href="{{track.backTrack.permalink_url}}">
-										<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			<!-- No need for retrieval
-			<form ng-submit="retrieveTracks()">
-				<input type="submit" value="Get Tracks">
-			</form>
-			!-->
-		</div>
-
-	<hr>
-
-	<!-- Search -->
-
-	<div ng-controller="SearchController as search">
-		<h1>Search</h1>
+					
+					<div id="div3" class="col-md-9">
+						<div ng-controller="SearchController as search" id="searchControl">
+							<h1>Search</h1>
 		<!-- Search box and submit button-->
 			<form ng-submit="search.search(search.query)">
 				<div class="form-group">
@@ -220,14 +210,14 @@
 				<tr>
 					<td>
 						<div>
-				        	<input type="text" ng-model="search.title" ng-change='filter()' size="50"
+				        	<input type="text" ng-model="search.title" ng-change='filter()' size="30"
 							placeholder="Title filter">
 				      	</div>
 					</td>
 
 					<td>
 						<form ng-submit="search.sortByDuration()">
-							Ascending?
+							Sort 
 							<input type="checkbox" ng-model="search.ascending" ng-click='filter()'>
 						</form>
 					</td>
@@ -260,7 +250,61 @@
 				</tr>
 			</table>
 		</div>
-	</div>
+						</div>
+						
+					 
 
-</body>
+						<!-- tiles !-->
+						<hr>
+							<div id="tileControl" ng-controller="TileCtrl">
+								<div ng-repeat="track in tracks" class="live-tile" data-mode="flip">
+									<div class="tileImage" ng-style="{'background-image': 'url(' + track.frontTrack.artwork_url + ')'}">
+										<div class="trackInfoContainer">
+											<div class='shading'>
+											</div>
+											<div class="trackInfo noselect" onselectstart="return false">
+												<span>{{track.frontTrack.artist | cut:true:17:' ...'}}</span>
+												</br>
+												<span>{{track.frontTrack.title | cut:true:17:' ...'}}</span>
+												</br>
+												<span>{{track.frontTrack.genre | cut:true:17:' ...'}}</span>
+												</br>
+												<span>{{track.frontTrack.duration}}</span>
+												<div class="trackLinkContainer">
+													<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.frontTrack)">
+													<a href="{{track.frontTrack.permalink_url}}">
+													<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tileImage" ng-style="{'background-image': 'url(' + track.backTrack.artwork_url + ')'}">
+										<div class="trackInfoContainer">
+											<div class='shading'>
+											</div>
+											<div class="trackInfo noselect" onselectstart="return false">
+												<span>{{track.backTrack.artist | cut:true:17:' ...'}}</span>
+												</br>
+												<span>{{track.backTrack.title | cut:true:17:' ...'}}</span>
+												</br>
+												<span>{{track.backTrack.genre | cut:true:17:' ...'}}</span>
+												</br>
+												<span>{{track.backTrack.duration}}</span>
+												<div class="trackLinkContainer">
+													<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.backTrack)">
+													<a href="{{track.backTrack.permalink_url}}">
+														<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						<hr>
+					</div>
+				</div>	
+		</div>
+	</body>
 </html>

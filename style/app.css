@@ -17,3 +17,41 @@ body{
 	height: auto;
 	overflow: hidden;
 }
+
+#volumeControl {
+	width:150px;
+}
+
+#dataContainer li {
+	list-style-type: none;
+}
+
+h3 {
+	margin-top:0px;
+}
+#currentSongContainer {
+	width:160px;
+}
+
+#bootVoteButtonContainer {
+	text-align: center;
+    margin: 0px auto;
+    margin-bottom:5px;
+    width: 95%;
+}
+
+#bootVoteButtonContainer > button {
+	display:inline-block;
+}
+
+#iconContainer {
+	width:160px;
+	text-align: center;
+    margin: 0px auto;
+    margin-left:-5px;
+    width: 95%;
+}
+
+#iconLink { 
+	margin-top:15px;
+}
