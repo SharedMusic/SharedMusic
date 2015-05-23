@@ -83,6 +83,17 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', func
     return minutes + "m " + seconds + "s";
   }
 
+  $scope.albumArt = function(track) {
+    var art = track.artwork_url;
+    if(!track.artwork_url) {
+      art = track.user.avatar_url;
+    }
+    art = fixResolution(art);
+
+    return art;
+  }
+
+
 	$scope.retrieveTracks();
 }]);
 

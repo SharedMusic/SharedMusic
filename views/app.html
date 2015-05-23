@@ -258,7 +258,7 @@
 						<hr>
 							<div id="tileControl" ng-controller="TileCtrl">
 								<div ng-repeat="track in tracks" class="live-tile" data-mode="flip">
-									<div class="tileImage" ng-style="{'background-image': 'url(' + track.frontTrack.artwork_url + ')'}">
+									<div class="tileImage" ng-style="{'background-image': 'url(' + albumArt(track.frontTrack) + ')'}">
 										<div class="trackInfoContainer">
 											<div class='shading'>
 											</div>
@@ -279,7 +279,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="tileImage" ng-style="{'background-image': 'url(' + track.backTrack.artwork_url + ')'}">
+									<div class="tileImage" ng-style="{'background-image': 'url(' + albumArt(track.backTrack) + ')'}">
 										<div class="trackInfoContainer">
 											<div class='shading'>
 											</div>
