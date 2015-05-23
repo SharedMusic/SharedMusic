@@ -20,7 +20,9 @@ https://shared-music.herokuapp.com/dev_documentation
 Zero-Feature Release:
 https://shared-music.herokuapp.com/zero.html
 
-Beta Release:
+Beta Release/Feature-Complete:
 https://shared-music.herokuapp.com/app.html
 
 Updated documents for beta can be found in documentation/updates_5-15
+
+Updated documents for feature-complete can be found in documentation/updates_5-22
