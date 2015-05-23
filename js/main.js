@@ -5,7 +5,7 @@ requirejs.config({
 	}
 });
 
-requirejs(['controllers/exploreTiles', 'controllers/socket', 'controllers/user', 'controllers/music', 'controllers/exploreTiles', 'controllers/musicplayer', 'controllers/search'],
+requirejs(['/controllers/exploreTiles.js', '/controllers/socket.js', '/controllers/user.js', '/controllers/music.js', '/controllers/exploreTiles.js', '/controllers/musicplayer.js', '/controllers/search.js', '/controllers/bootVotes.js'],
 function(socket, user, queue, music){
-	angular.bootstrap(document, ['socketio', 'users', 'music', 'exploreTiles', 'musicplayer', 'search']);
+	angular.bootstrap(document, ['socketio', 'users', 'music', 'exploreTiles', 'musicplayer', 'search', 'bootVotes']);
 });

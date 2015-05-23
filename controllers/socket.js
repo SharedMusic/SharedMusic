@@ -16,6 +16,7 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 
 	var updateUsersFn = null;
 	var updateQueueFn = null;
+	var updateBootVotesFn = null;
 	var updateCurrentFn = null;
 	var updateEpochFn = null;
 
@@ -24,6 +25,7 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 			//console.log('helloworld');
 			updateUsersFn(roomState.users);
 			updateQueueFn(roomState.trackQueue);
+			updateBootVotesFn(roomState.bootVotes.length, roomState.users.length);
 			if(roomState.trackQueue.length > 0)
 				updateCurrentFn(roomState.trackQueue[0]);
 			else 
@@ -68,9 +70,8 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 			updateEpochFn = updateEpochCallback;
 		},
 
-		// Returns list of boot votes
-		getBootVotes: function(){
-			return bootVotes;
+		setupBootVote: function(updateBootVoteCallback) {
+			updateBootVotesFn = updateBootVoteCallback;
 		},
 
 		// Tells the server to add a song to the queue
@@ -87,7 +88,7 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 
 		// Tells the server the current user wants to vote
 		addBootVote: function(){
-			// Socket io clal
+			socket.emit('bootTrack', {roomID: myRoomID, userID: myUserID});
 		}
 	}
 }]);

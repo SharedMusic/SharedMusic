@@ -112,6 +112,10 @@
 			<h2>Current Song:</h2>
 
 			<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
+			<div id="bootVotes" ng-controller="BootVotes as bootVotes">
+				<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot Song</button>
+				<p> {{bootVotes.bootCount}} \ {{bootVotes.userCount}}</p>
+			</div>
 
 			<img ng-src="{{musicplayer.getAlbumArt()}}">
 

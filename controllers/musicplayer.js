@@ -62,6 +62,10 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 		var old = mP.trackInfo;
 		mP.trackInfo = newTrackInfo;
 
+		if (old && !mP.trackInfo) {
+			mP.currentSong.stop();
+		}
+		console.log(mP.trackInfo);	//I don't know why but this is necessary to be here
 		if ((old == null && mP.trackInfo != null) || (old != null && mP.trackInfo != null && mP.trackInfo.id != old.id)) {
 			// SC.stream(trackPath, [options], [callback])
 			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){

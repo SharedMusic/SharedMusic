@@ -82,6 +82,10 @@ router.get('/room2/controllers/musicplayer.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/musicplayer.js'))
 });
 
+router.get('/room2/controllers/bootVotes.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/bootVotes.js'))
+});
+
 router.get('/room2/style/app.css', function (req, res) {
 	var room = req.room;
 	// Pass room to the view and return view to client
@@ -172,6 +176,10 @@ router.get('/controllers/musicplayer.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/musicplayer.js'))
 });
 
+router.get('/controllers/bootVotes.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/bootVotes.js'))
+});
+
 router.get('/room/controllers/socket.js', function (req, res) {
 	console.log(__dirname);
 	res.sendFile(path.join(__dirname, '../controllers/socket.js'))
@@ -195,6 +203,10 @@ router.get('/room/controllers/search.js', function (req, res) {
 
 router.get('/room/controllers/musicplayer.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/musicplayer.js'))
+});
+
+router.get('/room/controllers/bootVotes.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/bootVotes.js'))
 });
 
 // GET other js files
