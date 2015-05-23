@@ -64,6 +64,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 		if (old && !mP.trackInfo) {
 			mP.currentSong.stop();
+			mP.currentSong = null;
 		}
 		console.log(mP.trackInfo);	//I don't know why but this is necessary to be here
 		if ((old == null && mP.trackInfo != null) || (old != null && mP.trackInfo != null && mP.trackInfo.id != old.id)) {
@@ -126,7 +127,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	});
 
 	mP.millisToMinutesAndSeconds = function(millis) {
-		if (millis == null) {
+		if (mP.currentSong == null || millis == null) {
 			return "0:00";
 		}
 		var minutes = Math.floor(millis / 60000);
