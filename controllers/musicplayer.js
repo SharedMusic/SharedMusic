@@ -130,9 +130,16 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 		if (mP.currentSong == null || millis == null) {
 			return "0:00";
 		}
-		var minutes = Math.floor(millis / 60000);
-		var seconds = ((millis % 60000) / 1000).toFixed(0);
-		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+		var hours = parseInt((millis/(1000*60*60))%24);
+		var minutes = parseInt((millis/(1000*60))%60);
+		var seconds = parseInt((millis/1000)%60);
+
+		var time = ""
+		if (hours > 0) {
+			time = hours + ":" + (minutes < 10 ? '0' : '');
+		}
+		time = time + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+		return time;
 	};
 
 	mP.getAlbumArt = function() {
