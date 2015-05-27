@@ -124,10 +124,12 @@
 		  </div>
 		</div>
 		
+
+
 		<div id="div1" class="container">
 				<div id="div2" class="row">
 					<div id="userControl"  class="col-md-3">
-						<div id="dataContainer">
+						<!-- <div id="dataContainer">
 							<div ng-controller="UserController as userList">
 								<h3>Users</h3>
 								<ul>
@@ -141,7 +143,42 @@
 									<li ng-repeat="song in musicList.queue track by $index">{{song.title}}</li>
 								</ul>
 							</div>
-						</div>
+						</div> -->
+						<!-- Accordion collapsing for user list and queue -->
+						<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Users
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div ng-controller="UserController as userList" class="panel-body">
+        <ul>
+            <li ng-repeat="user in userList.users track by $index">{{user.name}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Music Queue
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body" ng-controller="MusicController as musicList">
+        <ul>
+          <li ng-repeat="song in musicList.queue track by $index">{{song.title}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 						
 						<!-- Music Player -->
 						<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
