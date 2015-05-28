@@ -1,0 +1,198 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+	font-family: 'Raleway', sans-serif;
+	overflow: hidden;
+	color: #EEEEEE;
+}
+
+div.leftContainer {
+	position: absolute;
+	left: 0px;
+	width: 250px;
+	height: 100%;
+	background: #262626;
+}
+
+div.logo {
+	background: #161616;
+	height: 87px;
+}
+
+img.logo {
+	width: 230px;
+	height: auto;
+	margin: 10px;
+}
+
+div.userList {
+	margin: 10px;
+	height: 275px;
+}
+
+div.user {
+	position: relative;
+	width: 100%;
+	height: 55px;
+	overflow: hidden;
+}
+
+img.avatar {
+	width: 40px;
+	height: 40px;
+}
+
+h1.userName {
+	position: absolute;
+	margin: 0px;
+	margin-left: 55px;
+	top: 0px;
+	left: 0px;
+	font-size: 25px;
+	line-height: 45px;
+}
+
+div.middleContainer {
+	position: absolute;
+	height: 100%;
+	left: 0px;
+	right: 0px;
+	margin-left: 250px;
+	margin-right: 290px;
+}
+
+div.searchBar {
+	height: 87px;
+	width: 100%;
+	background: #cbe86b;
+}
+
+div.rightContainer {
+	position: absolute;
+	right: 0px;
+	width: 290px;
+	height: 100%;
+	background: #262626;
+}
+
+div.chatContainer {
+	text-align: center;
+}
+
+h1.roomName {
+	margin: 15px;
+	margin-top: 20px;
+	margin-bottom: 0px;
+	max-height: 40px;
+	overflow: hidden;
+	font-size: 30px;
+	font-weight: 100;
+}
+h1.roomName:focus {
+	outline: 1px solid #EEEEEE;
+}
+
+hr.chat {
+	border: none;
+	border-top: 1px solid #EEEEEE;
+	margin: 0px auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 0px auto;
+	width: 250px;
+}
+
+div.chatStream {
+	margin-top: 80px;
+	margin-bottom: 100px;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 20px;
+	right: 20px;
+	text-align: left;
+	line-height: 17px;
+	overflow: hidden;
+}
+
+div.messages {
+	height: 100%;
+}
+
+div.chatTextArea {
+	position: absolute;
+	bottom: 0px;
+	left: 20px;
+	right: 20px;
+	height: 100px;
+	margin: 0px;
+}
+
+textarea.chatTextArea {
+	width: 236px;
+	height: 40px;
+	padding-right: 25px;
+	margin-top: 10px;
+	resize: none;
+	border: none;
+	padding: 7px;
+	font-size: 12px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	color: #999999;
+}
+
+span.userName {
+	font-size: 12px;
+	font-weight: bold;
+	color: #cbe86b;
+}
+
+span.colon {
+	margin-left: 1px;
+	margin-right: 2px;
+}
+
+p.chatMessage {
+	margin: 0px;
+	font-size: 12px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+div.chatMessage {
+	margin-top: 8px;
+	position: relative;
+	bottom: 0px;
+}
+
+div.tiles {
+	position: absolute;
+	margin-top: 87px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	overflow: hidden;
+}
+
+div.tile {
+	position: absolute;
+	background-size: 100%;
+	cursor: pointer;
+}
+
+div.s100 {
+	width: 100px;
+	height: 100px;
+}
+
+div.s200 {
+	width: 200px;
+	height: 200px;
+}
+
+div.s300 {
+	width: 300px;
+	height: 300px;
+}
