@@ -180,6 +180,10 @@ router.get('/controllers/bootVotes.js', function (req, res) {
 	res.sendFile(path.join(__dirname, '../controllers/bootVotes.js'))
 });
 
+router.get('/controllers/chat.js', function (req, res) {
+	res.sendFile(path.join(__dirname, '../controllers/chat.js'))
+});
+
 router.get('/room/controllers/socket.js', function (req, res) {
 	console.log(__dirname);
 	res.sendFile(path.join(__dirname, '../controllers/socket.js'))
