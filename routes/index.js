@@ -29,7 +29,7 @@ router.get('/createRoom', function(req, res){
 router.get('/room', function (req, res) {
 	var room = io.rooms[req.param.roomID];
 	// Pass room to the view and return view to client
-	res.sendFile(path.join(__dirname, '../views/app3.html'));
+	res.sendFile(path.join(__dirname, '../views/app.html'));
 });
 
 
