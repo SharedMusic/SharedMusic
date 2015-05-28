@@ -90,6 +90,8 @@ var RoomPrototype = {
 		if(this._state.bootVotes.has(user.id)) {
 			this._onChange(null, 'User already voted to boot!', user.id);
 		} else if(!this._state.trackQueue.isEmpty()) {
+
+
 			this._state.bootVotes.add(user.id);
 			if(this._state.bootVotes.size() >=
 			   Math.ceil(this._state.users.size() / 2)) {
@@ -179,13 +181,13 @@ var RoomPrototype = {
 		if(exists) {
 			var tries = 0;
 			do {
+				exists = false;
 				tries++;
 				var seed = Math.floor(Math.random()*1001);
 				proposedName = possName + seed;
 
 				_.find(this._state.users.array(), function(key, value) {
 					if(key.name.toLowerCase() === proposedName.toLowerCase()) {
-						console.log('name:' + name + ' proposedName:' + proposedName);
 						return exists = true;
 					}
 				});				

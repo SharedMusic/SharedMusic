@@ -864,6 +864,38 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		});
 	});
 
+	it('Should different names!', function(done) {
+		var proposedName = 'testUser';
+
+		var client1 = io.connect(socketUrl, socketOptions);
+		var client2 = io.connect(socketUrl, socketOptions);
+
+		client1.on('onRoomUpdate', function(roomState) {
+			roomState.users.length.should.equal(1);
+			roomState.users[0].name.should.equal(proposedName);
+
+			done();
+		});
+
+		client1.on('userInfo', function(actualName, userID) {
+			actualName.should.equal(proposedName);
+		});
+
+		client2.on('userInfo', function(actualName, userID) {
+			actualName.should.not.equal(proposedName);
+			actualName.should.not.equal("anony-mouse user");
+		});
+
+		requestNewRoom(function(roomID) {
+			var data1 = {
+				roomID: roomID,
+				name: proposedName
+			};
+			client1.emit('joinRoom', data1);
+			client2.emit('joinRoom', data1);
+		});
+	});
+
 	/*
 	it('Should not allow user with existant userID (but not part of room) to add track to room.', function(done) {
 		var trackName = 'newTrack';
