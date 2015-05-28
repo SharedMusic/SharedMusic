@@ -4,7 +4,7 @@
  */
 
 SC.initialize({
-    client_id: '337bccb696d7b8442deedde76fae5c10' // out client ID
+    client_id: '337bccb696d7b8442deedde76fae5c10' // our client ID
 });
 
 angular.module('search', ['socketio'])
@@ -21,6 +21,7 @@ angular.module('search', ['socketio'])
         search.genre = "";
         search.title = "";
         search.user = "";
+		  search.remix = "";
 
         // Duration sort order
         search.ascending= false;
@@ -49,7 +50,8 @@ angular.module('search', ['socketio'])
             for (i = 0; i < results.length; i++) {
                 if ((!search.title || results[i].title.toLowerCase().indexOf(search.title.toLowerCase()) > -1) &&
                     (!search.genre || results[i].genre.toLowerCase().indexOf(search.genre.toLowerCase()) > -1) &&
-                    (!search.user || results[i].user.username.toLowerCase().indexOf(search.user.toLowerCase()) > -1)) {
+                    (!search.user || results[i].user.username.toLowerCase().indexOf(search.user.toLowerCase()) > -1) &&
+						  (!search.remix || results[i].title.toLowerCase().indexOf(search.remix.toLowerCase()) == -1)) {
                     temp.push(results[i]);
                 }
             }
@@ -66,6 +68,7 @@ angular.module('search', ['socketio'])
 
             search.display = temp;
         };
+	
 
         // Sorts the current displayed results by order of duration
         search.sortByDuration = function() {
