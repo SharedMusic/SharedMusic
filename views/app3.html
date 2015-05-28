@@ -36,8 +36,6 @@
 
 		<script>
 			$(document).ready(function(){
-				$("div.tiles").fadeIn(6000);
-
 				function getParameterByName(name) {
 						name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 						var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -60,18 +58,18 @@
 							clearInterval(timer);
 						}
 					}, 100);
-				$('#myModal').modal({backdrop: 'static', keyboard: false})
+				//$('#myModal').modal({backdrop: 'static', keyboard: false});
 				$("#enterRoom").click(function() {
 					$('#myModal').modal('hide');
 
 				});
-
 				$("#volumeControl").on("input change", function() { 
 					var percent = this.value/100;
 					var marginLeft = 5+percent * (125);
 
 					document.getElementById("volumeText").style.marginLeft = marginLeft + "px";
 				});
+				$("div.tiles").fadeIn(5000);
 			}); 
 		</script>
 		
