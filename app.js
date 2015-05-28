@@ -19,9 +19,7 @@ var architecture = require('./architecture.js'),
     _ = require('underscore')._,
     uuid = require('uuid');
 
-app.use("/style", express.static(path.join(__dirname, 'public/style')));
-app.use("/images", express.static(path.join(__dirname, "public/images")));
-app.use("/js", express.static(path.join(__dirname, "public/js")));
+app.use(express.static(path.join(__dirname, 'public')));
 
 var userIDToUser = {};
 var rooms = {};
