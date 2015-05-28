@@ -64,7 +64,7 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', func
             	});
           	}
 
-          	
+
   		$scope.$apply();
 		});
 	};
@@ -83,8 +83,12 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', func
   }
 
   $scope.albumArt = function(track) {
-    var art = track.artwork_url;
-    if(!track.artwork_url) {
+    if (track == null) {
+			return "../images/tempAlbum.png";
+		}
+
+		var art = track.artwork_url;
+    if (track.artwork_url == null) {
       art = track.user.avatar_url;
     }
     art = fixResolution(art);

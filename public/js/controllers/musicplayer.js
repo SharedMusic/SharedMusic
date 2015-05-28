@@ -144,9 +144,29 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 	mP.getAlbumArt = function() {
 		if (mP.trackInfo == null || mP.trackInfo.artwork_url == null) {
-			return "../images/tempAlbum.png";
+			return "../images/tempAlbumSmall.png";
 		} else {
-			return mP.trackInfo.artwork_url;
+			return mP.trackInfo.artwork_url.replace("large", "badge");
+		}
+	}
+
+	mP.getTrackTitle = function() {
+		if (mP.trackInfo == null) {
+			return "";
+		} else {
+			return musicplayer.trackInfo.title + "by" + musicplayer.trackInfo.user.username;
+		}
+	}
+
+	mP.getLink = function() {
+		// Link to the SoundCloud URL containing the work
+		// If the sound is private link to the profile of the creator
+		if (mP.track == null) {
+			return "";
+		} else if (mP.trackInfo.sharing == "public") {
+			return mP.trackInfo.permalink_url;
+		} else {
+			return mP.trackInfo.user.permalink_url;
 		}
 	}
 

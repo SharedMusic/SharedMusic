@@ -8,18 +8,19 @@
 	
 	<link rel="stylesheet" type="text/css" href="/style/Metrojs.css">
 	<link rel="stylesheet" type="text/css" href="/style/tileTest.css">
+	<link rel="stylesheet" type="text/css" href="/style/app.css">
 
 	<style>
 		html, body, #div1, #div2, #div3 {
 			height: 100%;
 		}
-		
+
 		#searchControl {
 			max-height: 50%;
 			overflow: auto;
 		}
 	</style>
-	
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
@@ -42,7 +43,6 @@
 
 	<!-- Requirejs script importing -->
 	<script data-main="../js/main.js" src="../js/require.js"></script>
-	<link rel="stylesheet" href="/style/app.css">
 
 		<script src="/js/MetroJs.js"></script>
 		<script src="/js/tiles.js"></script>
@@ -78,21 +78,21 @@
 
 			});
 
-			$("#volumeControl").on("input change", function() { 
+			$("#volumeControl").on("input change", function() {
 				var percent = this.value/100;
 				var marginLeft = 5+percent * (125);
 
 				document.getElementById("volumeText").style.marginLeft = marginLeft + "px";
 			});
-		}); 
+		});
 	</script>
-	
+
 	<script type="text/javascript">
 		$(window).load(function(){
 			$('#myModal').modal('show');
 		});
 	</script>
-	
+
 </head>
 
 	<body>
@@ -105,7 +105,7 @@
 			</div>
 		  </div>
 		</nav>
-		
+
 		<!-- Modal -->
 		<div id="myModal" class="modal fade" role="dialog">
 		  <div class="modal-dialog">
@@ -125,8 +125,50 @@
 
 		  </div>
 		</div>
-		
 
+		<!-- Music Player -->
+		<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
+			<div id="currentSongContainer">
+
+				<div id="currentAlbum">
+					<a href="{{musicplayer.getLink}}">
+						<img ng-src="{{musicplayer.getAlbumArt()}}">
+					</a>
+				</div>
+
+				<div id="songDescription">
+					<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
+					<p>{{musicplayer.trackInfo.title}}</p>
+					<p>{{musicplayer.trackInfo.username}}</p>
+				</div>
+
+				<div id="musicButtonsContainer">
+					<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
+
+					<div id="volumeContainer">
+						<input id="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
+						<p id="volumeText">{{musicplayer.volume}}</p>
+					</div>
+
+					<div id="bootVotes" ng-controller="BootVotes as bootVotes">
+						<div id="bootVoteButtonContainer">
+							<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
+						</div>
+						<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}} required to boot</p>
+					</div>
+				</div>
+
+				<div id="iconContainer">
+					<a id="iconLink" href="https://soundcloud.com">
+						<!--
+						<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
+						-->
+						<img src="https://developers.soundcloud.com/assets/powered_by_large_black-e832a12f64d6ce6d2da947494e210e4d.png">
+					</a>
+				</div>
+
+			</div>
+		</div>
 
 		<div id="div1" class="container">
 				<div id="div2" class="row">
@@ -138,7 +180,7 @@
 									<li ng-repeat="user in userList.users track by $index">{{user.name}}</li>
 								</ul>
 							</div>
-							
+
 							<div ng-controller="MusicController as musicList">
 								<h3>Songs Queue</h3>
 								<ul>
@@ -181,48 +223,10 @@
     </div>
   </div>
 </div>
-						
-						<!-- Music Player -->
-						<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
-							<div>
-								<!--<form ng-submit="musicplayer.playSong()">
-									<input class="btn btn-primary btn-xs" type="submit" value="Play Next Song">
-								</form>-->
-							</div>
 
-							<div>
-								<h3>Current Song</h3>
-									<div id="currentSongContainer">
-									<div id="bootVotes" ng-controller="BootVotes as bootVotes">
-										<div id="bootVoteButtonContainer">
-											<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
-											<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
-										</div>
-										<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}} required to boot</p>
-									</div>
 
-									<img ng-src="{{musicplayer.getAlbumArt()}}">
-
-									<p>{{musicplayer.trackInfo.title}} by {{musicplayer.trackInfo.user.username}}</p>
-									<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
-
-									<input id="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
-									<p id="volumeText">{{musicplayer.volume}}</p>
-
-									<div id="iconContainer">
-										<a href="{{musicplayer.trackInfo.permalink_url}}">
-											<img src="/images/soundcloud_dark.png" alt="SoundCloud" style="width:80px;height:80px;display:inline-block;">
-										</a>
-
-										<a id="iconLink" href="https://soundcloud.com">
-											<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
-					
+
 					<div id="div3" class="col-md-9">
 						<div ng-controller="SearchController as search" id="searchControl">
 							<h1>Search</h1>
@@ -256,7 +260,7 @@
 
 										<td>
 											<form ng-submit="search.sortByDuration()">
-												Sort 
+												Sort
 												<input type="checkbox" ng-model="search.ascending" ng-click='filter()'>
 											</form>
 										</td>
@@ -290,8 +294,8 @@
 								</table>
 							</div>
 						</div>
-						
-					 
+
+
 
 						<!-- tiles !-->
 						<hr>
@@ -343,7 +347,7 @@
 							</div>
 						<hr>
 					</div>
-				</div>	
+				</div>
 		</div>
 	</body>
 </html>
