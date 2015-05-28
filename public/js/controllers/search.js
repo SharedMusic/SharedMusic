@@ -47,9 +47,15 @@ angular.module('search', ['socketio'])
             var temp = [];
             var results = search.results;
 
+				
+
             for (i = 0; i < results.length; i++) {
+	
+					 //bug fix: some genres are null, so filtering on null is erroring
+			  		 var genre = results[i].genre
+
                 if ((!search.title || results[i].title.toLowerCase().indexOf(search.title.toLowerCase()) > -1) &&
-                    (!search.genre || results[i].genre.toLowerCase().indexOf(search.genre.toLowerCase()) > -1) &&
+                    (!search.genre || (genre != null && results[i].genre.toLowerCase().indexOf(search.genre.toLowerCase()) > -1)) &&
                     (!search.user || results[i].user.username.toLowerCase().indexOf(search.user.toLowerCase()) > -1) &&
 						  (!search.remix || results[i].title.toLowerCase().indexOf(search.remix.toLowerCase()) == -1)) {
                     temp.push(results[i]);
