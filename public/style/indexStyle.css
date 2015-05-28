@@ -1,0 +1,49 @@
+body {
+	background-image: url('/images/background-web.jpg');
+	margin: 0px;
+	background-repeat: repeat;
+	font-family: 'Raleway', sans-serif;
+	color: #EEEEEE;
+	line-height: 1.5;
+}
+
+div {
+	width: 100%;
+	margin-top: 10%;
+	text-align: center;
+}
+
+img.logo {
+	width: 400px;
+	margin-bottom: 5px;
+}
+
+hr {
+	padding: 0px auto;
+	border: 0px;
+	border-top: 2px solid #EEEEEE;
+	width: 450px;
+}
+
+h1 {
+	font-size: 22px;
+}
+
+button {
+	cursor: pointer;
+	background-color: #2A9541;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	border: none;
+	width: 200px;
+	height: 50px;
+	color: #EEEEEE;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 500;
+	font-size: 15px;
+}
+
+button:hover {
+	cursor: hand;
+}

@@ -1,25 +1,27 @@
-var express = require('express');
-var socket_io = require('socket.io');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var express = require('express'),
+    socket_io = require('socket.io'),
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    routes = require('./routes/index'),
+    users = require('./routes/users'),
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
-var app = express();
-
-var io           = socket_io();
-app.io           = io;
-
+    app = express(),
+    io = socket_io();
+    app.io = io;
 
 var architecture = require('./architecture.js'),
-  Room = architecture.Room,
-  User = architecture.User;
-var _ = require('underscore')._;
-var uuid = require('uuid');
+    Room = architecture.Room,
+    User = architecture.User,
+    
+    _ = require('underscore')._,
+    uuid = require('uuid');
+
+app.use("/style", express.static(path.join(__dirname, 'public/style')));
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+app.use("/js", express.static(path.join(__dirname, "public/js")));
 
 var userIDToUser = {};
 var rooms = {};
@@ -192,16 +194,10 @@ exports.onRoomChange = onRoomChange;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'views')));
-app.use(express.static(path.join(__dirname, 'style'))); 
-app.use(express.static(path.join(__dirname, 'js'))); 
 
 app.use('/', routes);
 app.use('/users', users);

@@ -2,28 +2,26 @@
 
 <html>
 <head>
-	<title>Shared Music</title>
+	<title>Jukebox - Share and listen to music with friends</title>
+
+	<link rel="shortcut icon" href="/images/favicon.png">
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
 
-	<!-- Bootstrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<!-- Style sheet for index page -->
+	<link href="/style/indexStyle.css" rel="stylesheet" type="text/css">
 
-	<!-- Default theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-	<!-- <link rel="stylesheet" type="text/css" href="../css/index.css"> -->
+	<!-- Raleway Font Import -->
+	<link href="http://fonts.googleapis.com/css?family=Raleway:400,700,600,500,300,200,100,800,900" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-	<div class="container">
-	  <div class="jumbotron">
-	    <h1>Shared Music</h1>
-	    <p>This is our awesome music sharing service!</p>
-	  </div>
-
-	  <input class="btn btn-primary btn-xs" onclick="location.href='/createRoom';" type="button" value="Create Room">
+	<div>
+		<img class="logo" src="/images/dark-logo-t.png">
+		<hr noshade>
+		<h1>BUILD PLAYLISTS AND LISTEN <br/>TO MUSIC WITH FRIENDS.</h1>
+		<button onclick="location.href='/createRoom';"> CREATE ROOM </button>
 	</div>
 </body>
 </html>
