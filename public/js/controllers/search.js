@@ -34,8 +34,17 @@ angular.module('search', ['socketio'])
             SC.get('/tracks', { q: search.query, filter: 'streamable', limit: search.pageSize}, function(tracks) {
                 search.results = tracks;
                 search.display = tracks;
-                $scope.$apply();
+	
+					//display nothing/clear results when blank search
+					if (query == "" ) {
+						console.log('inside')
+						search.results = []
+						search.display = []
+					}
+
+               $scope.$apply();
             });
+				
         };
 
         $scope.filter = function (query) {
