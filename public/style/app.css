@@ -30,14 +30,14 @@ h3 {
 	margin-top:0px;
 }
 #currentSongContainer {
-	width:160px;
+	/*width:160px;*/
 }
 
 #bootVoteButtonContainer {
-	text-align: center;
-    margin: 0px auto;
-    margin-bottom:5px;
-    width: 95%;
+	/*margin: text-align: center;
+  margin: 0px auto;
+  margin-bottom:5px;
+  width: 95%;*/
 }
 
 #bootVoteButtonContainer > button {
@@ -46,16 +46,33 @@ h3 {
 
 #iconContainer {
 	width:160px;
+	/*
 	text-align: center;
     margin: 0px auto;
     margin-left:-5px;
     width: 95%;
+	*/
 }
 
-#iconLink { 
+#iconLink {
 	margin-top:15px;
 }
 
 #volumeText {
 	margin-left:67.5px;
+}
+
+#musicControl {
+	position: fixed;
+  bottom: 0;
+  /*height: 61px;*/
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 0 30px #ccc;
+  padding-top: 2px;
+	z-index:999;
+}
+
+#currentSongContainer > * {
+	display: inline-block;
 }
