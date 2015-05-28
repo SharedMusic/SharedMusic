@@ -29,15 +29,21 @@ body{
 h3 {
 	margin-top:0px;
 }
+
 #currentSongContainer {
 	/*width:160px;*/
 }
 
+#bootVotes {
+	float: right;
+	padding-right: 10px;
+}
+
 #bootVoteButtonContainer {
-	/*margin: text-align: center;
+	margin: text-align: center;
   margin: 0px auto;
   margin-bottom:5px;
-  width: 95%;*/
+  width: 95%;
 }
 
 #bootVoteButtonContainer > button {
@@ -45,17 +51,12 @@ h3 {
 }
 
 #iconContainer {
-	width:160px;
-	/*
-	text-align: center;
-    margin: 0px auto;
-    margin-left:-5px;
-    width: 95%;
-	*/
+	float: right;
+	padding-right: 10px;
 }
 
 #iconLink {
-	margin-top:15px;
+
 }
 
 #volumeText {
@@ -73,6 +74,7 @@ h3 {
 	z-index:999;
 }
 
-#currentSongContainer > * {
+#currentSongContainer > *, #musicButtonsContainer > * {
 	display: inline-block;
+	vertical-align: bottom;
 }

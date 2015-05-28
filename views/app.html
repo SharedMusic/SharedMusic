@@ -128,42 +128,43 @@
 		<div id="musicControl" ng-controller="MusicPlayer as musicplayer">
 			<div id="currentSongContainer">
 
-				<img ng-src="{{musicplayer.getAlbumArt()}}">
+				<div id="currentAlbum">
+					<a href="{{musicplayer.getLink}}">
+						<img ng-src="{{musicplayer.getAlbumArt()}}">
+					</a>
+				</div>
 
 				<div id="songDescription">
+					<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
 					<p>{{musicplayer.trackInfo.title}}</p>
 					<p>{{musicplayer.trackInfo.username}}</p>
 				</div>
 
-				<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
+				<div id="musicButtonsContainer">
+					<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
 
-				<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
-
-				<div id="volumeContainer">
-					<input id="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
-					<p id="volumeText">{{musicplayer.volume}}</p>
-				</div>
-
-				<a href="{{musicplayer.getLink}}">Song Link</a>
-
-				<div id="bootVotes" ng-controller="BootVotes as bootVotes">
-					<div id="bootVoteButtonContainer">
-						<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
+					<div id="volumeContainer">
+						<input id="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
+						<p id="volumeText">{{musicplayer.volume}}</p>
 					</div>
-					<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}} required to boot</p>
+
+					<div id="bootVotes" ng-controller="BootVotes as bootVotes">
+						<div id="bootVoteButtonContainer">
+							<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
+						</div>
+						<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}} required to boot</p>
+					</div>
 				</div>
 
 				<div id="iconContainer">
-					<!--
-					<a href="{{musicplayer.trackInfo.permalink_url}}">
-						<img src="/images/soundcloud_dark.png" alt="SoundCloud" style="width:80px;height:80px;display:inline-block;">
-					</a>
-					-->
-
 					<a id="iconLink" href="https://soundcloud.com">
+						<!--
 						<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
+						-->
+						<img src="https://developers.soundcloud.com/assets/powered_by_large_black-e832a12f64d6ce6d2da947494e210e4d.png">
 					</a>
 				</div>
+
 			</div>
 		</div>
 
