@@ -70,7 +70,6 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', func
 	};
 
   $scope.addTrack = function(track) {
-    console.log('helloworld');
     roomstateFactory.addSong(track);
   }
 

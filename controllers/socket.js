@@ -19,6 +19,7 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 	var updateBootVotesFn = null;
 	var updateCurrentFn = null;
 	var updateEpochFn = null;
+	var updateMessagesFn = null;
 
 	socket.on('onRoomUpdate', 
 		function(roomState) {
@@ -31,6 +32,11 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 			else 
 				updateCurrentFn(null);
 			updateEpochFn(roomState.currentSongEpoch);
+		});
+
+	socket.on('onMessage', 
+		function(message) {
+			updateMessagesFn(message);
 		});
 
 	socket.on('userInfo', 
@@ -85,10 +91,15 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 				queue.shift();
 			}
 		},
-
 		// Tells the server the current user wants to vote
 		addBootVote: function(){
 			socket.emit('bootTrack', {roomID: myRoomID, userID: myUserID});
+		},
+		sendMessage: function(message) { 
+			socket.emit('sendMessage', {roomID: myRoomID, userID: myUserID, message:message})
+		},
+		setupGetMesssage: function(updateMessagesCallback) {
+			updateMessagesFn = updateMessagesCallback;
 		}
 	}
 }]);

@@ -54,8 +54,29 @@ io.sockets.on('connection', function(socket) {
     }
   });
 
-  socket.on('helloworld', function(data) {
-    console.log(data);
+  socket.on('sendMessage', function(data) {
+    var roomID = data.roomID;
+    var userID = data.userID;
+    var message = data.message;
+
+    var room = rooms[roomID];
+
+    if(!room) {
+      socket.emit('onError', 'Room does not exist for roomID.');
+      return;
+    }
+
+    var user = userIDToUser[userID];
+    if(!user) {
+      socket.emit('onError', 'User does not exist for userID');
+      return;
+    }
+
+    io.to(roomID).emit('onMessage', 
+    { 
+      name: user.name,
+      message: message      
+    });
   });
 
   socket.on('joinRoom', function(data) {
@@ -91,7 +112,7 @@ io.sockets.on('connection', function(socket) {
     var track = data.track;
 
     var room = rooms[roomID];
-    console.log(userID + 'requested a track');
+
     if(!room) {
       socket.emit('onError', 'Room does not exist for roomID.');
       return;
@@ -216,14 +237,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
-
-/**
- * everything above this was automatically generated via express-generator
-**/
-
 app.get('/', function (req, res) {
-        res.render('index');
+  res.render('index');
 });
 
 
