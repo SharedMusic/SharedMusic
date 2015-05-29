@@ -18,28 +18,26 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 	var updateQueueFn = null;
 	var updateBootVotesFn = null;
 	var updateCurrentFn = null;
-	var updateEpochFn = null;
 	var updateMessagesFn = null;
 
-	socket.on('onRoomUpdate', 
+	socket.on('onRoomUpdate',
 		function(roomState) {
 			//console.log('helloworld');
 			updateUsersFn(roomState.users);
 			updateQueueFn(roomState.trackQueue);
 			updateBootVotesFn(roomState.bootVotes.length, roomState.users.length);
 			if(roomState.trackQueue.length > 0)
-				updateCurrentFn(roomState.trackQueue[0]);
-			else 
-				updateCurrentFn(null);
-			updateEpochFn(roomState.currentSongEpoch);
+				updateCurrentFn(roomState.trackQueue[0], roomState.currentSongEpoch);
+			else
+				updateCurrentFn(null, null);
 		});
 
-	socket.on('onMessage', 
+	socket.on('onMessage',
 		function(message) {
 			updateMessagesFn(message);
 		});
 
-	socket.on('userInfo', 
+	socket.on('userInfo',
 		function(name, id) {
 			myName = name;
 			myUserID = id;
@@ -71,10 +69,6 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 		setupGetSong: function(updateSongCallback){
 			updateCurrentFn = updateSongCallback;
 		},
-		// Returns current song epoch
-		setupGetEpoch: function(updateEpochCallback){
-			updateEpochFn = updateEpochCallback;
-		},
 
 		setupBootVote: function(updateBootVoteCallback) {
 			updateBootVotesFn = updateBootVoteCallback;
@@ -95,7 +89,7 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 		addBootVote: function(){
 			socket.emit('bootTrack', {roomID: myRoomID, userID: myUserID});
 		},
-		sendMessage: function(message) { 
+		sendMessage: function(message) {
 			socket.emit('sendMessage', {roomID: myRoomID, userID: myUserID, message:message})
 		},
 		setupGetMesssage: function(updateMessagesCallback) {
@@ -111,14 +105,14 @@ socketio.factory('socket', function ($rootScope) {
 	var socket = io();
 	return {
 		on: function (eventName, callback) {
-			socket.on(eventName, function () {  
+			socket.on(eventName, function () {
 				var args = arguments;
 				$rootScope.$apply(function () {
 					callback.apply(socket, args);
 				});
 			});
 		},
-		
+
 		emit: function (eventName, data, callback) {
 			socket.emit(eventName, data, function () {
 				var args = arguments;

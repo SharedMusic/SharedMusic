@@ -5,7 +5,7 @@
 	<title>Jukebox - Share and listen to music with friends</title>
 
 	<link rel="shortcut icon" href="/images/favicon.png">
-	
+
 	<link rel="stylesheet" type="text/css" href="/style/Metrojs.css">
 	<link rel="stylesheet" type="text/css" href="/style/tileTest.css">
 	<link rel="stylesheet" type="text/css" href="/style/app.css">
@@ -131,7 +131,7 @@
 			<div id="currentSongContainer">
 
 				<div id="currentAlbum">
-					<a href="{{musicplayer.getLink}}">
+					<a href="{{musicplayer.getLink()}}" target="_blank">
 						<img ng-src="{{musicplayer.getAlbumArt()}}">
 					</a>
 				</div>
@@ -140,6 +140,16 @@
 					<p>{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
 					<p>{{musicplayer.trackInfo.title}}</p>
 					<p>{{musicplayer.trackInfo.username}}</p>
+				</div>
+
+
+				<div id="iconContainer">
+					<a id="iconLink" href="https://soundcloud.com" target="_blank">
+						<!--
+						<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
+						-->
+						<img src="https://developers.soundcloud.com/assets/powered_by_large_black-e832a12f64d6ce6d2da947494e210e4d.png">
+					</a>
 				</div>
 
 				<div id="musicButtonsContainer">
@@ -156,15 +166,6 @@
 						</div>
 						<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}} required to boot</p>
 					</div>
-				</div>
-
-				<div id="iconContainer">
-					<a id="iconLink" href="https://soundcloud.com">
-						<!--
-						<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
-						-->
-						<img src="https://developers.soundcloud.com/assets/powered_by_large_black-e832a12f64d6ce6d2da947494e210e4d.png">
-					</a>
 				</div>
 
 			</div>

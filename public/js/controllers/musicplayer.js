@@ -6,12 +6,8 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	// mP.currentSongURL = roomstateFactory.getSong().permalink_url;
 	mP.currentSong = null;
 
-	roomstateFactory.setupGetEpoch(function(newEpoch) {
-		mP.currentSongEpoch = newEpoch;
-	});
-
 	mP.muted = false;
-	mP.muteStatus = "Mute";
+	mP.muteStatus = "Mute Song";
 	mP.volume = 50;
 
 	mP.currentTrackTime = 0;
@@ -58,17 +54,21 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	};
 
 	// play the song
-	roomstateFactory.setupGetSong(function(newTrackInfo) {
+	roomstateFactory.setupGetSong(function(newTrackInfo, newEpoch) {
 		var old = mP.trackInfo;
 		mP.trackInfo = newTrackInfo;
 
+		var oldEpoch = mP.currentSongEpoch;
+		mP.currentSongEpoch = newEpoch;
+
+		// stop the currently playing song if the next song is null
 		if (old && !mP.trackInfo) {
 			mP.currentSong.stop();
 			mP.currentSong = null;
 		}
 		console.log(mP.trackInfo);	//I don't know why but this is necessary to be here
-		if ((old == null && mP.trackInfo != null) || (old != null && mP.trackInfo != null && mP.trackInfo.id != old.id)) {
-			// SC.stream(trackPath, [options], [callback])
+		if ((old == null && mP.trackInfo != null) || (old != null && mP.trackInfo != null && mP.currentSongEpoch != oldEpoch)) {
+			// Calls SoundCloud API: SC.stream(trackPath, [options], [callback])
 			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){
 				// Streamable check testing
 				// Does not currently work ($http undefined?)
@@ -87,9 +87,12 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 					// stop the old song timer
 					if (mP.trackTimeUpdater != null) {
+						mP.currentTrackTime = 0;
 						clearInterval(mP.trackTimeUpdater);
 					}
+
 					// updates the song time
+					/*
 					mP.trackTimeUpdater = setInterval(function(){
 						mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch + 2000;
 						if 	(mP.currentTrackTime < 0) {
@@ -101,18 +104,39 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 							mP.currentTrackTime = 0;
 							clearInterval(mP.trackTimeUpdater);
 						}
-					}, 500);
+					}, 500);*/
 
 					// load the song and set position before playing
 					mP.currentSong.load({
 						onload: function() {
 							mP.muted = false;
-							mP.muteStatus = "Mute";
+							mP.muteStatus = "Mute Song";
 							mP.currentSong.unmute();
 
-							mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
+
+							while ((new Date).getTime() < mP.currentSongEpoch) {
+								// wait until the delay is finished
+							}
+
 							mP.currentSong.setVolume(mP.volume);
 							mP.currentSong.play();
+
+							// Once the song starts to play, update the interval
+							mP.trackTimeUpdater = setInterval(function(){
+								mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch;
+								if 	(mP.currentTrackTime < 0) {
+									mP.currentTrackTime = 0;
+								}
+								$scope.$apply();
+
+								if (mP.trackInfo == null || mP.currentTrackTime > mP.trackInfo.duration) {
+									mP.currentTrackTime = 0;
+									clearInterval(mP.trackTimeUpdater);
+								}
+							}, 500);
+
+							mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
+
 							console.log(mP.currentSong.position);
 						}
 					});
@@ -161,7 +185,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	mP.getLink = function() {
 		// Link to the SoundCloud URL containing the work
 		// If the sound is private link to the profile of the creator
-		if (mP.track == null) {
+		if (mP.trackInfo == null) {
 			return "";
 		} else if (mP.trackInfo.sharing == "public") {
 			return mP.trackInfo.permalink_url;
@@ -174,11 +198,11 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 		if (mP.currentSong != null) {
 			if (mP.muted) {
 				mP.muted = false;
-				mP.muteStatus = "Mute";
+				mP.muteStatus = "Mute Song";
 				mP.currentSong.unmute();
 			} else {
 				mP.muted = true;
-				mP.muteStatus = "Unmute";
+				mP.muteStatus = "Song Muted";
 				mP.currentSong.mute();
 			}
 		}
