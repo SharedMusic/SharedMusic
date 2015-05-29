@@ -713,7 +713,7 @@ describe("Socket.io Operations (Don't pass unless server is started)", function(
 		});
 
 		client1.on('onError', function(error) {
-			error.should.equal('User does not exist for userID');
+			error.should.equal('User does not exist for 1234');
 			done();
 		});
 
