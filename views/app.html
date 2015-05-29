@@ -5,7 +5,7 @@
 	<title>Jukebox - Share and listen to music with friends</title>
 
 	<link rel="shortcut icon" href="/images/favicon.png">
-	
+
 	<link rel="stylesheet" type="text/css" href="/style/Metrojs.css">
 	<link rel="stylesheet" type="text/css" href="/style/tileTest.css">
 	<link rel="stylesheet" type="text/css" href="/style/app.css">
@@ -131,7 +131,7 @@
 			<div id="currentSongContainer">
 
 				<div id="currentAlbum">
-					<a href="{{musicplayer.getLink}}">
+					<a href="{{musicplayer.getLink()}}" target="_blank">
 						<img ng-src="{{musicplayer.getAlbumArt()}}">
 					</a>
 				</div>
@@ -159,7 +159,7 @@
 				</div>
 
 				<div id="iconContainer">
-					<a id="iconLink" href="https://soundcloud.com">
+					<a id="iconLink" href="https://soundcloud.com" target="_blank">
 						<!--
 						<img src="https://developers.soundcloud.com/assets/powered_by_black-ee7e351d64511ecea75c6c17ca30064f.png">
 						-->

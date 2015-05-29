@@ -161,7 +161,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	mP.getLink = function() {
 		// Link to the SoundCloud URL containing the work
 		// If the sound is private link to the profile of the creator
-		if (mP.track == null) {
+		if (mP.trackInfo == null) {
 			return "";
 		} else if (mP.trackInfo.sharing == "public") {
 			return mP.trackInfo.permalink_url;
