@@ -1,6 +1,8 @@
 $( document ).ready(function() {
     $('body').on('mouseenter', 'div.tileImage', function() {
-    	$(this).children(".trackInfoContainer").animate({top: -105});
+    	var size = $(this).css('width');
+    	console.log(size);
+    	$(this).children(".trackInfoContainer").animate({top: "-" + size});
 	});
 
     $('body').on('mouseleave', 'div.tileImage', function() {
@@ -24,12 +26,11 @@ $( document ).ready(function() {
 	});
 	
 	$('body').on('DOMNodeInserted', '.live-tile', function () {
-		var randomInitDelay = Math.random() * (10000);
-
+		var randomInitDelay = Math.random() * (50000);
 		$(this).liveTile({ 
 			pauseOnHover: true,
-            delay: 10000,
-            speed: 1000, 
+            delay: 50000,
+            speed: 1000,
             initDelay: randomInitDelay
         })
 	});

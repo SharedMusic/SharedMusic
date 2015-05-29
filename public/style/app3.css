@@ -198,10 +198,16 @@ div.tiles {
 	overflow: hidden;
 }
 
+div.live-tile {
+	margin: 0px;
+}
+
 div.tile {
 	position: absolute;
+}
+
+div.tileImage {
 	background-size: 100%;
-	cursor: pointer;
 }
 
 div.front {
