@@ -6,10 +6,6 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	// mP.currentSongURL = roomstateFactory.getSong().permalink_url;
 	mP.currentSong = null;
 
-	roomstateFactory.setupGetEpoch(function(newEpoch) {
-		mP.currentSongEpoch = newEpoch;
-	});
-
 	mP.muted = false;
 	mP.muteStatus = "Mute";
 	mP.volume = 50;
@@ -58,17 +54,21 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	};
 
 	// play the song
-	roomstateFactory.setupGetSong(function(newTrackInfo) {
+	roomstateFactory.setupGetSong(function(newTrackInfo, newEpoch) {
 		var old = mP.trackInfo;
 		mP.trackInfo = newTrackInfo;
 
+		var oldEpoch = mP.currentSongEpoch;
+		mP.currentSongEpoch = newEpoch;
+
+		// stop the currently playing song if the next song is null
 		if (old && !mP.trackInfo) {
 			mP.currentSong.stop();
 			mP.currentSong = null;
 		}
 		console.log(mP.trackInfo);	//I don't know why but this is necessary to be here
-		if ((old == null && mP.trackInfo != null) || (old != null && mP.trackInfo != null && mP.trackInfo.id != old.id)) {
-			// SC.stream(trackPath, [options], [callback])
+		if ((old == null && mP.trackInfo != null) || (old != null && mP.trackInfo != null && mP.currentSongEpoch != oldEpoch)) {
+			// Calls SoundCloud API: SC.stream(trackPath, [options], [callback])
 			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){
 				// Streamable check testing
 				// Does not currently work ($http undefined?)
