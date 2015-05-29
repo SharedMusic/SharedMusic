@@ -31,6 +31,11 @@ angular.module('search', ['socketio'])
 
         // Searches sound clound with the given query
         search.search = function(query) {
+				//clear filters on each new search	
+				search.genre = "";
+				search.title = "";
+				search.user = "";
+
             SC.get('/tracks', { q: search.query, filter: 'streamable', limit: search.pageSize}, function(tracks) {
                 search.results = tracks;
                 search.display = tracks;
