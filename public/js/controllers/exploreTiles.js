@@ -54,7 +54,7 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', func
 
 			$scope.tracks = [];
 
-          	for(var i = 0; i < 22; i++) {
+          	for(var i = 0; i < data.tracks.length/2; i++) {
             	$scope.tracks.push(
             	{
                 //'frontTrack': cleanTrack(tracks[i]),

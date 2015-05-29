@@ -8,27 +8,34 @@ body {
 	color: #EEEEEE;
 }
 
+a {
+	text-decoration: none;
+}
+
 div.leftContainer {
 	position: absolute;
 	left: 0px;
-	width: 250px;
+	width: 204px;
 	height: 100%;
+	overflow: hidden;
 	background: #262626;
+	text-align: center;
 }
 
 div.logo {
 	background: #161616;
-	height: 87px;
+	height: 66px;
 }
 
 img.logo {
-	width: 230px;
+	width: 190px;
 	height: auto;
-	margin: 10px;
+	margin: 7px;
 }
 
 div.userList {
-	margin: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	height: 275px;
 }
 
@@ -37,11 +44,13 @@ div.user {
 	width: 100%;
 	height: 55px;
 	overflow: hidden;
+	text-align: left;
 }
 
 img.avatar {
-	width: 40px;
-	height: 40px;
+	margin: 10px;
+	width: 35px;
+	height: 35px;
 }
 
 h1.userName {
@@ -50,8 +59,9 @@ h1.userName {
 	margin-left: 55px;
 	top: 0px;
 	left: 0px;
-	font-size: 25px;
-	line-height: 45px;
+	font-size: 22px;
+	font-weight: 200;
+	line-height: 55px;
 }
 
 div.middleContainer {
@@ -59,14 +69,25 @@ div.middleContainer {
 	height: 100%;
 	left: 0px;
 	right: 0px;
-	margin-left: 250px;
+	margin-left: 204px;
 	margin-right: 290px;
 }
 
 div.searchBar {
-	height: 87px;
+	height: 66px;
 	width: 100%;
 	background: #cbe86b;
+}
+
+div.poweredBy {
+	height: 36px;
+	width: 110px;
+	position: absolute;
+	right: 0px;
+	margin: 13px;
+	margin-bottom: 17px;
+	background-image: url('/images/powered_by_soundcloud.png');
+	background-size: auto 35px;
 }
 
 div.rightContainer {
@@ -130,7 +151,7 @@ div.chatTextArea {
 	margin: 0px;
 }
 
-textarea.chatTextArea {
+input.chatTextArea {
 	width: 236px;
 	height: 40px;
 	padding-right: 25px;
@@ -168,7 +189,7 @@ div.chatMessage {
 
 div.tiles {
 	position: absolute;
-	margin-top: 87px;
+	margin-top: 66px;
 	top: 0px;
 	left: 0px;
 	right: 0px;
@@ -196,3 +217,167 @@ div.s300 {
 	width: 300px;
 	height: 300px;
 }
+
+hr.leftBar {
+	width: 180px;
+	border: none;
+	margin: 10px;
+	border-top: 1px solid #EEEEEE;
+}
+
+div.songQueue {
+	height: 250px;
+	position: relative;
+	bottom: 0px;
+	left: 0px;
+}
+
+div.modal-dialog {
+	margin-top: 100px;
+	width: 400px;
+}
+
+div.modal-content {
+	boder-radius: 0px;
+	background: #EEEEEE;
+}
+
+h1.welcome {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 300;
+	font-size: 30px;
+	color: #111111;
+	margin: 0px;
+}
+
+hr.welcome {
+	margin-top: 10px;
+	border: none;
+	border-top: 1px solid #111111;
+}
+
+input.welcomeInput {
+	width: 368px;
+	height: 40px;
+	font-size: 20px;
+	padding-left: 10px;
+	border-radius: 4px;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 500;
+	border: 1px solid #111111;
+	color: #363636;
+}
+
+input.welcomeButton {
+	margin-top: 15px;
+	width: 120px;
+	height: 35px;
+	background: #cbe86b;
+	border-radius: 4px;
+	font-family: 'Raleway', sans-serif;
+	font-size: 20px;
+	font-weight: 200;
+	color: #111111;
+}
+
+div.search {
+	padding: 15px;
+	margin-left: 40px;
+}
+
+input.search {
+	border-radius: 18px;
+	height: 36px;
+	border: none;
+	background-color: #262626;
+	width: 240px;
+	font-family: "Raleway", sans-serif;
+	font-weight: 300;
+	font-size: 20px;
+	padding-left: 20px;
+	color: #EEEEEE;
+}
+
+input.search:focus {
+	outline: none;
+}
+
+input.searchSubmit {
+	visibility: hidden;
+}
+
+input.welcomeButton:hover {
+	color: initial;
+	background: #cbe86b;
+}
+
+div.track {
+	width: 100%;
+	height: 25px;
+	overflow: hidden;
+	text-align: left;
+	margin-left: 10px;
+}
+
+h1.track {
+	margin: 0px;
+	font-size: 15px;
+	font-weight: 200;
+	line-height: 25px;
+}
+
+div.currentSong {
+	margin: 12px;
+	margin-bottom: 5px;
+}
+
+div.albumArt {
+	background-image: url('/images/albumArt/album1.jpg');
+	background-size: 100%;
+	width: 180px;
+	height: 180px;
+}
+
+div.time {
+	width: 100%;
+	height: 22px;
+	background: rgba(0,0,0,0.7);
+	position: relative;
+	top: 158px;
+}
+
+p.time {
+	color: #EEEEEE;
+	text-align: right;
+	font-family: 'Helvetica', Arial, sans-serif;
+	font-weight: 100;
+	font-size: 14px;
+	line-height: 22px;
+	margin: 0px;
+	margin-right: 5px;
+}
+
+div.songInfo {
+
+}
+
+h1.songTitle {
+	font-weight: 200;
+	font-size: 20px;
+	margin: 0px;
+	margin-top: 6px;
+	text-align: left;
+}
+p.artistName {
+	font-weight: 200;
+	font-size: 13px;
+	margin: 0px;
+	margin-top: 0px;
+	text-align: left;
+}
+
+
+
+
+
+
