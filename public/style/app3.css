@@ -84,6 +84,7 @@ div.poweredBy {
 	width: 110px;
 	position: absolute;
 	right: 0px;
+	top: 0px;
 	margin: 13px;
 	margin-bottom: 17px;
 	background-image: url('/images/powered_by_soundcloud.png');
@@ -151,9 +152,9 @@ div.chatTextArea {
 	margin: 0px;
 }
 
-input.chatTextArea {
+textarea.chatTextArea {
 	width: 236px;
-	height: 40px;
+	height: 44px;
 	padding-right: 25px;
 	margin-top: 10px;
 	resize: none;
@@ -201,6 +202,14 @@ div.tile {
 	position: absolute;
 	background-size: 100%;
 	cursor: pointer;
+}
+
+div.front {
+	background-size: 100%;
+}
+
+div.back {
+	background-size: 100%;
 }
 
 div.s100 {
@@ -283,6 +292,32 @@ input.welcomeButton {
 div.search {
 	padding: 15px;
 	margin-left: 40px;
+}
+
+div.searchResContainer {
+	background: rgba(0,0,0,0.7);
+	width: 100%;
+}
+ 
+table {
+	margin-bottom: 0px;
+	border: none;
+}
+
+tr {
+	border-top: 1px solid #EEEEEE;
+}
+
+.table-condensed>tbody>tr>th {
+	color: #EEEEEE;
+	font-family: 'Raleway', sans-serif;
+	font-size: 18px;
+	font-weight: 200;
+	padding-left: 10px;
+}
+
+.table-condensed>tbody>tr>td {
+	border: none;
 }
 
 input.search {

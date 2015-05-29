@@ -154,15 +154,6 @@ io.sockets.on('connection', function(socket) {
 
     room.bootTrack(user);
   })
-
-  socket.on('getRoomState', function(roomID, fn) {
-    var room = rooms[roomID];
-
-	 if (roomError(room, roomID))
-	   return;
-
-    socket.emit('onRoomUpdate', room.getRoomState());
-  })
 });
 
 var onRoomChange = function(roomID) {
