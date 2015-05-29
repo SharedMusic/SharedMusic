@@ -7,7 +7,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	mP.currentSong = null;
 
 	mP.muted = false;
-	mP.muteStatus = "Mute";
+	mP.muteStatus = "Mute Song";
 	mP.volume = 50;
 
 	mP.currentTrackTime = 0;
@@ -87,9 +87,12 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 					// stop the old song timer
 					if (mP.trackTimeUpdater != null) {
+						mP.currentTrackTime = 0;
 						clearInterval(mP.trackTimeUpdater);
 					}
+
 					// updates the song time
+					/*
 					mP.trackTimeUpdater = setInterval(function(){
 						mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch + 2000;
 						if 	(mP.currentTrackTime < 0) {
@@ -101,18 +104,39 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 							mP.currentTrackTime = 0;
 							clearInterval(mP.trackTimeUpdater);
 						}
-					}, 500);
+					}, 500);*/
 
 					// load the song and set position before playing
 					mP.currentSong.load({
 						onload: function() {
 							mP.muted = false;
-							mP.muteStatus = "Mute";
+							mP.muteStatus = "Mute Song";
 							mP.currentSong.unmute();
 
-							mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
+
+							while ((new Date).getTime() < mP.currentSongEpoch) {
+								// wait until the delay is finished
+							}
+
 							mP.currentSong.setVolume(mP.volume);
 							mP.currentSong.play();
+
+							// Once the song starts to play, update the interval
+							mP.trackTimeUpdater = setInterval(function(){
+								mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch;
+								if 	(mP.currentTrackTime < 0) {
+									mP.currentTrackTime = 0;
+								}
+								$scope.$apply();
+
+								if (mP.trackInfo == null || mP.currentTrackTime > mP.trackInfo.duration) {
+									mP.currentTrackTime = 0;
+									clearInterval(mP.trackTimeUpdater);
+								}
+							}, 500);
+
+							mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
+
 							console.log(mP.currentSong.position);
 						}
 					});
@@ -174,11 +198,11 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 		if (mP.currentSong != null) {
 			if (mP.muted) {
 				mP.muted = false;
-				mP.muteStatus = "Mute";
+				mP.muteStatus = "Mute Song";
 				mP.currentSong.unmute();
 			} else {
 				mP.muted = true;
-				mP.muteStatus = "Unmute";
+				mP.muteStatus = "Song Muted";
 				mP.currentSong.mute();
 			}
 		}
