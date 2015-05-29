@@ -53,7 +53,7 @@ io.sockets.on('connection', function(socket) {
   //returns true if an user doesn't exist
   function userError(user, userID) {
 	 if (!user) {
-	   socket.emit('onError', 'User does not exist for ' + userId);
+	   socket.emit('onError', 'User does not exist for ' + userID);
 		return true;
 	 }
   }
