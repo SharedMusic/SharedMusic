@@ -20,6 +20,7 @@
 		<link rel="stylesheet" type="text/css" href="/style/tileTest.css">
 		<link rel="stylesheet" type="text/css" href="/style/app3.css">
 		<link rel="stylesheet" type="text/css" href="/style/nanoScroller.css">
+		<script src="/js/flip.js"></script>
 		<link href="http://fonts.googleapis.com/css?family=Raleway:400,700,600,500,300,200,100,800,900" rel="stylesheet" type="text/css">
 
 		<!-- nanoScroller -->
@@ -122,6 +123,21 @@
 					<h1 class="songTitle">{{musicplayer.trackInfo.title}}</h1>
 					<p class="artistName">{{musicplayer.trackInfo.username}}</p>
 				</div>
+				<div class="musicButtonContainer">
+					<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
+
+					<div class="volumeContainer">
+						<input class="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
+						<p id="volumeText">{{musicplayer.volume}}</p>
+					</div>
+
+					<div id="bootVotes" ng-controller="BootVotes as bootVotes">
+						<div id="bootVoteButtonContainer">
+							<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
+						</div>
+						<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}} required to boot</p>
+					</div>
+				</div>
 			</div>
 			<div class="songQueue nano" ng-controller="MusicController as musicList">
 				<div class="nano-content">
@@ -141,24 +157,134 @@
 			</div>
 		</div>
 		<div class="middleContainer">
-			<div class="searchBar" ng-controller="SearchController as search">
+			<div class="searchBar" ng-controller="SearchController as search" id="searchControl">
+				<div class="search">
+					<form ng-submit="search.search(search.query)">
+						<input class="search" type="text" ng-model="search.query"  size="30"
+						placeholder="Search">
+						<input class="searchSubmit btn btn-primary btn-xs" type="submit" value="Search">
+					</form>
+				</div>
+
+				<div class="searchResContainer">
+					<table class="table table-hover table-condensed" style="width:100%">
+						<!-- Headings for each column in the table-->
+						<tr>
+							<th>Title</th>
+							<th>Duration</th>
+							<th>Username</th>
+							<th>Genre</th>
+						</tr>
+
+						<!-- Filter fields for each column-->
+						<tr>
+							<td>
+								<div>
+						        	<input type="text" ng-model="search.title" ng-change='filter()' size="30"
+									placeholder="Title filter">
+						      	</div>
+							</td>
+
+							<td>
+								<form ng-submit="search.sortByDuration()">
+									Sort
+									<input type="checkbox" ng-model="search.ascending" ng-click='filter()'>
+								</form>
+							</td>
+
+							<td>
+								<form ng-submit="search.filter()">
+									<input class="searchFilter" type="text" ng-model="search.user" ng-change='filter()' size="30"
+									placeholder="User filter">
+								</form>
+							</td>
+							<td>
+								<form ng-submit="search.filter()">
+									<input class="searchFilter" type="text" ng-model="search.genre" ng-change='filter()' size="30"
+									placeholder="Genre filter">
+								</form>
+							</td>
+						</tr>
+
+						<!-- Display the results-->
+						<tr ng-repeat="track in search.display">
+							<td>{{track.title}} </td>
+							<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
+							<td>{{track.user.username}}</td>
+							<td>{{track.genre}}</td>
+							<td>
+								<form ng-submit="search.addSong($index)">
+									<input class="btn btn-primary btn-xs" type="submit" value="Add">
+								</form>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<!-- <div ng-controller="SearchController as search">
 				<div class="search">
 					<form ng-submit="search.search(search.query)">
 						<input class="search" type="text" ng-model="search.query" size="30" placeholder="Search">
 						<input class="searchSubmit" type="submit">
+						<input type="checkbox" id="remix"  ng-model="search.remix" ng-change="filter()" ng-true-value="'remix'" >
 					</form>
 				</div>
 				<a target="_blank" href="http://soundcloud.com">
 					<div class="poweredBy">
 					</div>
 				</a>
-			</div>
-			<div class="searchResContainer">
-				<div class="searchResults">
-					<div ng-repeat="track in search.display">
-					</div>
-				</div>
-			</div>
+			</div> -->
+			<!-- <div class="searchResContainer">
+				<table class="table table-hover table-condensed" style="width:100%">
+					<tr>
+						<th>Title</th>
+						<th>Duration</th>
+						<th>Username</th>
+						<th>Genre</th>
+					</tr>
+
+					<tr>
+						<td>
+							<div>
+					        	<input type="text" ng-model="search.title" ng-change='filter()' size="30"
+								placeholder="Title filter">
+					      	</div>
+						</td>
+
+						<td>
+							<form ng-submit="search.sortByDuration()">
+								Sort
+								<input type="checkbox" ng-model="search.ascending" ng-click='filter()'>
+							</form>
+						</td>
+
+						<td>
+							<form ng-submit="search.filter()">
+								<input class="searchFilter" type="text" ng-model="search.user" ng-change='filter()' size="30"
+								placeholder="User filter">
+							</form>
+						</td>
+						<td>
+							<form ng-submit="search.filter()">
+								<input class="searchFilter" type="text" ng-model="search.genre" ng-change='filter()' size="30"
+								placeholder="Genre filter">
+							</form>
+						</td>
+					</tr>
+
+					<tr ng-repeat="track in search.display">
+						<td>{{track.title}} </td>
+						<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
+						<td>{{track.user.username}}</td>
+						<td>{{track.genre}}</td>
+						<td>
+							<form ng-submit="search.addSong($index)">
+								<input class="btn btn-primary btn-xs" type="submit" value="Add">
+							</form>
+						</td>
+					</tr>
+				</table>
+			</div> -->
 			<div class="tiles" ng-controller="TileCtrl">
 				<!-- 100 width tiles -->
 				<div id="t100-1" class="tile s100" style="left: 0px; top: 0px;">
@@ -531,6 +657,48 @@
 					<div class="back">
 					</div> 
 				</div>
+				<script>
+					$("div.tiles").hide();
+
+					var ones = ["t100-1", "t100-2", "t100-3", "t100-4", "t100-5", "t100-6", "t100-7", "t100-8", "t100-9", "t100-10", "t100-11", "t100-12", "t100-13", "t100-14", "t100-15", "t100-16", "t100-17", "t100-18", "t100-19", "t100-20", "t100-21", "t100-22", "t100-23", "t100-24", "t100-25", "t100-26", "t100-27", "t100-28", "t100-29", "t100-30", "t100-31", "t100-32", "t100-33", "t100-34", "t100-35", "t100-36"];
+					var twos = ["t200-1", "t200-2", "t200-3", "t200-4", "t200-5", "t200-6", "t200-7", "t200-8", "t200-9", "t200-10", "t200-11", "t200-12", "t200-13", "t200-14", "t200-15", "t200-16", "t200-17"];
+					var threes = ["t300-1", "t300-2", "t300-3", "t300-4", "t300-5", "t300-6", "t300-7", "t300-8"];
+					var albums = ["album1.jpg","album14.jpg","album19.jpg","album23.png","album28.jpg","album6.jpg","album10.jpg","album15.jpg","album2.jpg","album24.jpg","album29.jpg","album7.jpg","album11.png","album16.jpg","album20.jpg","album25.jpg","album3.jpg","album8.jpg","album12.jpg","album17.jpg","album21.jpg","album26.jpg","album4.png","album9.jpg","album13.jpg","album18.jpg","album22.jpg","album27.jpg","album5.jpg"];
+
+					for (one in ones) {
+						/*var index = Math.floor(Math.random() * ({{scope.tracks}}.length));
+						var div = document.getElementById(ones[one]);
+						var front = div.getElementsByClassName(".front")[0];
+						var back = div.getElementsByClassName(".back")[0];
+						front.style.backgroundImage = "url(" + scope.albumArt(scope.tracks[index].frontTrack) + ")";
+						back.style.backgroundImage = "url(" + scope.albumArt(scope.tracks[index].backTrack) + ")";
+						$(document.getElementById(ones[one])).click(function() {
+							this.flip();
+						});*/
+						var index = Math.floor(Math.random() * (albums.length));
+						document.getElementById(ones[one]).style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
+						$(document.getElementById(ones[one])).click(function() {
+							var index = Math.floor(Math.random() * (albums.length));
+							this.style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
+						});
+					}
+					for (two in twos) {
+						var index = Math.floor(Math.random() * (albums.length));
+						document.getElementById(twos[two]).style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
+						$(document.getElementById(twos[two])).click(function() {
+							var index = Math.floor(Math.random() * (albums.length));
+							this.style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
+						});
+					}
+					for (three in threes) {
+						var index = Math.floor(Math.random() * (albums.length));
+						document.getElementById(threes[three]).style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
+						$(document.getElementById(threes[three])).click(function() {
+							var index = Math.floor(Math.random() * (albums.length));
+							this.style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
+						});
+					}
+				</script>
 			</div>
 		</div>
 		<div class="rightContainer">
@@ -551,48 +719,9 @@
 				</div>
 				<div class="chatTextArea">
 					<hr class="chat">
-					<input type="text" class="chatTextArea" placeholder="Send a message" ng-model="message" ng-enter="sendMessage()"></input>
+					<textarea class="chatTextArea" placeholder="Send a message" ng-model="message" ng-enter="sendMessage()"></input>
 				</div>
 			</div>
 		</div>
-		<script>
-			$("div.tiles").hide();
-
-			var ones = ["t100-1", "t100-2", "t100-3", "t100-4", "t100-5", "t100-6", "t100-7", "t100-8", "t100-9", "t100-10", "t100-11", "t100-12", "t100-13", "t100-14", "t100-15", "t100-16", "t100-17", "t100-18", "t100-19", "t100-20", "t100-21", "t100-22", "t100-23", "t100-24", "t100-25", "t100-26", "t100-27", "t100-28", "t100-29", "t100-30", "t100-31", "t100-32", "t100-33", "t100-34", "t100-35", "t100-36"];
-			var twos = ["t200-1", "t200-2", "t200-3", "t200-4", "t200-5", "t200-6", "t200-7", "t200-8", "t200-9", "t200-10", "t200-11", "t200-12", "t200-13", "t200-14", "t200-15", "t200-16", "t200-17"];
-			var threes = ["t300-1", "t300-2", "t300-3", "t300-4", "t300-5", "t300-6", "t300-7", "t300-8"];
-			var albums = ["album1.jpg","album14.jpg","album19.jpg","album23.png","album28.jpg","album6.jpg","album10.jpg","album15.jpg","album2.jpg","album24.jpg","album29.jpg","album7.jpg","album11.png","album16.jpg","album20.jpg","album25.jpg","album3.jpg","album8.jpg","album12.jpg","album17.jpg","album21.jpg","album26.jpg","album4.png","album9.jpg","album13.jpg","album18.jpg","album22.jpg","album27.jpg","album5.jpg"];
-			for (one in ones) {
-				var index = Math.floor(Math.random() * (albums.length));
-				document.getElementById(ones[one]).style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
-				$(document.getElementById(ones[one])).click(function() {
-					var index = Math.floor(Math.random() * (albums.length));
-					this.style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
-				});
-				/*var index = Math.floor(Math.random() * (albums.length));
-				$(ones[one]).find(".front").style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
-				$(ones[one]).click(function() {
-					var index = Math.floor(Math.random() * (albums.length));
-					this.find(".back")css("background-image", "url('/images/albumArt/" + albums[index] + "')");
-					this.flip();
-				});*/
-			}
-			for (two in twos) {
-				var index = Math.floor(Math.random() * (albums.length));
-				document.getElementById(twos[two]).style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
-				$(document.getElementById(twos[two])).click(function() {
-					var index = Math.floor(Math.random() * (albums.length));
-					this.style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
-				});
-			}
-			for (three in threes) {
-				var index = Math.floor(Math.random() * (albums.length));
-				document.getElementById(threes[three]).style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
-				$(document.getElementById(threes[three])).click(function() {
-					var index = Math.floor(Math.random() * (albums.length));
-					this.style.backgroundImage = "url('/images/albumArt/" + albums[index] + "')";
-				});
-			}
-		</script>
 	</body>
 </html>
