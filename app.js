@@ -6,7 +6,6 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     routes = require('./routes/index'),
-    users = require('./routes/users'),
 
     app = express(),
     io = socket_io();
@@ -155,15 +154,6 @@ io.sockets.on('connection', function(socket) {
 
     room.bootTrack(user);
   })
-
-  socket.on('getRoomState', function(roomID, fn) {
-    var room = rooms[roomID];
-
-	 if (roomError(room, roomID))
-	   return;
-
-    socket.emit('onRoomUpdate', room.getRoomState());
-  })  
 });
 
 var onRoomChange = function(roomID) {
@@ -208,7 +198,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

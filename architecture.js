@@ -59,7 +59,7 @@ var RoomPrototype = {
 
 	// Adds a user to the room
 	addUser: function (user) {
-		if(this._state.users.has(user)) {
+		if(this._hasUser(user)) {
 			this._onChange(null, 'User already exists in room!', user.id);
 		} else {
 			this._state.users.add(user);
@@ -67,10 +67,20 @@ var RoomPrototype = {
 		}
 	},
 
+	//_ prior denotes "private" functions
+	_hasUser: function(user) {
+		return this._state.users.has(user)
+	},
+	
+	_removeUser: function(user) {
+		return this._state.users.remove(user);
+	},
+	
+
 	// Removes a user from the room
 	removeUser: function (user) {
-		if(this._state.users.has(user)) {
-			this._state.users.remove(user);
+		if(this._hasUser(user)) {
+			this._removeUser(user)
 			this._onChange(this._state, null, null);
 		} else {
 			this._onChange(null, 'User didn\'t exist in room!', user.id);
@@ -96,9 +106,9 @@ var RoomPrototype = {
 			if(this._state.bootVotes.size() >=
 			   Math.ceil(this._state.users.size() / 2)) {
 			   	clearTimeout(this._songTimeout);
-				this.nextTrack();
+					this.nextTrack();
 			} else {
-				this._onChange(this._state, null, null);
+					this._onChange(this._state, null, null);
 			}
 		}
 	},
@@ -129,7 +139,7 @@ var RoomPrototype = {
 	},
 
 	_checkUserExistsInRoom: function(user) {
-		if(!this._state.users.has(user)) {
+		if(!this._hasUser(user)) {
 			this._onChange(null, 'User doesn\'t exist in room', user.id);
 
 			return false;
@@ -198,10 +208,6 @@ var RoomPrototype = {
 		}
 
 		return proposedName;
-	},
-
-	getRoomState: function() {			//TODO pending delete after finished implementation
-		return this._state;
 	}
 }
 exports.Room.prototype = RoomPrototype;
