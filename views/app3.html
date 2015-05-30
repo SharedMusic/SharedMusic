@@ -44,11 +44,8 @@
 		<script>
 			$(window).load(function(){
 				$('#myModal').modal('show');
-<<<<<<< HEAD
 				document.getElementsByClassName("wrapper")[0].style.visibility = "";
-=======
 				$(".welcomeInput")[0].focus();
->>>>>>> 1c5cf37ef86d8a3723d6467d9c20a0b87d59bf2a
 			});
 			$(document).ready(function(){
 				function getParameterByName(name) {
@@ -128,18 +125,16 @@
 						<p class="artistName">{{musicplayer.trackInfo.username}}</p>
 					</div>
 					<div class="musicButtonContainer">
-						<button ng-click="musicplayer.muteSong()" class="btn btn-primary btn-xs">{{musicplayer.muteStatus}}</button>
 
 						<div class="volumeContainer">
 							<input class="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
-							<p id="volumeText">{{musicplayer.volume}}</p>
 						</div>
 
 						<div id="bootVotes" ng-controller="BootVotes as bootVotes">
 							<div id="bootVoteButtonContainer">
 								<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
 							</div>
-							<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}} required to boot</p>
+							<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}}</p>
 						</div>
 					</div>
 				</div>
@@ -277,46 +272,26 @@
 					</table>
 				</div>
 				<div class="tiles" ng-controller="TileCtrl">
-					<div ng-repeat="track in tracks" class="tile live-tile {{track.format.cls}}" style="left: {{track.format.left}}px; top: {{track.format.top}}px;" data-mode="flip">
-						<div class="tileImage" ng-style="{'background-image': 'url(' + albumArt(track.frontTrack) + ')'}">
+					<div ng-repeat="track in tracks" id="{{track.format.cls}}" class="tile live-tile" style="left: {{track.format.left}}px; top: {{track.format.top}}px;" data-direction="vertical" data-mode="flip">
+						<div class="tileImage" ng-click="addTrack(track.frontTrack)" ng-style="{'background-image': 'url(' + albumArt(track.frontTrack) + ')'}">
 							<div class="trackInfoContainer">
 								<div class='shading'>
 								</div>
 								<div class="trackInfo noselect" onselectstart="return false">
-									<span>{{track.frontTrack.artist | cut:true:17:' ...'}}</span>
-									</br>
-									<span>{{track.frontTrack.title | cut:true:17:' ...'}}</span>
-									</br>
-									<span>{{track.frontTrack.genre | cut:true:17:' ...'}}</span>
-									</br>
-									<span>{{msToTime(track.frontTrack.duration)}}</span>
-									<div class="trackLinkContainer">
-										<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.frontTrack)">
-										<a href="{{track.frontTrack.permalink_url}}">
-										<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
-										</a>
-									</div>
+									<p id="title" class="tileDetails">{{track.frontTrack.title | cut:true:(track.format.width / 7):' ...'}}</p>
+									<p id="artist" class="tileDetails">{{track.frontTrack.user.username | cut:true:(track.format.width / 11):' ...'}}</p>
+									<p id="duration" class="tileDetails">{{msToTime(track.frontTrack.duration)}}</p>
 								</div>
 							</div>
 						</div>
-						<div class="tileImage" ng-style="{'background-image': 'url(' + albumArt(track.backTrack) + ')'}">
+						<div class="tileImage" ng-click="addTrack(track.backTrack)" ng-style="{'background-image': 'url(' + albumArt(track.backTrack) + ')'}">
 							<div class="trackInfoContainer">
 								<div class='shading'>
 								</div>
 								<div class="trackInfo noselect" onselectstart="return false">
-									<span>{{track.backTrack.artist | cut:true:17:' ...'}}</span>
-									</br>
-									<span>{{track.backTrack.title | cut:true:17:' ...'}}</span>
-									</br>
-									<span>{{track.backTrack.genre | cut:true:17:' ...'}}</span>
-									</br>
-									<span>{{msToTime(track.backTrack.duration)}}</span>
-									<div class="trackLinkContainer">
-										<img class="imageLeft" src="/images/addsong.png" alt="Add Song" style="width:40px;height:40px" ng-click="addTrack(track.backTrack)">
-										<a href="{{track.backTrack.permalink_url}}">
-											<img class="imageRight" src="/images/soundcloud.png" alt="SoundCloud" style="width:40px;height:40px">
-										</a>
-									</div>
+									<p id="title" class="tileDetails">{{track.backTrack.title | cut:true:(track.format.width / 7):' ...'}}</p>
+									<p id="artist" class="tileDetails">{{track.backTrack.user.username | cut:true:(track.format.width / 11):' ...'}}</p>
+									<p id="duration" class="tileDetails">{{msToTime(track.backTrack.duration)}}</p>
 								</div>
 							</div>
 						</div>

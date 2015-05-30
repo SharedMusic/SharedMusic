@@ -22,6 +22,25 @@ div.leftContainer {
 	text-align: center;
 }
 
+p.tileDetails {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 200;
+	font-size: 12px;
+	padding: 0px;
+	margin: 3px;
+	line-height: 15px;
+	height: 15px;
+	overflow: hidden;
+}
+
+p.tileDetails#duration {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	margin-right: 6px;
+	margin-bottom: 3px;
+}
+
 div.logo {
 	background: #161616;
 	height: 66px;
@@ -208,6 +227,7 @@ div.tile {
 
 div.tileImage {
 	background-size: 100%;
+	cursor: pointer;
 }
 
 div.front {
@@ -218,17 +238,20 @@ div.back {
 	background-size: 100%;
 }
 
-div.s100 {
+div#s100 {
+	position: absolute;
 	width: 100px;
 	height: 100px;
 }
 
-div.s200 {
+div#s200 {
+	position: absolute;
 	width: 200px;
 	height: 200px;
 }
 
-div.s300 {
+div#s300 {
+	position: absolute;
 	width: 300px;
 	height: 300px;
 }
@@ -358,6 +381,10 @@ div.track {
 	overflow: hidden;
 	text-align: left;
 	margin-left: 10px;
+}
+
+div.trackInfo {
+	width: 100%;
 }
 
 h1.track {

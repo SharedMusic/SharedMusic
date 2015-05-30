@@ -168,9 +168,9 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 	mP.getAlbumArt = function() {
 		if (mP.trackInfo == null || mP.trackInfo.artwork_url == null) {
-			return "../images/tempAlbumSmall.png";
+			return "../images/tempAlbum.jpg";
 		} else {
-			return mP.trackInfo.artwork_url.replace("large", "badge");
+			return mP.trackInfo.artwork_url.replace("large", "t300x300");
 		}
 	}
 
