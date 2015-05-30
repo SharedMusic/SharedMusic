@@ -48,8 +48,15 @@ angular.module('search', ['socketio'])
 					}
 
                $scope.$apply();
-            });
-				
+               $('.searchResContainer').css({top: "66px"});
+               $('input.clearSearchButtom').fadeIn(400);
+               $('.tiles').animate({top: "100%"}, 400);
+            });		
+        };
+
+        search.clearSearch = function() {
+           $('input.clearSearchButtom').fadeOut(400);
+           $('.tiles').animate({top: "0px"}, 400);     
         };
 
         $scope.filter = function (query) {

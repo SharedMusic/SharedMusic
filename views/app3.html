@@ -56,6 +56,9 @@
 				}
 
 				$('#roomID').hide();
+				$('input.welcomeButton').hide();
+				$('input.clearSearchButtom').hide();
+				$("div.tiles").hide();
 				var count = 0;
 				var timer = setInterval(function () {
 					count++;
@@ -84,6 +87,7 @@
 				setTimeout(function(){
 					$("div.tiles").fadeIn(1000);
 				}, 3000);
+				$(".nano").nanoScroller();
 			}); 
 		</script>
 	</head>
@@ -100,7 +104,7 @@
 				<form ng-submit="userList.addUser()">
 					<input class="welcomeInput" type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="25" placeholder="Enter your name">
 					<input id="roomID" type="text" ng-model="userList.temp.roomID">
-					<input ng-click="button = true" id="enterRoom" class="welcomeButton btn btn-primary btn-xs" type="submit" value="Join  Room">
+					<input ng-click="button = true" id="enterRoom" class="welcomeButton btn btn-primary btn-xs" type="submit" value="Join Room">
 				</form>
 			  </div>
 			</div>
@@ -113,40 +117,48 @@
 					<img class="logo" src="/images/dark-logo-t.png">
 				</div></a>
 				<div class="currentSong" ng-controller="MusicPlayer as musicplayer">
-					<a href="{{musicplayer.getLink}}">
+					<a ng-if="musicplayer.getLink()" target="_blank" href="{{musicplayer.getLink()}}">
 						<div class="albumArt" style="background-image: url({{musicplayer.getAlbumArt()}});">
 							<div class="time">
 								<p class="time">{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
 							</div>
 						</div>
 					</a>
+					<div ng-if="!musicplayer.getLink()" class="albumArt" style="background-image: url({{musicplayer.getAlbumArt()}});">
+							<div class="time">
+								<p class="time">{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
+							</div>
+						</div>
 					<div class="songInfo">
 						<h1 class="songTitle">{{musicplayer.trackInfo.title}}</h1>
-						<p class="artistName">{{musicplayer.trackInfo.username}}</p>
+						<p class="artistName">{{musicplayer.trackInfo.user.username}}</p>
 					</div>
 					<div class="musicButtonContainer">
-
-						<div class="volumeContainer">
-							<input class="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" />
-						</div>
-
 						<div id="bootVotes" ng-controller="BootVotes as bootVotes">
 							<div id="bootVoteButtonContainer">
-								<button ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
+								<button id="bootVoteButton" ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
 							</div>
-							<p align="center"> {{bootVotes.bootCount}} / {{bootVotes.userCount}}</p>
+							<p id="bootVoteCount" align="center"> {{bootVotes.bootCount}}/{{bootVotes.userCount}}</p>
+						</div>
+						<div class="volumeContainer">
+							<input class="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" step="1" list="vol-detents"/>
+							<datalist id="vol-detents">
+								<option value="50">
+							</datalist>
 						</div>
 					</div>
 				</div>
-				<div class="songQueue nano" ng-controller="MusicController as musicList">
+				<hr class="leftBar">
+				<div class="songQueue nano has-scrollbar" ng-controller="MusicController as musicList">
 					<div class="nano-content">
-						<hr class="leftBar">
 						<div class="track" ng-repeat="song in musicList.queue track by $index">
-							<h1 class="track">{{song.title}} by {{song.username}}</h1>
-							<hr class="leftBar">
+							<h1 class="track">{{song.title | cut:true:24:' ...'}} <br/> by {{song.user.username | cut:true:20:' ...'}}</h1>
+							<hr ng-if="!$last" class="leftBar" style="margin-left: 0px; margin-right: 0px;">
 						</div>
 					</div>
+					<div class="nano-pane" style="display: block;"><div class="nano-slider" style="height: 34px; transform: translate(0px, 0px);"></div></div>
 				</div>
+				<hr class="leftBar">
 				<div class="userList nano" ng-controller="UserController as userList">
 					<div class="nano-content">
 						<div class="user" ng-repeat="user in userList.users track by $index">
@@ -156,120 +168,57 @@
 				</div>
 			</div>
 			<div class="middleContainer">
-				<div class="searchBar" ng-controller="SearchController as search" id="searchControl">
-					<div class="search">
-						<form ng-submit="search.search(search.query)">
-							<input class="search" type="text" ng-model="search.query"  size="30"
-							placeholder="Search">
-							<input class="searchSubmit btn btn-primary btn-xs" type="submit" value="Search">
-						</form>
+				<div ng-controller="SearchController as search">
+					<div class="searchBar"  id="searchControl">
+						<div class="search">
+							<form ng-submit="search.search(search.query)">
+								<input class="search" type="text" ng-model="search.query"  size="30"
+								placeholder="Search">
+								<input class="searchSubmit btn btn-primary btn-xs" type="submit" value="Search">
+							</form>
+							<form ng-submit="search.clearSearch()">
+								<input class="clearSearchButtom" type="submit" value="">
+							</form>
+						</div>
+						<a target="_blank" href="http://soundcloud.com">
+							<div class="poweredBy">
+							</div>
+						</a>
 					</div>
-
 					<div class="searchResContainer">
 						<table class="table table-hover table-condensed" style="width:100%">
 							<!-- Headings for each column in the table-->
-							<tr>
-								<th>Title</th>
-								<th>Duration</th>
-								<th>Username</th>
-								<th>Genre</th>
-							</tr>
-
-							<!-- Filter fields for each column-->
-							<tr>
-								<td>
-									<div>
-							        	<input type="text" ng-model="search.title" ng-change='filter()' size="30"
-										placeholder="Title filter">
-							      	</div>
-								</td>
-
-								<td>
-									<form ng-submit="search.sortByDuration()">
-										Sort
-										<input type="checkbox" ng-model="search.ascending" ng-click='filter()'>
-									</form>
-								</td>
-
-								<td>
+							<tr id="searchResHeader">
+								<th style="padding: 10px;">
+									<form ng-submit="search.filter()">
+							        	<input class="searchFilter" type="text" ng-model="search.title" ng-change='filter()' size="30"
+										placeholder="Title">
+							      	</form>
+							    </th>
+								<th style="padding: 10px;">
 									<form ng-submit="search.filter()">
 										<input class="searchFilter" type="text" ng-model="search.user" ng-change='filter()' size="30"
-										placeholder="User filter">
+										placeholder="Artist">
 									</form>
-								</td>
-								<td>
+								</th>
+								<th style="padding: 10px;">
 									<form ng-submit="search.filter()">
 										<input class="searchFilter" type="text" ng-model="search.genre" ng-change='filter()' size="30"
-										placeholder="Genre filter">
+										placeholder="Genre">
 									</form>
-								</td>
+								</th>
+								<th></th>
 							</tr>
 
 							<!-- Display the results-->
-							<tr ng-repeat="track in search.display">
+							<tr ng-click="search.addSong($index)" ng-repeat="track in search.display">
 								<td>{{track.title}} </td>
-								<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
 								<td>{{track.user.username}}</td>
 								<td>{{track.genre}}</td>
-								<td>
-									<form ng-submit="search.addSong($index)">
-										<input class="btn btn-primary btn-xs" type="submit" value="Add">
-									</form>
-								</td>
+								<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
 							</tr>
 						</table>
 					</div>
-				</div>
-				<div class="searchResContainer">
-					<table class="table table-hover table-condensed" style="width:100%">
-						<tr>
-							<th>Title</th>
-							<th>Duration</th>
-							<th>Username</th>
-							<th>Genre</th>
-						</tr>
-
-						<tr>
-							<td>
-								<div>
-						        	<input type="text" ng-model="search.title" ng-change='filter()' size="30"
-									placeholder="Title filter">
-						      	</div>
-							</td>
-
-							<td>
-								<form ng-submit="search.sortByDuration()">
-									Sort
-									<input type="checkbox" ng-model="search.ascending" ng-click='filter()'>
-								</form>
-							</td>
-
-							<td>
-								<form ng-submit="search.filter()">
-									<input class="searchFilter" type="text" ng-model="search.user" ng-change='filter()' size="30"
-									placeholder="User filter">
-								</form>
-							</td>
-							<td>
-								<form ng-submit="search.filter()">
-									<input class="searchFilter" type="text" ng-model="search.genre" ng-change='filter()' size="30"
-									placeholder="Genre filter">
-								</form>
-							</td>
-						</tr>
-
-						<tr ng-repeat="track in search.display">
-							<td>{{track.title}} </td>
-							<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
-							<td>{{track.user.username}}</td>
-							<td>{{track.genre}}</td>
-							<td>
-								<form ng-submit="search.addSong($index)">
-									<input class="btn btn-primary btn-xs" type="submit" value="Add">
-								</form>
-							</td>
-						</tr>
-					</table>
 				</div>
 				<div class="tiles" ng-controller="TileCtrl">
 					<div ng-repeat="track in tracks" id="{{track.format.cls}}" class="tile live-tile" style="left: {{track.format.left}}px; top: {{track.format.top}}px;" data-direction="vertical" data-mode="flip">
@@ -296,10 +245,6 @@
 							</div>
 						</div>
 					</div>
-					
-					<script>
-						$("div.tiles").hide();
-					</script>
 				</div>
 			</div>
 			<div class="rightContainer">
