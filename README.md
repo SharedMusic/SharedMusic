@@ -22,7 +22,7 @@ https://jukeboxmusic.herokuapp.com/dev_documentation
 ## Progress:
 
 Zero-Feature Release:
-https://jukeboxmusic.herokuapp.com/zero.html
+https://jukeboxmusic.herokuapp.com/zero
 
 Beta Release/Feature-Complete: Look in github history for app.html
 
