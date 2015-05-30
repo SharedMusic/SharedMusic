@@ -42,7 +42,6 @@ angular.module('search', ['socketio'])
 	
 					//display nothing/clear results when blank search
 					if (query == "" ) {
-						console.log('inside')
 						search.results = []
 						search.display = []
 					}

@@ -1,85 +1,608 @@
-body{
-	padding: 5px;
+body {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+	font-family: 'Raleway', sans-serif;
+	overflow: hidden;
+	color: #EEEEEE;
+	background: #464646;
 }
 
-/*
-	For errors/alerts
-	Change left and top to be centered
-*/
-.alert{
-	position: fixed;
-	left: 0;
-	top: 0;
-	z-index: 1000;
+a {
+	text-decoration: none;
 }
 
-#tileControl {
-	height: auto;
+a:hover {
+	text-decoration: none;
+}
+
+input:focus {
+	outline: none;
+}
+
+textarea:focus {
+	outline: none;
+}
+
+div.volumeContainer {
+	position: absolute;
+  	bottom: 0px;
+}
+
+input[type=range] {
+	-webkit-appearance: none;
+	background-color: #EEEEEE;
+	width: 180px;
+	height: 4px;
+	border-radius: 2px;
+	margin: 0px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+input[type=range]:focus {
+	outline: none;
+}
+
+::-webkit-slider-thumb, ::-moz-range-thumb, ::-ms-thumb {
+	-webkit-appearance: none;
+	background-color: #111;
+	width: 10px;
+	height: 10px;
+}
+
+.table-hover>tbody>tr:hover {
+	background-color: #363636;
+	cursor: pointer;
+}
+
+tr#searchResHeader:hover {
+	cursor:auto;
+	background-color: initial;
+}
+
+div.leftContainer {
+	position: absolute;
+	left: 0px;
+	width: 204px;
+	height: 100%;
+	overflow: hidden;
+	background: #262626;
+	text-align: center;
+}
+
+p.tileDetails {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 200;
+	font-size: 12px;
+	padding: 0px;
+	margin: 3px;
+	line-height: 15px;
+	height: 15px;
 	overflow: hidden;
 }
 
-#volumeControl {
-	width:150px;
+p.tileDetails#duration {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	font-family: 'Helvetica', Arial, sans-serif;
+	margin-right: 6px;
+	margin-bottom: 3px;
 }
 
-#dataContainer li {
-	list-style-type: none;
+div.logo {
+	background: #161616;
+	height: 66px;
 }
 
-h3 {
-	margin-top:0px;
+img.logo {
+	width: 190px;
+	height: auto;
+	margin: 7px;
 }
 
-#currentSongContainer {
-	/*width:160px;*/
+div.userList {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: 245px;
 }
 
-#bootVotes {
-	float: right;
-	padding-right: 10px;
+div.user {
+	position: relative;
+	width: 100%;
+	height: 55px;
+	overflow: hidden;
+	text-align: left;
 }
 
-#bootVoteButtonContainer {
-	margin: text-align: center;
-  margin: 0px auto;
-  margin-bottom:5px;
-  width: 95%;
+img.avatar {
+	margin: 10px;
+	width: 35px;
+	height: 35px;
 }
 
-#bootVoteButtonContainer > button {
-	display:inline-block;
+h1.userName {
+	position: absolute;
+	margin: 0px;
+	margin-left: 55px;
+	top: 0px;
+	left: 0px;
+	font-size: 22px;
+	font-weight: 200;
+	line-height: 55px;
 }
 
-#iconContainer {
-	float: right;
-	padding-right: 10px;
+div.musicButtonContainer {
+	height: 50px;
+	position: relative;
 }
 
-#iconLink {
-
+div#bootVotes {
+	position: relative;
+	top: 0px;
+	height: 100%;
 }
 
-#volumeText {
-	margin-left:67.5px;
+div#bootVoteButtonContainer {
+	position: absolute;
+	top: 0px;
+	left: 0px;
 }
 
-#musicButtonsContainer {
-	float: right;
-	padding-right: 30%;
+button#bootVoteButton {
+	background: #cbe86b;
+	height: 30px;
+	width: 120px;
+	border: none;
+	font-family: 'Raleway', sans-serif;
+	line-height: 30px;
+	font-weight: 400;
+	color: #262626;
+	font-size: 15px;	
 }
 
-#musicControl {
-	position: fixed;
-  bottom: 0;
-  /*height: 61px;*/
-  width: 100%;
-  background-color: white;
-  box-shadow: 0 0 30px #ccc;
-  padding-top: 2px;
-	z-index:999;
+p#bootVoteCount {
+	font-size: 20px;
+	font-weight: 200;
+	line-height: 30px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	margin: 0px;
 }
 
-#currentSongContainer > *, #musicButtonsContainer > * {
-	display: inline-block;
-	vertical-align: bottom;
+div.middleContainer {
+	position: absolute;
+	height: 100%;
+	left: 0px;
+	right: 0px;
+	margin-left: 204px;
+	margin-right: 290px;
 }
+
+div.searchBar {
+	height: 66px;
+	width: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+	background: #cbe86b;
+}
+
+input.searchFilter {
+	height: 30px;
+	border-radius: 15px;
+	border: none;
+	padding-left: 15px;
+	margin-right: 5px;
+	width: 250px;
+	color: #111111;
+}
+
+input.searchFilter:focus {
+	outline: none;
+}
+
+input.searchFilter::-webkit-input-placeholder {
+   color: #333333;
+}
+
+input.searchFilter:-moz-placeholder { /* Firefox 18- */
+   color: #333333;  
+}
+
+input.searchFilter::-moz-placeholder {  /* Firefox 19+ */
+   color: #333333;  
+}
+
+input.searchFilter:-ms-input-placeholder {  
+   color: #333333;
+}
+
+div.poweredBy {
+	height: 36px;
+	width: 110px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	margin: 13px;
+	margin-bottom: 17px;
+	background-image: url('/images/powered_by_soundcloud.png');
+	background-size: auto 35px;
+}
+
+div.rightContainer {
+	position: absolute;
+	right: 0px;
+	width: 290px;
+	height: 100%;
+	background: #262626;
+}
+
+div.chatContainer {
+	text-align: center;
+}
+
+h1.roomName {
+	margin: 15px;
+	margin-top: 20px;
+	margin-bottom: 0px;
+	max-height: 40px;
+	overflow: hidden;
+	font-size: 30px;
+	font-weight: 100;
+}
+h1.roomName:focus {
+	outline: 1px solid #EEEEEE;
+}
+
+hr.chat {
+	border: none;
+	border-top: 1px solid #EEEEEE;
+	margin: 0px auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 0px auto;
+	width: 250px;
+}
+
+div.chatStream {
+	margin-top: 80px;
+	margin-bottom: 100px;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 20px;
+	right: 20px;
+	text-align: left;
+	line-height: 17px;
+	overflow: hidden;
+}
+
+div.messages {
+	height: 100%;
+}
+
+div.chatTextArea {
+	position: absolute;
+	bottom: 0px;
+	left: 20px;
+	right: 20px;
+	height: 100px;
+	margin: 0px;
+}
+
+textarea.chatTextArea {
+	width: 236px;
+	height: 44px;
+	padding-right: 25px;
+	margin-top: 10px;
+	resize: none;
+	border: none;
+	padding: 7px;
+	font-size: 12px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	color: #999999;
+}
+
+span.userName {
+	font-size: 12px;
+	font-weight: bold;
+	color: #cbe86b;
+}
+
+span.colon {
+	margin-left: 1px;
+	margin-right: 2px;
+}
+
+p.chatMessage {
+	margin: 0px;
+	font-size: 12px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+div.chatMessage {
+	margin-top: 8px;
+	position: relative;
+	bottom: 0px;
+}
+
+div.tiles {
+	position: absolute;
+	margin-top: 66px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	overflow: hidden;
+}
+
+div.live-tile {
+	margin: 0px;
+}
+
+div.tile {
+	position: absolute;
+}
+
+div.tileImage {
+	background-size: 100%;
+	cursor: pointer;
+}
+
+div.front {
+	background-size: 100%;
+}
+
+div.back {
+	background-size: 100%;
+}
+
+div#s100 {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+}
+
+div#s200 {
+	position: absolute;
+	width: 200px;
+	height: 200px;
+}
+
+div#s300 {
+	position: absolute;
+	width: 300px;
+	height: 300px;
+}
+
+hr.leftBar {
+	width: 180px;
+	border: none;
+	margin: 10px;
+	border-top: 1px solid #EEEEEE;
+}
+
+div.songQueue {
+	height: 165px;
+	position: relative;
+	bottom: 0px;
+	left: 0px;
+}
+
+div.modal-dialog {
+	margin-top: 100px;
+	width: 400px;
+}
+
+div.modal-content {
+	boder-radius: 0px;
+	background: #BBBBBB;
+}
+
+h1.welcome {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 300;
+	font-size: 30px;
+	color: #111111;
+	margin: 0px;
+}
+
+hr.welcome {
+	margin-top: 10px;
+	border: none;
+	border-top: 1px solid #111111;
+}
+
+input.welcomeInput {
+	width: 368px;
+	background-color: #262626;;
+	height: 40px;
+	font-size: 20px;
+	padding-left: 10px;
+	border-radius: 6px;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 200;
+	border: none;
+	color: #EEEEEE;
+}
+
+input.welcomeInput::-webkit-input-placeholder {
+   color: #EEEEEE;
+}
+
+input.welcomeInput:-moz-placeholder { /* Firefox 18- */
+   color: #EEEEEE;  
+}
+
+input.welcomeInput::-moz-placeholder {  /* Firefox 19+ */
+   color: #EEEEEE;  
+}
+
+input.welcomeInput:-ms-input-placeholder {  
+   color: #EEEEEE; 
+}
+
+input.clearSearchButtom {
+	background: url("/images/cancelSearchButton.png");
+	width: 36px;
+	height: 36px;
+	border: none;
+	position: absolute;
+	top: 0px;
+	margin: 15px;
+	left: 0px;
+}
+
+input.welcomeButton {
+	margin-top: 15px;
+	width: 120px;
+	height: 35px;
+	background: #cbe86b;
+	border-radius: 4px;
+	border: none;
+	font-family: 'Raleway', sans-serif;
+	font-size: 20px;
+	font-weight: 200;
+	color: #111111;
+}
+
+div.search {
+	padding: 15px;
+	margin-left: 50px;
+}
+
+div.searchResContainer {
+	background: rgba(0,0,0,0.7);
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	width: 100%;
+	overflow: hidden;
+}
+ 
+table {
+	margin-bottom: 0px;
+	border: none;
+}
+
+tr {
+	border-top: 1px solid #EEEEEE;
+}
+
+.table-condensed>tbody>tr>th {
+	color: #EEEEEE;
+	font-family: 'Raleway', sans-serif;
+	font-size: 18px;
+	font-weight: 200;
+	padding-left: 10px;
+}
+
+.table-condensed>tbody>tr>td {
+	border: none;
+}
+
+input.search {
+	border-radius: 18px;
+	height: 36px;
+	border: none;
+	background-color: #262626;
+	width: 240px;
+	font-family: "Raleway", sans-serif;
+	font-weight: 300;
+	font-size: 20px;
+	padding-left: 20px;
+	color: #EEEEEE;
+}
+
+input.search:focus {
+	outline: none;
+}
+
+input.searchSubmit {
+	visibility: hidden;
+}
+
+input.welcomeButton:hover {
+	color: initial;
+	background: #cbe86b;
+}
+
+div.track {
+	width: 100%;
+	overflow: hidden;
+	text-align: left;
+	margin-left: 10px;
+}
+
+div.trackInfo {
+	width: 100%;
+}
+
+h1.track {
+	margin: 0px;
+	font-size: 15px;
+	font-weight: 200;
+	line-height: 20px;
+}
+
+div.currentSong {
+	margin: 12px;
+	margin-bottom: 0px;
+}
+
+div.albumArt {
+	background-size: 100%;
+	width: 180px;
+	height: 180px;
+}
+
+div.time {
+	width: 100%;
+	height: 22px;
+	background: rgba(0,0,0,0.7);
+	position: relative;
+	top: 158px;
+}
+
+p.time {
+	color: #EEEEEE;
+	text-align: right;
+	font-family: 'Helvetica', Arial, sans-serif;
+	font-weight: 100;
+	font-size: 14px;
+	line-height: 22px;
+	margin: 0px;
+	margin-right: 5px;
+}
+
+div.songInfo {
+	margin-bottom: 5px;
+}
+
+h1.songTitle {
+	font-weight: 200;
+	font-size: 20px;
+	margin: 0px;
+	margin-top: 6px;
+	text-align: left;
+	max-height: 45px;
+  	overflow: hidden;
+}
+p.artistName {
+	font-weight: 200;
+	font-size: 13px;
+	margin: 0px;
+	margin-top: 0px;
+	text-align: left;
+}
+
+
+
+
+
+

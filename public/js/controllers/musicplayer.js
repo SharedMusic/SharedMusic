@@ -66,7 +66,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 			mP.currentSong.stop();
 			mP.currentSong = null;
 		}
-		console.log(mP.trackInfo);	//I don't know why but this is necessary to be here
+		if (!mP.trackInfo) mP.trackInfo = null;
 		if ((old == null && mP.trackInfo != null) || (old != null && mP.trackInfo != null && mP.currentSongEpoch != oldEpoch)) {
 			// Calls SoundCloud API: SC.stream(trackPath, [options], [callback])
 			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){
@@ -136,8 +136,6 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 							}, 500);
 
 							mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
-
-							console.log(mP.currentSong.position);
 						}
 					});
 				// }).

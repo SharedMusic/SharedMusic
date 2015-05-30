@@ -22,7 +22,6 @@ socketio.factory('roomstateFactory', ['socket', function(socket){
 
 	socket.on('onRoomUpdate',
 		function(roomState) {
-			//console.log('helloworld');
 			updateUsersFn(roomState.users);
 			updateQueueFn(roomState.trackQueue);
 			updateBootVotesFn(roomState.bootVotes.length, roomState.users.length);

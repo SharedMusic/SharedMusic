@@ -14,14 +14,15 @@ router.get('/createRoom', function(req, res){
 	var newRoom = new Room('NewRoom', uRoomID, io.onRoomChange(uRoomID));
 
 	io.rooms[uRoomID] = newRoom;
-	console.log('redirecting');
+	console.log('created room: ' + uRoomID);
 	res.redirect('/room/?roomID=' + uRoomID);
 })
 
 router.get('/room', function (req, res) {
 	var room = io.rooms[req.param.roomID];
+	console.log('rendered room: ' + req.param.roomID);
 	// Pass room to the view and return view to client
-	res.sendFile(path.join(__dirname, '../views/app3.html'));
+	res.sendFile(path.join(__dirname, '../views/app.html'));
 });
 
 
@@ -34,12 +35,13 @@ router.get('/createRoom2', function(req, res){
 	var newRoom = new Room('NewRoom', uRoomID, io.onRoomChange(uRoomID));
 
 	io.rooms[uRoomID] = newRoom;
-	console.log('redirecting');
+	console.log('created test room: ' + uRoomID);
 	res.redirect('/room2/?roomID=' + uRoomID);
 })
 
 router.get('/room2', function (req, res) {
 	var room = io.rooms[req.param.roomID];
+	console.log('rendered test room: ' + req.param.roomID);
 	// Pass room to the view and return view to client
 	res.sendFile(path.join(__dirname, '../views/app2.html'));
 });
@@ -61,7 +63,18 @@ router.get('/room2/scrape', function (req, res) {
 
 // for zero release / product page
 router.get('/zero', function (req, res) {
-	res.sendFile(path.join(__dirname, '../views/zero.html'))
+	console.log('rendered zero');
+	res.sendFile(path.join(__dirname, '../views/zero.html'));
+});
+
+router.get('/user_documentation', function (req, res) {
+	console.log('rendered user documentation');
+	res.sendFile(path.join(__dirname, '../documentation/user_documentation.pdf'));
+});
+
+router.get('/dev_documentation', function (req, res) {
+	console.log('rendered dev documentation');
+	res.sendFile(path.join(__dirname, '../documentation/dev_documentation.pdf'));
 });
 
 

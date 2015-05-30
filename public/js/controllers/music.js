@@ -8,7 +8,6 @@ musicList.controller('MusicController', ['$scope', 'roomstateFactory', function(
 	current = [];
 
 	roomstateFactory.setupGetQueue(function(queue) {
-		console.log(queue);
 		mL.queue = queue;
 	});
 
