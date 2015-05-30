@@ -14,19 +14,20 @@ Tanner Coval - tcoval
 ## Documents:
 
 User Documentation:
-https://jukebox.herokuapp.com/user_documentation
+https://jukeboxmusic.herokuapp.com/user_documentation
 
 Developer Documentation:
-https://jukebox.herokuapp.com/dev_documentation
+https://jukeboxmusic.herokuapp.com/dev_documentation
 
 ## Progress:
 
 Zero-Feature Release:
-https://jukebox.herokuapp.com/zero.html
+https://jukeboxmusic.herokuapp.com/zero.html
 
-Beta Release/Feature-Complete (Look in github history):
-Current Release
-https://jukebox.herokuapp.com/
+Beta Release/Feature-Complete: Look in github history for app.html
+
+Current Release:
+https://jukeboxmusic.herokuapp.com/
 
 Updated documents for beta can be found in documentation/updates_5-15
 
