@@ -1,5 +1,5 @@
-# SharedMusic
-This is the readme for the Shared Music Project in UW CSE 403 Spring 2015
+# Jukebox (formerly SharedMusic)
+This is the readme for the Jukebox Project in UW CSE 403 Spring 2015
 
 ## Group Members:
 Keith Yang - keith619
@@ -14,21 +14,24 @@ Tanner Coval - tcoval
 ## Documents:
 
 User Documentation:
-https://shared-music.herokuapp.com/user_documentation
+https://jukebox.herokuapp.com/user_documentation
 
 Developer Documentation:
-https://shared-music.herokuapp.com/dev_documentation
+https://jukebox.herokuapp.com/dev_documentation
 
 ## Progress:
 
 Zero-Feature Release:
-https://shared-music.herokuapp.com/zero.html
+https://jukebox.herokuapp.com/zero.html
 
-Beta Release/Feature-Complete:
-https://shared-music.herokuapp.com/app.html
+Beta Release/Feature-Complete (Look in github history):
+Current Release
+https://jukebox.herokuapp.com/
 
 Updated documents for beta can be found in documentation/updates_5-15
 
 Updated documents for feature-complete can be found in documentation/updates_5-22
 
 For the feature-complete release there is an issue of being able to play song that cannot be streamed correctly that we are still working on, the issue can be found at https://github.com/SharedMusic/SharedMusic/issues/7
+
+Updated documents for release candidate can be found in documentation/updates_5-29
