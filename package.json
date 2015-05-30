@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "node_modules/.bin/mocha; mocha --require blanket -R html-cov > coverage.html",
-    "unit-test": "node node_modules/karma/bin/karma start test/karma.conf.js --single-run"
+    "unit-test": "node node_modules/karma/bin/karma start test/karma.conf.js"
   },
   "dependencies": {
     "angular": "^1.4.0",
