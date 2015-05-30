@@ -117,18 +117,13 @@
 					<img class="logo" src="/images/dark-logo-t.png">
 				</div></a>
 				<div class="currentSong" ng-controller="MusicPlayer as musicplayer">
-					<a ng-if="musicplayer.getLink()" target="_blank" href="{{musicplayer.getLink()}}">
+					<a target="_blank" href="{{musicplayer.getLink() || '/'}}">
 						<div class="albumArt" style="background-image: url({{musicplayer.getAlbumArt()}});">
 							<div class="time">
 								<p class="time">{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
 							</div>
 						</div>
 					</a>
-					<div ng-if="!musicplayer.getLink()" class="albumArt" style="background-image: url({{musicplayer.getAlbumArt()}});">
-							<div class="time">
-								<p class="time">{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
-							</div>
-						</div>
 					<div class="songInfo">
 						<h1 class="songTitle">{{musicplayer.trackInfo.title}}</h1>
 						<p class="artistName">{{musicplayer.trackInfo.user.username}}</p>
