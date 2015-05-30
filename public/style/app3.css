@@ -552,7 +552,6 @@ div.currentSong {
 }
 
 div.albumArt {
-	background-image: url('/images/albumArt/album1.jpg');
 	background-size: 100%;
 	width: 180px;
 	height: 180px;
