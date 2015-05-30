@@ -14,13 +14,10 @@ router.get('/createRoom', function(req, res){
 	var newRoom = new Room('NewRoom', uRoomID, io.onRoomChange(uRoomID));
 
 	io.rooms[uRoomID] = newRoom;
-	console.log('created room: ' + uRoomID);
 	res.redirect('/room/?roomID=' + uRoomID);
 })
 
 router.get('/room', function (req, res) {
-	var room = io.rooms[req.param.roomID];
-	console.log('rendered room: ' + req.param.roomID);
 	// Pass room to the view and return view to client
 	res.sendFile(path.join(__dirname, '../views/app.html'));
 });
