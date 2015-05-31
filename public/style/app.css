@@ -6,8 +6,21 @@ body {
 	font-family: 'Raleway', sans-serif;
 	overflow: hidden;
 	color: #EEEEEE;
-	background: #464646;
+	background: #161616;
 }
+
+::-webkit-scrollbar { 
+	background: none;
+	width: 6px;
+}
+
+/*
+::-webkit-scrollbar-thumb { 
+	background: #EEEEEE;
+	border-radius: 3px;
+
+}
+*/
 
 a {
 	text-decoration: none;
@@ -103,38 +116,30 @@ img.logo {
 	margin: 7px;
 }
 
-div.userList {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	height: 245px;
-}
-
 div.user {
 	position: relative;
-	width: 100%;
-	height: 55px;
-	overflow: hidden;
-	text-align: left;
+	width: 290px;
+	height: 70px;
 }
 
-img.avatar {
+div.avatar {
 	margin: 10px;
-	width: 35px;
-	height: 35px;
+	width: 50px;
+	height: 50px;
+	background-size: 100%;
 }
 
 h1.userName {
-	position: absolute;
+	position: relative;
 	margin: 0px;
-	margin-left: 55px;
-	top: 0px;
-	left: 0px;
-	font-size: 22px;
-	font-weight: 200;
-	line-height: 55px;
+	top: -70px;
+	left: 70px;
+	line-height: 70px;
 }
 
 div.musicButtonContainer {
+	margin-left: 12px;
+	margin-right: 12px;
 	height: 50px;
 	position: relative;
 }
@@ -179,7 +184,7 @@ div.middleContainer {
 	left: 0px;
 	right: 0px;
 	margin-left: 204px;
-	margin-right: 290px;
+	margin-right: 360px;
 }
 
 div.searchBar {
@@ -236,10 +241,19 @@ div.poweredBy {
 
 div.rightContainer {
 	position: absolute;
-	right: 0px;
+	right: 70px;
 	width: 290px;
 	height: 100%;
 	background: #262626;
+}
+
+div.userContainer {
+	position: absolute;
+	right: 0px;
+	height: 100%;
+	width: 70px;
+	background: #161616;
+	overflow-x: hidden;
 }
 
 div.chatContainer {
@@ -279,7 +293,8 @@ div.chatStream {
 	right: 20px;
 	text-align: left;
 	line-height: 17px;
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 div.messages {
@@ -332,6 +347,7 @@ div.chatMessage {
 }
 
 div.tiles {
+	background: #161616;
 	position: absolute;
 	margin-top: 66px;
 	top: 0px;
@@ -381,17 +397,16 @@ div#s300 {
 }
 
 hr.leftBar {
-	width: 180px;
 	border: none;
 	margin: 10px;
 	border-top: 1px solid #EEEEEE;
 }
 
 div.songQueue {
-	height: 165px;
 	position: relative;
-	bottom: 0px;
-	left: 0px;
+	overflow-x: hidden;
+	margin-left: 12px;
+	margin-right: 12px;
 }
 
 div.modal-dialog {
@@ -477,7 +492,6 @@ div.search {
 }
 
 div.searchResContainer {
-	background: rgba(0,0,0,0.7);
 	position: absolute;
 	top: 0px;
 	bottom: 0px;
@@ -537,7 +551,6 @@ div.track {
 	width: 100%;
 	overflow: hidden;
 	text-align: left;
-	margin-left: 10px;
 }
 
 div.trackInfo {
@@ -556,10 +569,33 @@ div.currentSong {
 	margin-bottom: 0px;
 }
 
+div.leftSubContainer {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	width: 100%;
+	position: absolute;
+	top: 266px;
+	bottom: 0px;
+	margin-bottom: 12px;
+}
+
 div.albumArt {
 	background-size: 100%;
 	width: 180px;
 	height: 180px;
+}
+
+hr.userSplit {
+	margin: 10px 16px 16px 16px;
+}
+
+div.expandUserTab {
+	width: 36px;
+	height: 36px;
+	margin: 13px 17px 14px 17px;
+	cursor: pointer;
+	background-size: 100%;
+	background-image: url('/images/expandUserTab.png');
 }
 
 div.time {
@@ -582,14 +618,13 @@ p.time {
 }
 
 div.songInfo {
-	margin-bottom: 5px;
+	margin: 0px 6px 5px 12px;
 }
 
 h1.songTitle {
 	font-weight: 200;
 	font-size: 20px;
 	margin: 0px;
-	margin-top: 6px;
 	text-align: left;
 	max-height: 45px;
   	overflow: hidden;
@@ -600,6 +635,7 @@ p.artistName {
 	margin: 0px;
 	margin-top: 0px;
 	text-align: left;
+	overflow: hidden;
 }
 
 

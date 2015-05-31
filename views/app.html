@@ -19,11 +19,7 @@
 		<link rel="stylesheet" type="text/css" href="/style/Metrojs.css">
 		<link rel="stylesheet" type="text/css" href="/style/tileTest.css">
 		<link rel="stylesheet" type="text/css" href="/style/app.css">
-		<link rel="stylesheet" type="text/css" href="/style/nanoScroller.css">
 		<link href="https://fonts.googleapis.com/css?family=Raleway:400,700,600,500,300,200,100,800,900" rel="stylesheet" type="text/css">
-
-		<!-- nanoScroller -->
-		<script src="/js/nanoScroller.js"></script>
 
 		<!-- Angular -->
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
@@ -39,6 +35,17 @@
 
 		<script src="/js/MetroJs.js"></script>
 		<script src="/js/tiles.js"></script>
+
+		<!-- Google Analytics -->
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-41997789-3', 'auto');
+			ga('send', 'pageview');
+		</script>
 
 		<script>
 			$(window).load(function(){
@@ -58,6 +65,20 @@
 				$('.wrapper').hide();
 				$('input.clearSearchButtom').hide();
 				$("div.tiles").hide();
+				var expand = true;
+				$('div.expandUserTab').click(function() {
+					if (expand) {
+						$('div.userContainer').animate({width: "360px"}, 250);
+						$('div.avatar').animate({marginLeft: "16px"}, 250);
+						$('div.expandUserTab').css({backgroundImage: "url('/images/reduceUserTab.png')"});
+					} else {
+						$('div.userContainer').animate({width: "70px"}, 250);
+						$('div.avatar').animate({marginLeft: "10px"}, 250);
+						$('div.expandUserTab').css({backgroundImage: "url('/images/expandUserTab.png')"});
+					}
+					expand = !expand;
+				});
+
 				var count = 0;
 				var timer = setInterval(function () {
 					count++;
@@ -87,8 +108,7 @@
 					$("div.tiles").fadeIn(1000);
 				}, 3000);
 				
-			}); 
-			$(".nano").nanoScroller();
+			});
 		</script>
 	</head>
 	<body>
@@ -124,6 +144,8 @@
 							</div>
 						</div>
 					</a>
+				</div>
+				<div class="leftSubContainer" ng-controller="MusicPlayer as musicplayer">
 					<div class="songInfo">
 						<h1 class="songTitle">{{musicplayer.trackInfo.title}}</h1>
 						<p class="artistName">{{musicplayer.trackInfo.user.username}}</p>
@@ -142,22 +164,11 @@
 							</datalist>
 						</div>
 					</div>
-				</div>
-				<hr class="leftBar">
-				<div class="songQueue nano has-scrollbar" ng-controller="MusicController as musicList">
-					<div class="nano-content">
+					<hr class="leftBar">
+					<div class="songQueue" ng-controller="MusicController as musicList">
 						<div class="track" ng-repeat="song in musicList.queue track by $index">
 							<h1 class="track">{{song.title | cut:true:24:' ...'}} <br/> by {{song.user.username | cut:true:20:' ...'}}</h1>
 							<hr ng-if="!$last" class="leftBar" style="margin-left: 0px; margin-right: 0px;">
-						</div>
-					</div>
-					<div class="nano-pane" style="display: block;"><div class="nano-slider" style="height: 34px; transform: translate(0px, 0px);"></div></div>
-				</div>
-				<hr class="leftBar">
-				<div class="userList nano" ng-controller="UserController as userList">
-					<div class="nano-content">
-						<div class="user" ng-repeat="user in userList.users track by $index">
-							<img class="avatar" ng-src="/images/avatars/{{($index % 15) + 1}}.jpg"><h1 class="userName">{{user.name}}</h1>
 						</div>
 					</div>
 				</div>
@@ -250,10 +261,11 @@
 					</div>
 					
 					<div class="chatStream">
-						<div class="messagesContainer nano">
-							<div class="messages nano-content">
+						<div class="messagesContainer">
+							<div class="messages">
 								<div class="chatMessage" ng-repeat="message in receivedMessages">
 									<p class="chatMessage"><span class="userName">{{message.name}}</span><span class="colon">:</span>{{message.message}}</p>
+									{{updateScrollArea()}}
 								</div>
 							</div>
 						</div>
@@ -262,6 +274,16 @@
 						<hr class="chat">
 						<textarea class="chatTextArea" placeholder="Send a message" ng-model="message" ng-enter="sendMessage()"></textarea>
 					</div>
+				</div>
+			</div>
+			<div class="userContainer" ng-controller="UserController as userList">
+				<div class="expandUserTab">
+				</div>
+				<hr class="userSplit">
+				<div class="user" ng-repeat="user in userList.users track by $index">
+					<div class="avatar" style="background-image: url(/images/avatars/{{($index % 15) + 1}}.jpg);">
+					</div>
+					<h1 class="userName">{{user.name}}</h1>
 				</div>
 			</div>
 		</div>
