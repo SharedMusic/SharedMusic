@@ -136,39 +136,41 @@
 				<a href="/"><div class="logo">
 					<img class="logo" src="/images/dark-logo-t.png">
 				</div></a>
-				<div class="currentSong" ng-controller="MusicPlayer as musicplayer">
-					<a target="_blank" href="{{musicplayer.getLink() || '/'}}">
-						<div class="albumArt" style="background-image: url({{musicplayer.getAlbumArt()}});">
-							<div class="time">
-								<p class="time">{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
+				<div ng-controller="MusicPlayer as musicplayer">
+					<div class="currentSong">
+						<a target="_blank" href="{{musicplayer.getLink() || '/'}}">
+							<div class="albumArt" style="background-image: url({{musicplayer.getAlbumArt()}});">
+								<div class="time">
+									<p class="time">{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="leftSubContainer">
+						<div class="songInfo">
+							<h1 class="songTitle">{{musicplayer.trackInfo.title}}</h1>
+							<p class="artistName">{{musicplayer.trackInfo.user.username}}</p>
+						</div>
+						<div class="musicButtonContainer">
+							<div id="bootVotes" ng-controller="BootVotes as bootVotes">
+								<div id="bootVoteButtonContainer">
+									<button id="bootVoteButton" ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
+								</div>
+								<p id="bootVoteCount" align="center"> {{bootVotes.bootCount}}/{{bootVotes.userCount}}</p>
+							</div>
+							<div class="volumeContainer">
+								<input class="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" step="1" list="vol-detents"/>
+								<datalist id="vol-detents">
+									<option value="50">
+								</datalist>
 							</div>
 						</div>
-					</a>
-				</div>
-				<div class="leftSubContainer" ng-controller="MusicPlayer as musicplayer">
-					<div class="songInfo">
-						<h1 class="songTitle">{{musicplayer.trackInfo.title}}</h1>
-						<p class="artistName">{{musicplayer.trackInfo.user.username}}</p>
-					</div>
-					<div class="musicButtonContainer">
-						<div id="bootVotes" ng-controller="BootVotes as bootVotes">
-							<div id="bootVoteButtonContainer">
-								<button id="bootVoteButton" ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
+						<hr class="leftBar">
+						<div class="songQueue" ng-controller="MusicController as musicList">
+							<div class="track" ng-repeat="song in musicList.queue track by $index">
+								<h1 class="track">{{song.title | cut:true:24:' ...'}} <br/> by {{song.user.username | cut:true:20:' ...'}}</h1>
+								<hr ng-if="!$last" class="leftBar" style="margin-left: 0px; margin-right: 0px;">
 							</div>
-							<p id="bootVoteCount" align="center"> {{bootVotes.bootCount}}/{{bootVotes.userCount}}</p>
-						</div>
-						<div class="volumeContainer">
-							<input class="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" step="1" list="vol-detents"/>
-							<datalist id="vol-detents">
-								<option value="50">
-							</datalist>
-						</div>
-					</div>
-					<hr class="leftBar">
-					<div class="songQueue" ng-controller="MusicController as musicList">
-						<div class="track" ng-repeat="song in musicList.queue track by $index">
-							<h1 class="track">{{song.title | cut:true:24:' ...'}} <br/> by {{song.user.username | cut:true:20:' ...'}}</h1>
-							<hr ng-if="!$last" class="leftBar" style="margin-left: 0px; margin-right: 0px;">
 						</div>
 					</div>
 				</div>
