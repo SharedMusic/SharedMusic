@@ -5,11 +5,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	mP.currentSongEpoch = -1;
 	// mP.currentSongURL = roomstateFactory.getSong().permalink_url;
 	mP.currentSong = null;
-
-	mP.muted = false;
-	mP.muteStatus = "Mute Song";
 	mP.volume = 50;
-
 	mP.currentTrackTime = 0;
 	mP.trackTimeUpdater = null;
 
@@ -62,14 +58,14 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 		mP.currentSongEpoch = newEpoch;
 
 		// stop the currently playing song if the next song is null
-		if (old && !mP.trackInfo) {
+		if (mP.currentSong && !mP.trackInfo) {
 			mP.currentSong.stop();
-			mP.currentSong = null;
+			mP.currentSong == null;
+			mP.currentTrackTime = 0;
 		}
-		if (!mP.trackInfo) mP.trackInfo = null;
-		if ((old == null && mP.trackInfo != null) || (old != null && mP.trackInfo != null && mP.currentSongEpoch != oldEpoch)) {
+		if ((!old && mP.trackInfo) || (old && mP.trackInfo && mP.currentSongEpoch != oldEpoch)) {
 			// Calls SoundCloud API: SC.stream(trackPath, [options], [callback])
-			SC.stream("/tracks/"+mP.trackInfo.id, function(sound){
+			SC.stream("/tracks/" + mP.trackInfo.id, function(sound){
 				// Streamable check testing
 				// Does not currently work ($http undefined?)
 				// $http.get('http://api.soundcloud.com/tracks/'+mP.trackInfo.id+'/stream?client_id=337bccb696d7b8442deedde76fae5c10').
@@ -78,16 +74,16 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 					// when the response is available
 					// console.log(status);
 					// console.log(data);
-					if (mP.currentSong != null) {
-						// stop the previous playing song
+					if (mP.currentSong) {
 						mP.currentSong.stop();
+						mP.currentSong = null;
 					}
 					// update to the new song
 					mP.currentSong = sound;
+					mP.currentTrackTime = 0;
 
 					// stop the old song timer
-					if (mP.trackTimeUpdater != null) {
-						mP.currentTrackTime = 0;
+					if (mP.trackTimeUpdater) {
 						clearInterval(mP.trackTimeUpdater);
 					}
 
@@ -109,27 +105,25 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 					// load the song and set position before playing
 					mP.currentSong.load({
 						onload: function() {
-							mP.muted = false;
-							mP.muteStatus = "Mute Song";
-							mP.currentSong.unmute();
 
+							mP.currentSong.setVolume(mP.volume);
 
 							while ((new Date).getTime() < mP.currentSongEpoch) {
 								// wait until the delay is finished
 							}
-
-							mP.currentSong.setVolume(mP.volume);
 							mP.currentSong.play();
 
 							// Once the song starts to play, update the interval
 							mP.trackTimeUpdater = setInterval(function(){
-								mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch;
-								if 	(mP.currentTrackTime < 0) {
+								if (mP.currentSongEpoch) {
+									mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch;
+								} else {
 									mP.currentTrackTime = 0;
 								}
+								mP.currentTrackTime = Math.max(0, mP.currentTrackTime);
 								$scope.$apply();
 
-								if (mP.trackInfo == null || mP.currentTrackTime > mP.trackInfo.duration) {
+								if (!mP.trackInfo || mP.currentTrackTime > mP.trackInfo.duration) {
 									mP.currentTrackTime = 0;
 									clearInterval(mP.trackTimeUpdater);
 								}
@@ -189,20 +183,6 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 			return mP.trackInfo.permalink_url;
 		} else {
 			return mP.trackInfo.user.permalink_url;
-		}
-	}
-
-	mP.muteSong = function() {
-		if (mP.currentSong != null) {
-			if (mP.muted) {
-				mP.muted = false;
-				mP.muteStatus = "Mute Song";
-				mP.currentSong.unmute();
-			} else {
-				mP.muted = true;
-				mP.muteStatus = "Song Muted";
-				mP.currentSong.mute();
-			}
 		}
 	}
 }]);
