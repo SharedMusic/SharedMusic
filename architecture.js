@@ -3,7 +3,8 @@ var sets = require('simplesets');
 var _ = require('underscore')._;
 
 /**
- *	TODO comment user
+ *	User represents the individual end user 
+ *	@constructor
  */
 exports.User = function (p_name, p_id, p_roomID) {
 	this.name = p_name;
@@ -67,11 +68,10 @@ var RoomPrototype = {
 		}
 	},
 
-	//_ prior denotes "private" functions
+	// _ prior denotes "private" functions
 	_hasUser: function(user) {
 		return this._state.users.has(user)
 	},
-	
 	_removeUser: function(user) {
 		return this._state.users.remove(user);
 	},
@@ -88,9 +88,9 @@ var RoomPrototype = {
 	},
 
 	// Adds user's vote to boot the current song
-	// if there is a song in the track queue
-	// If the boot count gets over ceil(half of the
-	// users in the room) then the next track
+	// if there is a song in the track queue.
+	// If the boot count gets over half of the
+	// users in the room then the next track
 	// is requested and boot votes are cleared.
 	bootTrack: function (user) {
 		if(!this._checkUserExistsInRoom(user)) {
@@ -100,11 +100,11 @@ var RoomPrototype = {
 		if(this._state.bootVotes.has(user.id)) {
 			this._onChange(null, 'User already voted to boot!', user.id);
 		} else if(!this._state.trackQueue.isEmpty()) {
-
-
 			this._state.bootVotes.add(user.id);
-			if(this._state.bootVotes.size() >=
-			   Math.ceil(this._state.users.size() / 2)) {
+
+			var boots = this._state.bootVotes.size()
+			var limit = Math.ceil(this._state.users.size() / 2)
+			if(boots >= limit) {
 			   	clearTimeout(this._songTimeout);
 					this.nextTrack();
 			} else {
@@ -113,7 +113,7 @@ var RoomPrototype = {
 		}
 	},
 
-	// Adds the track to the room's track queue
+	// Adds a given track to the room's track queue
 	addTrack: function (user, track) {
 		if(!this._checkUserExistsInRoom(user)) {
 			return;
@@ -132,10 +132,15 @@ var RoomPrototype = {
 		this._onChange(this._state, null, null);
 	},
 
-	_playSong: function(track) {			//TODO refactor this ish
-		this._state.currentSongEpoch = (new Date).getTime() + this._loadDelay;
+	//play a given track
+	_playSong: function(track) {			
+		var now = (new Date).getTime()
+		this._state.currentSongEpoch = now + this._loadDelay;
 		var that = this;
-		this._songTimeout = setTimeout(function(){that.nextTrack()}, track.duration + this._loadDelay);
+		var timeoutDelay = track.duration + this._loadDelay;
+		this._songTimeout = setTimeout(function(){
+			that.nextTrack()
+		}, timeoutDelay) ;
 	},
 
 	_checkUserExistsInRoom: function(user) {
@@ -144,12 +149,11 @@ var RoomPrototype = {
 
 			return false;
 		}
-
 		return true;
 	},
 
 	// Removes the head of the room's track queue
-	// and clears any votes for the song.
+	// and clears any bootvotes for the song.
 	nextTrack: function () {
 		// The room might have been reaped :^)
 		if(this._state != null) {
@@ -169,25 +173,31 @@ var RoomPrototype = {
 		}
 	},
 
+	//returns true is this room is empty
 	isEmpty: function() {
 		return this._state == null || this._state.users.size() == 0;
 	},
 
+	//close a room
 	closeRoom: function() {
 		this._state = null;
 		this._onChange(null, null, null);
 	},
-
+	
+	//returns a unique name so everyone in a room is unique.
 	getUniqueName: function(possName) {
 		var exists = false;
 		var proposedName = possName;
-
+		
+		//set 'exists = true' if the name already exists in the room
 		_.find(this._state.users.array(), function(key, value) {
 			if(key.name.toLowerCase() === possName.toLowerCase()) {
 				return exists = true;
 			}
 		});
+		
 
+		//if possName already exists, try a variation of that name
 		if(exists) {
 			var tries = 0;
 			do {
@@ -196,11 +206,15 @@ var RoomPrototype = {
 				var seed = Math.floor(Math.random()*1001);
 				proposedName = possName + seed;
 
+				//set 'exists = true' if the name already exists in the room
+				//ps: purposefully didn't refactor this duplicate code into its own function
+				//	  because use of 'this' room then becomes out of scope
 				_.find(this._state.users.array(), function(key, value) {
-					if(key.name.toLowerCase() === proposedName.toLowerCase()) {
+					if(key.name.toLowerCase() === possName.toLowerCase()) {
 						return exists = true;
 					}
-				});				
+				});
+				
 			} while(exists && tries < 5);
 			if (tries >= 5) {
 				proposedName = "anony-mouse user";
@@ -212,6 +226,7 @@ var RoomPrototype = {
 }
 exports.Room.prototype = RoomPrototype;
 
+//Queue data structure. 
 function Queue() {
   var queue  = [];
   var offset = 0;
