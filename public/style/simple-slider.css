@@ -5,8 +5,6 @@
 }
 
 body .slider {
-  position: absolute;
-  -webkit-user-select: none;
   height: 28px;
   right: 3px;
   width: 145px;

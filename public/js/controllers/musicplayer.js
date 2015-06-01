@@ -14,6 +14,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	mP.currentSongEpoch = -1;
 	mP.currentSong = null;
 	mP.volume = 50;
+	mP.volumeIcon = "/images/soundHalf.png";
 	mP.currentTrackTime = 0;
 	mP.trackTimeUpdater = null;
 
@@ -23,6 +24,16 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 	$scope.updateVolume2 = function(newVal) {
 		mP.volume = newVal;
+
+		if (mP.volume == 0) {
+			mP.volumeIcon = "/images/soundNone.png";
+		} else if (mP.volume > 50) {
+			mP.volumeIcon = "/images/soundFull.png";
+		} else {
+			mP.volumeIcon = "/images/soundHalf.png";
+		}
+		$scope.$apply();
+
 		if (mP.currentSong != null) {
 			console.log(mP.volume);
 			mP.currentSong.setVolume(mP.volume);
@@ -87,7 +98,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 							// Once the song starts to play, update the interval
 							mP.trackTimeUpdater = setInterval(function(){
-								mP.currentTrackTime = Math.max(0, 
+								mP.currentTrackTime = Math.max(0,
 									(mP.currentSongEpoch) ? (new Date).getTime() - mP.currentSongEpoch : 0);
 
 								$scope.$apply();
@@ -119,7 +130,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 										mP.currentSong.positionFixed = true;
 									}
 								}*/
-								
+
 							}, 20);
 						}
 					});
@@ -150,7 +161,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	};
 
 	mP.getAlbumArt = function() {
-		if (!mP.currentSong || !mP.currentSong.trackInfo || 
+		if (!mP.currentSong || !mP.currentSong.trackInfo ||
 			(!mP.currentSong.trackInfo.artwork_url && !mP.currentSong.trackInfo.user.avatar_url)) {
 			return "../images/tempAlbum.jpg";
 		} else {
