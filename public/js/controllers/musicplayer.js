@@ -166,7 +166,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 			return "../images/tempAlbum.jpg";
 		} else {
 			var artwork_url = mP.currentSong.trackInfo.artwork_url;
-			return ((artwork_url) ? artwork_url : mP.currentSong.trackInfo.user.avatar_url).replace("large", "t300x300");
+			return ((artwork_url) ? artwork_url.replace("large", "t300x300") : mP.currentSong.trackInfo.user.avatar_url);
 		}
 	}
 

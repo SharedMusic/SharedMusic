@@ -684,7 +684,7 @@ p.artistName {
 	overflow: hidden;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1135px) {
 	div.middleContainer {
 		margin-right: 70px;
 		z-index: 1;
