@@ -54,9 +54,16 @@ angular.module('search', ['socketio'])
         };
 
         search.clearSearch = function() {
-           $('input.clearSearchButtom').fadeOut(400);
+           $('input.clearSearchButtom').hide();
+           $('input.displaySearchButtom').show();
            $('.tiles').animate({top: "0px"}, 400);     
         };
+
+        search.displaySearch = function() {
+            $('input.clearSearchButtom').show();
+            $('input.displaySearchButtom').hide();
+            $('.tiles').animate({top: "100%"}, 400);
+        }
 
         $scope.filter = function (query) {
             search.filter();

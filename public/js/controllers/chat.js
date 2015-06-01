@@ -1,8 +1,8 @@
-var musicList = angular.module('chat', ['socketio']);
+var chat = angular.module('chat', ['socketio']);
 
 // User List Controller
 // Depends on roomstateFactory to see the current roomstate
-musicList.controller('ChatController', ['$scope', 'roomstateFactory', function($scope, roomstateFactory){
+chat.controller('ChatController', ['$scope', 'roomstateFactory', function($scope, roomstateFactory){
 	$scope.receivedMessages = [];
 	$scope.message = "";
     $scope.newMessage = false;
@@ -23,17 +23,15 @@ musicList.controller('ChatController', ['$scope', 'roomstateFactory', function($
   	}
 
     $scope.updateScrollArea = function() {
-        var messages = $('div.messages');
         if ($scope.newMessage) {
-            console.log(messages.scrollTop());
-            console.log($scope.prevHeight);
-            if (messages.scrollTop() == $scope.prevHeight) {
-                messages.scrollTop(messages.height());
-                $scope.newMessage = false;
-            } else {
-                console.log("You were looking elsewhere");
+            var messages = $('div.chatStream');
+            if ($scope.newMessage) {
+                if (messages.scrollTop() + messages.height() + 36 >= $scope.prevHeight) {
+                    messages.scrollTop($('div.messages')[0].scrollHeight);
+                }
             }
         }
+        $scope.newMessage = false;
     }
 }]);
 

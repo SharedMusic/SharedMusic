@@ -51,7 +51,6 @@
 			$(window).load(function(){
 				$('#myModal').modal('show');
 				$(".wrapper").show();
-				$(".welcomeInput")[0].focus();
 			});
 			$(document).ready(function(){
 				function getParameterByName(name) {
@@ -60,9 +59,9 @@
 								results = regex.exec(location.search);
 						return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 				}
-
 				$('#roomID').hide();
 				$('.wrapper').hide();
+				$('.displaySearchButtom').hide();
 				$('input.clearSearchButtom').hide();
 				$("div.tiles").hide();
 				var expand = true;
@@ -96,7 +95,6 @@
 				$('#myModal').modal({backdrop: 'static', keyboard: false});
 				$("#enterRoom").click(function() {
 					$('#myModal').modal('hide');
-
 				});
 
 				$("#volumeControl").on("input change", function() { 
@@ -108,7 +106,6 @@
 				setTimeout(function(){
 					$("div.tiles").fadeIn(1000);
 				}, 3000);
-				
 			});
 		</script>
 	</head>
@@ -123,9 +120,9 @@
 				<h1 class="welcome">Welcome to Jukebox</h1>
 				<hr class="welcome">
 				<form ng-submit="userList.addUser()">
-					<input class="welcomeInput" type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="25" maxlength="25" placeholder="Enter your name">
+					<input class="welcomeInput" type="text" ng-model="userList.tempName" ng-disabled="button" required ng-init="button = false" size="25" maxlength="14" placeholder="Enter your name" autofocus>
 					<input id="roomID" type="text" ng-model="userList.temp.roomID">
-					<input ng-click="button = true" id="enterRoom" class="welcomeButton btn btn-primary btn-xs" type="submit" value="Join Room">
+					<input ng-click="button = true" id="enterRoom" class="welcomeButton btn btn-primary btn-xs" type="submit" value="Join Room" ng-disabled="!userList.tempName || userList.tempName.length <= 0">
 				</form>
 			  </div>
 			</div>
@@ -187,6 +184,9 @@
 							</form>
 							<form ng-submit="search.clearSearch()">
 								<input class="clearSearchButtom" type="submit" value="">
+							</form>
+							<form ng-submit="search.displaySearch()">
+								<input class="displaySearchButtom" type="submit" value="">
 							</form>
 						</div>
 						<a target="_blank" href="http://soundcloud.com">

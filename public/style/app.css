@@ -123,22 +123,25 @@ img.logo {
 
 div.user {
 	position: relative;
-	width: 290px;
-	height: 70px;
+	width: 344px;
+	overflow: hidden;
+	height: 60px;
 }
 
 div.avatar {
-	margin: 10px;
+	margin: 0px 10px 10px 10px;
 	width: 50px;
 	height: 50px;
 	background-size: 100%;
 }
 
 h1.userName {
+	font-weight: 400;
+	font-size: 35px;
 	position: relative;
 	margin: 0px;
 	top: -70px;
-	left: 70px;
+	left: 80px;
 	line-height: 70px;
 }
 
@@ -483,6 +486,16 @@ input.clearSearchButtom {
 	margin: 15px;
 	left: 0px;
 }
+input.displaySearchButtom {
+	background: url("/images/displaySearchButton.png");
+	width: 36px;
+	height: 36px;
+	border: none;
+	position: absolute;
+	top: 0px;
+	margin: 15px;
+	left: 0px;
+}
 
 input#copy {
 	position: absolute;
@@ -506,6 +519,11 @@ input.welcomeButton {
 	font-size: 20px;
 	font-weight: 200;
 	color: #111111;
+}
+
+input.welcomeButton:disabled {
+	color: #EEEEEE;
+	background-color: #464646;
 }
 
 div.search {
@@ -664,7 +682,33 @@ p.artistName {
 	overflow: hidden;
 }
 
+@media (max-width: 1000px) {
+	div.middleContainer {
+		margin-right: 70px;
+		z-index: 1;
+	}
 
+	div.rightContainer {
+		width: 0px;
+	}
+
+	div.userContainer {
+		background-color: #262626;
+		z-index: 2;
+	}
+}
+
+@media (max-width: 850px) {
+	div.poweredBy {
+		visibility: hidden;
+	}
+}
+
+@media (max-width: 715px) {
+	input#copy {
+		visibility: hidden;
+	}
+}
 
 
 

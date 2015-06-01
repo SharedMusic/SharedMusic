@@ -14,7 +14,7 @@ userList.controller('UserController', ['$scope', 'roomstateFactory', function($s
 	// Add a new user to the room
 	uL.addUser = function(){
 		// This currently pushes and pulls from the roomstateFactory
-		roomstateFactory.addUser(uL.temp.roomID, uL.temp.name);
+		roomstateFactory.addUser(uL.temp.roomID, uL.tempName);
 	};
 
 	// Updates the user list

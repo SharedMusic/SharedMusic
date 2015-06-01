@@ -75,6 +75,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 									mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
 							}, 1500);
 
+
 							// Once the song starts to play, update the interval
 							mP.trackTimeUpdater = setInterval(function(){
 								mP.currentTrackTime = Math.max(0, 
@@ -136,30 +137,30 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	};
 
 	mP.getAlbumArt = function() {
-		if (mP.trackInfo == null || mP.trackInfo.artwork_url == null) {
+		if (!mP.currentSong || !mP.currentSong.trackInfo || !mP.currentSong.trackInfo.artwork_url) {
 			return "../images/tempAlbum.jpg";
 		} else {
-			return mP.trackInfo.artwork_url.replace("large", "t300x300");
+			return mP.currentSong.trackInfo.artwork_url.replace("large", "t300x300");
 		}
 	}
 
 	mP.getTrackTitle = function() {
-		if (mP.trackInfo == null) {
+		if (mP.currentSong.trackInfo == null) {
 			return "";
 		} else {
-			return musicplayer.trackInfo.title + "by" + musicplayer.trackInfo.user.username;
+			return mP.currentSong.trackInfo.title + "by" + mP.currentSong.trackInfo.user.username;
 		}
 	}
 
 	mP.getLink = function() {
 		// Link to the SoundCloud URL containing the work
 		// If the sound is private link to the profile of the creator
-		if (mP.trackInfo == null) {
-			return "";
-		} else if (mP.trackInfo.sharing == "public") {
-			return mP.trackInfo.permalink_url;
+		if (!mP.currentSong || !mP.currentSong.trackInfo) {
+			return null;
+		} else if (mP.currentSong.trackInfo.sharing == "public") {
+			return mP.currentSong.trackInfo.permalink_url;
 		} else {
-			return mP.trackInfo.user.permalink_url;
+			return mP.currentSong.trackInfo.user.permalink_url;
 		}
 	}
 }]);
