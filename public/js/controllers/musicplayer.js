@@ -85,53 +85,50 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 							mP.currentSong.setVolume(mP.volume);
 
-							while ((new Date).getTime() < mP.currentSongEpoch) {
-								// wait until the delay is finished
-							}
+							var delay = (new Date).getTime() - mP.currentSongEpoch;
 
-							mP.currentSong.play();
-
+							// wait until delay is finished
 							setTimeout(function() {
-									mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
-							}, 600);
+								mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
 
+								mP.currentSong.play();
 
-							// Once the song starts to play, update the interval
-							mP.trackTimeUpdater = setInterval(function(){
-								mP.currentTrackTime = Math.max(0,
-									(mP.currentSongEpoch) ? (new Date).getTime() - mP.currentSongEpoch : 0);
+								// Once the song starts to play, update the interval
+								mP.trackTimeUpdater = setInterval(function() {
+									mP.currentTrackTime = Math.max(0,
+										(mP.currentSongEpoch) ? (new Date).getTime() - mP.currentSongEpoch : 0);
 
-								$scope.$apply();
+									$scope.$apply();
 
-								if (!mP.currentSong || mP.currentTrackTime > mP.currentSong.trackInfo.duration) {
-									clearInterval(mP.trackTimeUpdater);
-									mP.currentTrackTime = 0;
-								} else {
-									//console.log((new Date).getTime() - mP.currentSongEpoch - mP.currentSong.position);
-								}
-								/*else if (!mP.currentSong.positionSet) {
-									mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
-									mP.currentSong.positionSet = true;
-									mP.currentSong.lastDiffAdjustment = 0;
-								} else if (!mP.currentSong.positionFixed) {
-									var expectedPosition = (new Date).getTime() - mP.currentSongEpoch;
-									mP.currentSong.timeDiffs.push(expectedPosition - mP.currentSong.position);
-									console.log(mP.currentSong.timeDiffs);
-									if (mP.currentSong.timeDiffs.length >= 15) {
-										var avgDiff = Math.floor(average(mP.currentSong.timeDiffs));
-										if (avgDiff > 20 || avgDiff < -20) {
-											mP.currentSong.lastDiffAdjustment += (avgDiff * 0.7);
-											mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch + mP.currentSong.lastDiffAdjustment);
-											mP.currentSong.timeDiffs = [];
+									if (!mP.currentSong || mP.currentTrackTime > mP.currentSong.trackInfo.duration) {
+										clearInterval(mP.trackTimeUpdater);
+										mP.currentTrackTime = 0;
+									} else {
+										//console.log((new Date).getTime() - mP.currentSongEpoch - mP.currentSong.position);
+									}
+									/*else if (!mP.currentSong.positionSet) {
+										mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
+										mP.currentSong.positionSet = true;
+										mP.currentSong.lastDiffAdjustment = 0;
+									} else if (!mP.currentSong.positionFixed) {
+										var expectedPosition = (new Date).getTime() - mP.currentSongEpoch;
+										mP.currentSong.timeDiffs.push(expectedPosition - mP.currentSong.position);
+										console.log(mP.currentSong.timeDiffs);
+										if (mP.currentSong.timeDiffs.length >= 15) {
+											var avgDiff = Math.floor(average(mP.currentSong.timeDiffs));
+											if (avgDiff > 20 || avgDiff < -20) {
+												mP.currentSong.lastDiffAdjustment += (avgDiff * 0.7);
+												mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch + mP.currentSong.lastDiffAdjustment);
+												mP.currentSong.timeDiffs = [];
+											}
+											console.log("adjusted time" + avgDiff);
 										}
-										console.log("adjusted time" + avgDiff);
-									}
-									if (mP.currentSong.timeDiffs.length >= 80) {
-										mP.currentSong.positionFixed = true;
-									}
-								}*/
-
-							}, 20);
+										if (mP.currentSong.timeDiffs.length >= 80) {
+											mP.currentSong.positionFixed = true;
+										}
+									}*/
+								}, 20);
+							}, Math.max(delay, 0));
 						}
 					});
 				// }).
