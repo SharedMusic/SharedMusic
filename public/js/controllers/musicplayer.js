@@ -85,12 +85,11 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 							mP.currentSong.setVolume(mP.volume);
 
-							var delay = (new Date).getTime() - mP.currentSongEpoch;
-
+							var delay = mP.currentSongEpoch - (new Date).getTime();
 							// wait until delay is finished
 							setTimeout(function() {
-								mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
 
+								mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
 								mP.currentSong.play();
 
 								// Once the song starts to play, update the interval
