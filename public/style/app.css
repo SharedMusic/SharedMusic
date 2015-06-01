@@ -663,6 +663,7 @@ p.time {
 
 div.songInfo {
 	margin: 0px 6px 5px 12px;
+	height: 63px;
 }
 
 h1.songTitle {
