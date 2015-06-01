@@ -3,7 +3,6 @@ var musicPlayer = angular.module('musicplayer', ['socketio']);
 musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '$http', function($scope, roomstateFactory, $timeout, $http){
 	var mP = this;
 	mP.currentSongEpoch = -1;
-	// mP.currentSongURL = roomstateFactory.getSong().permalink_url;
 	mP.currentSong = null;
 	mP.volume = 50;
 	mP.currentTrackTime = 0;
@@ -19,53 +18,18 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 		}
 	}
 
-	// update the currently playing song
-	mP.updateSong = function(songURL, epoch){
-		// only update if a new song is given
-		if (mP.currentSongURL != songURL) {
-			mP.currentSongURL = songURL;
-			mP.currentSongEpoch = epoch;
-
-			// fetch track information
-			SC.get("/resolve/?url="+mP.currentSongURL, {limit: 1}, function(result){
-				if (result.errors == null) {
-					if (result.kind != "track") {
-						console.log("url is not for a song")
-					} else {
-						mP.trackInfo = result;
-
-						// apply update to the view - needed because this is a callback that excutes after
-						$scope.$apply();
-
-						// play the song when results are returned
-						mP.playSong();
-					}
-				} else {
-					// error is given songURL
-					console.log("error")
-				}
-			});
-
-		}
-	};
-
 	// play the song
 	roomstateFactory.setupGetSong(function(newTrackInfo, newEpoch) {
-		var old = mP.trackInfo;
-		mP.trackInfo = newTrackInfo;
-
-		var oldEpoch = mP.currentSongEpoch;
-		mP.currentSongEpoch = newEpoch;
-
 		// stop the currently playing song if the next song is null
-		if (mP.currentSong && !mP.trackInfo) {
+		if (mP.currentSong && newEpoch != mP.currentSongEpoch) {
 			mP.currentSong.stop();
-			mP.currentSong == null;
-			mP.currentTrackTime = 0;
+			mP.currentSong = null;
 		}
-		if ((!old && mP.trackInfo) || (old && mP.trackInfo && mP.currentSongEpoch != oldEpoch)) {
+
+		if (newTrackInfo && newEpoch && newEpoch != mP.currentSongEpoch) {
 			// Calls SoundCloud API: SC.stream(trackPath, [options], [callback])
-			SC.stream("/tracks/" + mP.trackInfo.id, function(sound){
+			SC.stream("/tracks/" + newTrackInfo.id, function(sound){
+				console.log("happened");
 				// Streamable check testing
 				// Does not currently work ($http undefined?)
 				// $http.get('http://api.soundcloud.com/tracks/'+mP.trackInfo.id+'/stream?client_id=337bccb696d7b8442deedde76fae5c10').
@@ -74,33 +38,17 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 					// when the response is available
 					// console.log(status);
 					// console.log(data);
-					if (mP.currentSong) {
-						mP.currentSong.stop();
-						mP.currentSong = null;
-					}
+
 					// update to the new song
 					mP.currentSong = sound;
+					mP.currentSong.trackInfo = newTrackInfo;
+					mP.currentSongEpoch = newEpoch;
 					mP.currentTrackTime = 0;
 
 					// stop the old song timer
 					if (mP.trackTimeUpdater) {
 						clearInterval(mP.trackTimeUpdater);
 					}
-
-					// updates the song time
-					/*
-					mP.trackTimeUpdater = setInterval(function(){
-						mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch + 2000;
-						if 	(mP.currentTrackTime < 0) {
-							mP.currentTrackTime = 0;
-						}
-						$scope.$apply();
-
-						if (mP.trackInfo == null || mP.currentTrackTime > mP.trackInfo.duration) {
-							mP.currentTrackTime = 0;
-							clearInterval(mP.trackTimeUpdater);
-						}
-					}, 500);*/
 
 					// load the song and set position before playing
 					mP.currentSong.load({
@@ -111,25 +59,36 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 							while ((new Date).getTime() < mP.currentSongEpoch) {
 								// wait until the delay is finished
 							}
+
 							mP.currentSong.play();
 
 							// Once the song starts to play, update the interval
 							mP.trackTimeUpdater = setInterval(function(){
-								if (mP.currentSongEpoch) {
-									mP.currentTrackTime = (new Date).getTime() - mP.currentSongEpoch;
-								} else {
-									mP.currentTrackTime = 0;
-								}
-								mP.currentTrackTime = Math.max(0, mP.currentTrackTime);
+								mP.currentTrackTime = Math.max(0, 
+									(mP.currentSongEpoch) ? (new Date).getTime() - mP.currentSongEpoch : 0);
+
 								$scope.$apply();
 
-								if (!mP.trackInfo || mP.currentTrackTime > mP.trackInfo.duration) {
-									mP.currentTrackTime = 0;
+								if (!mP.currentSong || mP.currentTrackTime > mP.currentSong.trackInfo.duration) {
 									clearInterval(mP.trackTimeUpdater);
+									mP.currentTrackTime = 0;
+								} else {
+									var expectedPosition = (new Date).getTime() - mP.currentSongEpoch;
+									var timeDiff = expectedPosition - mP.currentSong.position;
+									if (timeDiff > 30 && !mP.currentSong.positionFixed) {
+										if (!mP.currentSong.positionSet) {
+											mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
+											mP.currentSong.positionSet = true;
+										} else {
+											mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch + (timeDiff * 0.8));
+										}
+										console.log("adjusted time" + timeDiff);
+									} else if (!mP.currentSong.positionFixed) {
+										console.log("position fixed");
+										mP.currentSong.positionFixed = true;
+									}
 								}
 							}, 500);
-
-							mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
 						}
 					});
 				// }).

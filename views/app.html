@@ -35,6 +35,7 @@
 
 		<script src="/js/MetroJs.js"></script>
 		<script src="/js/tiles.js"></script>
+		<script src="/js/zeroClipboard/ZeroClipboard.js"></script>
 
 		<!-- Google Analytics -->
 		<script>
@@ -98,6 +99,21 @@
 					$('#myModal').modal('hide');
 
 				});
+
+				// This allows for the clipboard sharing to work
+				var client = new ZeroClipboard( document.getElementById("copy") );
+
+				client.on( "ready", function( readyEvent ) {
+				  // alert( "ZeroClipboard SWF is ready!" );
+
+				  client.on("aftercopy", function( event ) {
+				    // `this` === `client`
+				    // `event.target` === the element that was clicked
+				    event.target.style.display = "none";
+				    alert("Copied text to clipboard: " + event.data["text/plain"]);
+				  } );
+				} );
+
 				$("#volumeControl").on("input change", function() { 
 					var percent = this.value/100;
 					var marginLeft = 5+percent * (125);
@@ -122,7 +138,7 @@
 				<h1 class="welcome">Welcome to Jukebox</h1>
 				<hr class="welcome">
 				<form ng-submit="userList.addUser()">
-					<input class="welcomeInput" type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="25" placeholder="Enter your name">
+					<input class="welcomeInput" type="text" ng-model="userList.temp.name" ng-disabled="button" required ng-init="button = false" size="25" maxlength="25" placeholder="Enter your name">
 					<input id="roomID" type="text" ng-model="userList.temp.roomID">
 					<input ng-click="button = true" id="enterRoom" class="welcomeButton btn btn-primary btn-xs" type="submit" value="Join Room">
 				</form>
@@ -141,15 +157,15 @@
 						<a target="_blank" href="{{musicplayer.getLink() || '/'}}">
 							<div class="albumArt" style="background-image: url({{musicplayer.getAlbumArt()}});">
 								<div class="time">
-									<p class="time">{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.trackInfo.duration)}}</p>
+									<p class="time">{{musicplayer.millisToMinutesAndSeconds(musicplayer.currentTrackTime)}} of {{musicplayer.millisToMinutesAndSeconds(musicplayer.currentSong.trackInfo.duration)}}</p>
 								</div>
 							</div>
 						</a>
 					</div>
 					<div class="leftSubContainer">
 						<div class="songInfo">
-							<h1 class="songTitle">{{musicplayer.trackInfo.title}}</h1>
-							<p class="artistName">{{musicplayer.trackInfo.user.username}}</p>
+							<h1 class="songTitle">{{musicplayer.currentSong.trackInfo.title}}</h1>
+							<p class="artistName">{{musicplayer.currentSong.trackInfo.user.username}}</p>
 						</div>
 						<div class="musicButtonContainer">
 							<div id="bootVotes" ng-controller="BootVotes as bootVotes">
@@ -168,7 +184,7 @@
 						<hr class="leftBar">
 						<div class="songQueue" ng-controller="MusicController as musicList">
 							<div class="track" ng-repeat="song in musicList.queue track by $index">
-								<h1 class="track">{{song.title | cut:true:24:' ...'}} <br/> by {{song.user.username | cut:true:20:' ...'}}</h1>
+								<h1 class="track"><span class="trackTitle">{{song.title | cut:true:40:' ...'}}</span> <br/> by {{song.user.username | cut:true:20:' ...'}}</h1>
 								<hr ng-if="!$last" class="leftBar" style="margin-left: 0px; margin-right: 0px;">
 							</div>
 						</div>
@@ -192,38 +208,39 @@
 							<div class="poweredBy">
 							</div>
 						</a>
+						<input type="button" id="copy" data-clipboard-text="{{window.location.href}}" class="welcomeButton" name="copy" value="Share" />
 					</div>
 					<div class="searchResContainer">
 						<table class="table table-hover table-condensed" style="width:100%">
 							<!-- Headings for each column in the table-->
 							<tr id="searchResHeader">
-								<th style="padding: 10px;">
-									<form ng-submit="search.filter()">
+								<th style="padding: 10px; width: 42%;">
+									<form style="width: 50%" ng-submit="search.filter()">
 							        	<input class="searchFilter" type="text" ng-model="search.title" ng-change='filter()' size="30"
 										placeholder="Title">
 							      	</form>
 							    </th>
-								<th style="padding: 10px;">
-									<form ng-submit="search.filter()">
+								<th style="padding: 10px; width: 25%;">
+									<form style="width: 80%" ng-submit="search.filter()">
 										<input class="searchFilter" type="text" ng-model="search.user" ng-change='filter()' size="30"
 										placeholder="Artist">
 									</form>
 								</th>
-								<th style="padding: 10px;">
-									<form ng-submit="search.filter()">
+								<th style="padding: 10px; width: 25%;">
+									<form style="width: 80%" ng-submit="search.filter()">
 										<input class="searchFilter" type="text" ng-model="search.genre" ng-change='filter()' size="30"
 										placeholder="Genre">
 									</form>
 								</th>
-								<th></th>
+								<th style="width: 8%;"></th>
 							</tr>
 
 							<!-- Display the results-->
 							<tr ng-click="search.addSong($index)" ng-repeat="track in search.display">
-								<td>{{track.title}} </td>
+								<td>{{track.title | cut:true:70:'...'}} </td>
 								<td>{{track.user.username}}</td>
 								<td>{{track.genre}}</td>
-								<td>{{search.millisToMinutesAndSeconds(track.duration)}}</td>
+								<td style="text-align: right;">{{search.millisToMinutesAndSeconds(track.duration)}}</td>
 							</tr>
 						</table>
 					</div>

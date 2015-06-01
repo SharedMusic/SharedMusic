@@ -11,7 +11,8 @@ body {
 
 ::-webkit-scrollbar { 
 	background: none;
-	width: 6px;
+	width: 0px;
+	/*width: 6px;*/
 }
 
 /*
@@ -63,6 +64,10 @@ input[type=range]:focus {
 	background-color: #111;
 	width: 10px;
 	height: 10px;
+}
+
+table {
+	table-layout:fixed;
 }
 
 .table-hover>tbody>tr:hover {
@@ -203,8 +208,12 @@ input.searchFilter {
 	border: none;
 	padding-left: 15px;
 	margin-right: 5px;
-	width: 250px;
+	width: 100%;
 	color: #111111;
+}
+
+td {
+	overflow-x: hidden;
 }
 
 input.searchFilter:focus {
@@ -231,7 +240,8 @@ div.poweredBy {
 	height: 36px;
 	width: 110px;
 	position: absolute;
-	right: 0px;
+	/*right: 0px;*/
+	left: 310px;
 	top: 0px;
 	margin: 13px;
 	margin-bottom: 17px;
@@ -319,8 +329,9 @@ textarea.chatTextArea {
 	border: none;
 	padding: 7px;
 	font-size: 12px;
+	font-weight: 500;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	color: #999999;
+	color: #565656;
 }
 
 span.userName {
@@ -473,6 +484,17 @@ input.clearSearchButtom {
 	left: 0px;
 }
 
+input#copy {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	margin: 16px;
+	background: #262626;
+	color: #EEEEEE;
+	border-radius: 5px;
+	width: 100px;
+}
+
 input.welcomeButton {
 	margin-top: 15px;
 	width: 120px;
@@ -587,6 +609,10 @@ div.albumArt {
 
 hr.userSplit {
 	margin: 10px 16px 16px 16px;
+}
+
+span.trackTitle {
+	font-weight: 600;
 }
 
 div.expandUserTab {
