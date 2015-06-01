@@ -1,5 +1,14 @@
 var musicPlayer = angular.module('musicplayer', ['socketio']);
 
+
+var average = function(array) {
+	var avg = 0;
+	for (i = 0; i < array.length; i++) {
+		avg += array[i];
+	}
+	return avg / array.length;
+}
+
 musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '$http', function($scope, roomstateFactory, $timeout, $http){
 	var mP = this;
 	mP.currentSongEpoch = -1;
@@ -41,6 +50,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 					// update to the new song
 					mP.currentSong = sound;
+					mP.currentSong.timeDiffs = [];
 					mP.currentSong.trackInfo = newTrackInfo;
 					mP.currentSongEpoch = newEpoch;
 					mP.currentTrackTime = 0;
@@ -72,23 +82,28 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 								if (!mP.currentSong || mP.currentTrackTime > mP.currentSong.trackInfo.duration) {
 									clearInterval(mP.trackTimeUpdater);
 									mP.currentTrackTime = 0;
-								} else {
+								} else if (!mP.currentSong.positionSet) {
+									mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
+									mP.currentSong.positionSet = true;
+									mP.currentSong.lastDiffAdjustment = 0;
+								} else if (!mP.currentSong.positionFixed) {
 									var expectedPosition = (new Date).getTime() - mP.currentSongEpoch;
-									var timeDiff = expectedPosition - mP.currentSong.position;
-									if (timeDiff > 30 && !mP.currentSong.positionFixed) {
-										if (!mP.currentSong.positionSet) {
-											mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
-											mP.currentSong.positionSet = true;
-										} else {
-											mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch + (timeDiff * 0.8));
+									mP.currentSong.timeDiffs.push(expectedPosition - mP.currentSong.position);
+									console.log(mP.currentSong.timeDiffs);
+									if (mP.currentSong.timeDiffs.length >= 15) {
+										var avgDiff = Math.floor(average(mP.currentSong.timeDiffs));
+										if (avgDiff > 20 || avgDiff < -20) {
+											mP.currentSong.lastDiffAdjustment += (avgDiff * 0.7);
+											mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch + mP.currentSong.lastDiffAdjustment);
+											mP.currentSong.timeDiffs = [];
 										}
-										console.log("adjusted time" + timeDiff);
-									} else if (!mP.currentSong.positionFixed) {
-										console.log("position fixed");
+										console.log("adjusted time" + avgDiff);
+									}
+									if (mP.currentSong.timeDiffs.length >= 80) {
 										mP.currentSong.positionFixed = true;
 									}
 								}
-							}, 500);
+							}, 200);
 						}
 					});
 				// }).
