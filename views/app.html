@@ -35,7 +35,6 @@
 
 		<script src="/js/MetroJs.js"></script>
 		<script src="/js/tiles.js"></script>
-		<script src="/js/zeroClipboard/ZeroClipboard.js"></script>
 
 		<!-- Google Analytics -->
 		<script>
@@ -99,20 +98,6 @@
 					$('#myModal').modal('hide');
 
 				});
-
-				// This allows for the clipboard sharing to work
-				var client = new ZeroClipboard( document.getElementById("copy") );
-
-				client.on( "ready", function( readyEvent ) {
-				  // alert( "ZeroClipboard SWF is ready!" );
-
-				  client.on("aftercopy", function( event ) {
-				    // `this` === `client`
-				    // `event.target` === the element that was clicked
-				    event.target.style.display = "none";
-				    alert("Copied text to clipboard: " + event.data["text/plain"]);
-				  } );
-				} );
 
 				$("#volumeControl").on("input change", function() { 
 					var percent = this.value/100;
