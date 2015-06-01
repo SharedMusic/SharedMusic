@@ -159,7 +159,6 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', func
       art = track.user.avatar_url;
     }
     art = fixResolution(art);
-
     return art;
   }
 

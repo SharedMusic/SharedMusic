@@ -141,10 +141,12 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 	};
 
 	mP.getAlbumArt = function() {
-		if (!mP.currentSong || !mP.currentSong.trackInfo || !mP.currentSong.trackInfo.artwork_url) {
+		if (!mP.currentSong || !mP.currentSong.trackInfo || 
+			(!mP.currentSong.trackInfo.artwork_url && !mP.currentSong.trackInfo.user.avatar_url)) {
 			return "../images/tempAlbum.jpg";
 		} else {
-			return mP.currentSong.trackInfo.artwork_url.replace("large", "t300x300");
+			var artwork_url = mP.currentSong.trackInfo.artwork_url;
+			return ((artwork_url) ? artwork_url : mP.currentSong.trackInfo.user.avatar_url).replace("large", "t300x300");
 		}
 	}
 
