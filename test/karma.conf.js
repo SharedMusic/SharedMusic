@@ -8,6 +8,7 @@ module.exports = function(config){
       'node_modules/angular-mocks/angular-mocks.js',
       'https://cdn.socket.io/socket.io-1.2.0.js',
       'http://connect.soundcloud.com/sdk.js',
+      'public/js/controllers/music.js',
       'public/js/controllers/**/*.js',
       'test/unit/test-musicplayer.js'
     ],

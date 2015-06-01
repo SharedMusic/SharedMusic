@@ -188,7 +188,7 @@
 								<p id="bootVoteCount" align="center"> {{(musicplayer.currentSong) ? bootVotes.bootCount + "/" + bootVotes.userCount : ""}}</p>
 							</div>
 							<div class="volumeContainer">
-								<input type="image" id="volumeIcon" class="playIcon" src="{{musicplayer.volumeIcon}}" style="width:28px; position:absolute; top: 0px; left: 0px; cursor: pointer;">
+								<input type="image" id="volumeIcon" class="playIcon" ng-src="{{musicplayer.volumeIcon}}" style="width:28px; position:absolute; top: 0px; left: 0px; cursor: pointer;">
 
 								<input type="text" data-slider="true" value=0.5 data-slider-highlight="true">
 
