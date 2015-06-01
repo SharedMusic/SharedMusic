@@ -291,45 +291,7 @@ describe("Architecture Room",function(){
     newRoom.bootTrack(newUser1);
   });
 
-  it('Should error and not let user vote twice on same track', function(done) {
-    // Arrange
-    var newRoomName = 'test';
-    var newRoomID = 1;
-    var newRoom;
-    var onChangeCount = 0;
-
-    var newRoomOnChangeFail = function(roomState, error) { 
-      // Assert
-      should.not.exist(roomState);
-      error.should.not.equal(null);
-      error.should.equal('User already voted to boot!')
-      newRoom._state.bootVotes.size().should.equal(1);
-      done();
-    };
-
-    newRoom = new Room(newRoomName, newRoomID, function() {});
-
-    var newUser1 = new User('user1', 1);
-    var newUser2 = new User('user2', 2);
-    var newUser3 = new User('user3', 3);
-
-    newRoom.addUser(newUser1);
-    newRoom.addUser(newUser2);
-    newRoom.addUser(newUser3);
-
-    var newTrack1 = {title: 'track1', recommender: newUser1.name};
-    var newTrack2 = {title: 'track2', recommender: newUser2.name};
-
-    newRoom.addTrack(newUser1, newTrack1);
-    newRoom.addTrack(newUser1, newTrack2);
-
-    newRoom.bootTrack(newUser1);
-    newRoom._onChange = newRoomOnChangeFail;
-
-    // Act
-    newRoom.bootTrack(newUser1);
-  });
-
+  
   it('Should ignore boot track from user not in the room', function(done) {
     // Arrange
     var newRoomName = 'test';
