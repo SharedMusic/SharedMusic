@@ -48,7 +48,7 @@ exports.Room = function(p_name, p_id, p_onChange) {
 	 *	to the head of the queue and when client should begin
 	 *	playing that track.
 	 */
-	this._loadDelay = 4000;
+	this._loadDelay = 2000;
 
 	// Public
 	this.id = p_id;
