@@ -17,11 +17,6 @@ describe('test musicplayer initialization', function() {
 		expect(ctrl.volume).toBe(50);
 	});
 
-	it('song is not muted at the start', function() {
-		expect(ctrl.muted).toBe(false);
-		expect(ctrl.muteStatus).toBe("Mute Song");
-	});
-
 	it('currentSongEpoch is -1', function() {
 		expect(ctrl.currentSongEpoch).toBe(-1);
 	});
