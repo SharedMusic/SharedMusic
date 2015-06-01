@@ -73,7 +73,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 							setTimeout(function() {
 									mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
-							}, 1500);
+							}, 600);
 
 
 							// Once the song starts to play, update the interval
@@ -83,10 +83,13 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 								$scope.$apply();
 
-								/*if (!mP.currentSong || mP.currentTrackTime > mP.currentSong.trackInfo.duration) {
+								if (!mP.currentSong || mP.currentTrackTime > mP.currentSong.trackInfo.duration) {
 									clearInterval(mP.trackTimeUpdater);
 									mP.currentTrackTime = 0;
-								} else if (!mP.currentSong.positionSet) {
+								} else {
+									//console.log((new Date).getTime() - mP.currentSongEpoch - mP.currentSong.position);
+								}
+								/*else if (!mP.currentSong.positionSet) {
 									mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
 									mP.currentSong.positionSet = true;
 									mP.currentSong.lastDiffAdjustment = 0;
@@ -107,7 +110,8 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 										mP.currentSong.positionFixed = true;
 									}
 								}*/
-							}, 500);
+								
+							}, 20);
 						}
 					});
 				// }).
