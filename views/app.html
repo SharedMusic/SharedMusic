@@ -155,8 +155,7 @@
 							</div>
 						</a>
 					</div>
-					<div class="leftSubContainer">
-						<div class="songInfo">
+					<div class="songInfo">
 							<h1 class="songTitle">{{musicplayer.currentSong.trackInfo.title}}</h1>
 							<p class="artistName">{{musicplayer.currentSong.trackInfo.user.username}}</p>
 						</div>
@@ -179,7 +178,9 @@
 							<!--<input type="text" g-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" data-slider="true" value="0.8" data-slider-highlight="true">-->
 								
 						</div>
-						<hr class="leftBar">
+					<div class="leftSubContainer">
+						
+						<!-- <hr class="leftBar"> -->
 						<div class="songQueue" ng-controller="MusicController as musicList">
 							<div class="track" ng-repeat="song in musicList.queue track by $index">
 								<h1 class="track"><span class="trackTitle">{{song.title | cut:true:40:' ...'}}</span> <br/> by {{song.user.username | cut:true:20:' ...'}}</h1>

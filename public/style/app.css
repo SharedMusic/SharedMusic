@@ -614,7 +614,7 @@ div.leftSubContainer {
 	overflow-y: scroll;
 	width: 100%;
 	position: absolute;
-	top: 266px;
+	top: 400px;
 	bottom: 0px;
 	margin-bottom: 12px;
 }
@@ -663,6 +663,7 @@ p.time {
 
 div.songInfo {
 	margin: 0px 6px 5px 12px;
+	height: 63px;
 }
 
 h1.songTitle {
