@@ -38,7 +38,6 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 		if (newTrackInfo && newEpoch && newEpoch != mP.currentSongEpoch) {
 			// Calls SoundCloud API: SC.stream(trackPath, [options], [callback])
 			SC.stream("/tracks/" + newTrackInfo.id, function(sound){
-				console.log("happened");
 				// Streamable check testing
 				// Does not currently work ($http undefined?)
 				// $http.get('http://api.soundcloud.com/tracks/'+mP.trackInfo.id+'/stream?client_id=337bccb696d7b8442deedde76fae5c10').
@@ -72,6 +71,10 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 							mP.currentSong.play();
 
+							setTimeout(function() {
+									mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
+							}, 1500);
+
 							// Once the song starts to play, update the interval
 							mP.trackTimeUpdater = setInterval(function(){
 								mP.currentTrackTime = Math.max(0, 
@@ -79,7 +82,7 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 								$scope.$apply();
 
-								if (!mP.currentSong || mP.currentTrackTime > mP.currentSong.trackInfo.duration) {
+								/*if (!mP.currentSong || mP.currentTrackTime > mP.currentSong.trackInfo.duration) {
 									clearInterval(mP.trackTimeUpdater);
 									mP.currentTrackTime = 0;
 								} else if (!mP.currentSong.positionSet) {
@@ -102,8 +105,8 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 									if (mP.currentSong.timeDiffs.length >= 80) {
 										mP.currentSong.positionFixed = true;
 									}
-								}
-							}, 200);
+								}*/
+							}, 500);
 						}
 					});
 				// }).
