@@ -66,11 +66,6 @@ io.sockets.on('connection', function(socket) {
       room.removeUser(user);
 
       delete userIDToUser[socket.id];
-
-      if(room.isEmpty()) {
-        delete rooms[room.id];
-        room.closeRoom();
-      }
     }
   });
 

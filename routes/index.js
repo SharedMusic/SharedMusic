@@ -18,10 +18,13 @@ router.get('/createRoom', function(req, res){
 })
 
 router.get('/room', function (req, res) {
-	// Pass room to the view and return view to client
-	res.sendFile(path.join(__dirname, '../views/app.html'));
+	if(!(req.param('roomID') in io.rooms)) {
+		res.redirect('../createRoom');
+	} else {
+		// Pass room to the view and return view to client
+		res.sendFile(path.join(__dirname, '../views/app.html'));
+	}
 });
-
 
 /*
 	For UI Testing and app2.html
