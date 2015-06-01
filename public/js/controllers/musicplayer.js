@@ -41,7 +41,6 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 	mP.updateVolume = function() {
 		if (mP.currentSong != null) {
-			console.log(mP.volume);
 			mP.currentSong.setVolume(mP.volume);
 		}
 	}
