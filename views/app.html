@@ -5,7 +5,7 @@
 		<title>Jukebox - Share and listen to music with friends</title>
 
 		<link rel="shortcut icon" href="/images/favicon.png">
-		
+
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
@@ -38,7 +38,7 @@
 
 		<script src="http://loopj.com/jquery-simple-slider/js/simple-slider.js"></script>
   		<link href="/style/simple-slider.css" rel="stylesheet" type="text/css" />
-  		<link href="http://loopj.com/jquery-simple-slider/css/simple-slider-volume.css" rel="stylesheet" type="text/css" />  
+  		<link href="http://loopj.com/jquery-simple-slider/css/simple-slider-volume.css" rel="stylesheet" type="text/css" />
 
 		<!-- Google Analytics -->
 		<script>
@@ -101,12 +101,13 @@
 					$('#myModal').modal('hide');
 				});
 
-				$("#volumeControl").on("input change", function() { 
+				$("#volumeControl").on("input change", function() {
 					var percent = this.value/100;
 					var marginLeft = 5+percent * (125);
 
 					document.getElementById("volumeText").style.marginLeft = marginLeft + "px";
 				});
+
 				setTimeout(function(){
 					$("div.tiles").fadeIn(1000);
 				}, 3000);
@@ -117,6 +118,26 @@
 			      	$("#volumeControl").val(newVal);
 		      		angular.element('#musicContainer').scope().updateVolume2(newVal);
 			    });
+
+				$("#volumeIcon").click(function() {
+					//var val = $("#volumeControl").value;
+					var vc = document.getElementById("volumeControl");
+
+					if (vc.value == 0) {
+						vc.value = 50;
+						var percent = vc.value/100;
+						$("[data-slider]").simpleSlider("setValue", percent);
+
+						angular.element('#musicContainer').scope().updateVolume2(50);
+					} else {
+						vc.value = 0;
+						var percent = vc.value/100;
+						$("[data-slider]").simpleSlider("setValue", percent);
+
+						angular.element('#musicContainer').scope().updateVolume2(0);
+					}
+				});
+
 			});
 		</script>
 	</head>
@@ -167,19 +188,20 @@
 								<p id="bootVoteCount" align="center"> {{bootVotes.bootCount}}/{{bootVotes.userCount}}</p>
 							</div>
 							<div class="volumeContainer">
-								<img class="playIcon" src="/images/soundFull.png" style="width:28px;position:relative;margin-left:-140px;top:24px;">
+								<input type="image" id="volumeIcon" src="{{musicplayer.volumeIcon}}" style="width:28px;position:relative;margin-left:-140px;top:24px;">
+
 								<input type="text" data-slider="true" value=0.5 data-slider-highlight="true">
 
-								<input class="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" step="1" list="vol-detents" style="display: none;" />
+								<input class="volumeControl" id="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" step="1" list="vol-detents" style="display: none;" />
 								<datalist id="vol-detents">
 									<option value="50">
 								</datalist>
 							</div>
 							<!--<input type="text" g-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" data-slider="true" value="0.8" data-slider-highlight="true">-->
-								
+
 						</div>
 					<div class="leftSubContainer">
-						
+
 						<!-- <hr class="leftBar"> -->
 						<div class="songQueue" ng-controller="MusicController as musicList">
 							<div class="track" ng-repeat="song in musicList.queue track by $index">
@@ -282,7 +304,7 @@
 						<h1 contenteditable="true" class="roomName">Room Name</h1>
 						<hr class="chat">
 					</div>
-					
+
 					<div class="chatStream">
 						<div class="messagesContainer">
 							<div class="messages">
