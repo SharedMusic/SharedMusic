@@ -41,7 +41,8 @@ textarea:focus {
 
 div.volumeContainer {
 	position: absolute;
-  	bottom: 0px;
+	width: 100%;
+	height: 28px;
 }
 
 input[type=range] {
@@ -148,14 +149,14 @@ h1.userName {
 div.musicButtonContainer {
 	margin-left: 12px;
 	margin-right: 12px;
-	height: 50px;
+	height: 60px;
 	position: relative;
 }
 
 div#bootVotes {
 	position: relative;
 	top: 0px;
-	height: 100%;
+	height: 36px;
 }
 
 div#bootVoteButtonContainer {
@@ -614,7 +615,7 @@ div.leftSubContainer {
 	overflow-y: scroll;
 	width: 100%;
 	position: absolute;
-	top: 400px;
+	top: 410px;
 	bottom: 0px;
 	margin-bottom: 12px;
 }
@@ -662,7 +663,7 @@ p.time {
 }
 
 div.songInfo {
-	margin: 0px 6px 5px 12px;
+	margin: 5px 12px 5px 12px;
 	height: 63px;
 }
 
@@ -709,8 +710,4 @@ p.artistName {
 	input#copy {
 		visibility: hidden;
 	}
-}
-
-.volumeContainer {
-	padding-top:15px;
 }

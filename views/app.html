@@ -164,10 +164,10 @@
 								<div id="bootVoteButtonContainer">
 									<button id="bootVoteButton" ng-click="bootVotes.addBootVote()" class="btn btn-primary btn-xs">Vote to Boot</button>
 								</div>
-								<p id="bootVoteCount" align="center"> {{bootVotes.bootCount}}/{{bootVotes.userCount}}</p>
+								<p id="bootVoteCount" align="center"> {{(musicplayer.currentSong) ? bootVotes.bootCount + "/" + bootVotes.userCount : ""}}</p>
 							</div>
 							<div class="volumeContainer">
-								<img class="playIcon" src="/images/soundFull.png" style="width:28px;position:relative;margin-left:-140px;top:24px;">
+								<img class="playIcon" src="/images/soundFull.png" style="width:28px; position:absolute; top: 0px; left: 0px;">
 								<input type="text" data-slider="true" value=0.5 data-slider-highlight="true">
 
 								<input class="volumeControl" ng-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" type="range" min="0" max="100" value="50" step="1" list="vol-detents" style="display: none;" />
@@ -178,9 +178,8 @@
 							<!--<input type="text" g-model="musicplayer.volume" ng-change="musicplayer.updateVolume()" data-slider="true" value="0.8" data-slider-highlight="true">-->
 								
 						</div>
+						<hr class="leftBar" style="margin-left: 12px;">
 					<div class="leftSubContainer">
-						
-						<!-- <hr class="leftBar"> -->
 						<div class="songQueue" ng-controller="MusicController as musicList">
 							<div class="track" ng-repeat="song in musicList.queue track by $index">
 								<h1 class="track"><span class="trackTitle">{{song.title | cut:true:40:' ...'}}</span> <br/> by {{song.user.username | cut:true:20:' ...'}}</h1>
