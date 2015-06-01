@@ -21,8 +21,17 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 		client_id: '337bccb696d7b8442deedde76fae5c10'
 	});
 
+	$scope.updateVolume2 = function(newVal) {
+		mP.volume = newVal;
+		if (mP.currentSong != null) {
+			console.log(mP.volume);
+			mP.currentSong.setVolume(mP.volume);
+		}
+	}
+
 	mP.updateVolume = function() {
 		if (mP.currentSong != null) {
+			console.log(mP.volume);
 			mP.currentSong.setVolume(mP.volume);
 		}
 	}
