@@ -92,13 +92,16 @@ var RoomPrototype = {
 	// If the boot count gets over half of the
 	// users in the room then the next track
 	// is requested and boot votes are cleared.
+	// If the user has already voted for the song
+	// then their vote is undone.
 	bootTrack: function (user) {
 		if(!this._checkUserExistsInRoom(user)) {
 			return;
 		}
 
 		if(this._state.bootVotes.has(user.id)) {
-			this._onChange(null, 'User already voted to boot!', user.id);
+			this._state.bootVotes.remove(user.id);
+			this._onChange(this._state, null, null);
 		} else if(!this._state.trackQueue.isEmpty()) {
 			this._state.bootVotes.add(user.id);
 
@@ -108,7 +111,7 @@ var RoomPrototype = {
 			   	clearTimeout(this._songTimeout);
 					this.nextTrack();
 			} else {
-					this._onChange(this._state, null, null);
+				this._onChange(this._state, null, null);
 			}
 		}
 	},
