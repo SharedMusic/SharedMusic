@@ -137,12 +137,18 @@
 						angular.element('#musicContainer').scope().updateVolume2(0);
 					}
 				});
+			
+				//invite friends
+				$('#copy').on('click', function() {
+					$('#myModal2').modal('show')
+				});
+				$('#shareURL').val(window.location.href)
 
 			});
 		</script>
 	</head>
 	<body>
-		<!-- Modal -->
+		<!--Initial Modal -->
 		<div id="myModal" class="modal fade" role="dialog">
 		  <div class="modal-dialog">
 
@@ -161,6 +167,25 @@
 
 		  </div>
 		</div>
+
+		<!--Invite friends Modal -->
+		<div id="myModal2" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+			  <div class="modal-body">
+				<h1 class="welcome">	Send this URL to friends to join your room!</h1>
+				<hr class="welcome">
+					<input class="welcomeInput" id="shareURL">
+					<input class="welcomeButton btn btn-priary btn-xs" style="align:right" value="Close" onclick="$('#myModal2').modal('hide')" type="button">
+			  </div>
+			</div>
+
+		  </div>
+		</div>
+
+
 		<div class="wrapper">
 			<div class="leftContainer">
 				<a href="/"><div class="logo">
