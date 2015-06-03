@@ -295,7 +295,7 @@
 						</table>
 					</div>
 				</div>
-				<div class="tiles" ng-controller="TileCtrl">
+				<div class="tiles" id="tiles" ng-controller="TileCtrl">
 					<div ng-repeat="track in tracks" id="{{track.format.cls}}" class="tile live-tile" style="left: {{track.format.left}}px; top: {{track.format.top}}px;" data-direction="vertical" data-mode="flip">
 						<div class="tileImage" ng-click="addTrack(track.frontTrack)" ng-style="{'background-image': 'url(' + albumArt(track.frontTrack) + ')'}">
 							<div class="trackInfoContainer">
