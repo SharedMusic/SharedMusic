@@ -127,7 +127,7 @@ angular.module('search', ['socketio'])
         search.addSong = function(n) {
             // call add song function with the given name
             // socket.io?
-           $http.get('http://api.soundcloud.com/tracks/' + search.display[n].id+ '/stream?client_id=337bccb696d7b8442deedde76fae5c10')
+           $http.get('https://api.soundcloud.com/tracks/' + search.display[n].id+ '/stream?client_id=337bccb696d7b8442deedde76fae5c10')
                .success(function(data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available
