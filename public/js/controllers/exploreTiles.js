@@ -42,7 +42,7 @@ function cleanTrack(track) {
 	return track;
 }
 
-exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', function($scope, $http, roomstateFactory) {
+exploreTiles.controller('TileCtrl', ['$scope', '$http', '$document', 'roomstateFactory', function($scope, $http, $document, roomstateFactory) {
 	$scope.tracks =	[];
 
   var tiles = [ {id: "t100-1", imageLen: 40, imageBorder: 30, width: 100, cls: "s100", left: "0", top: "0"},
@@ -132,7 +132,33 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', func
 	};
 
   $scope.addTrack = function(track) {
-    roomstateFactory.addSong(track);
+    // call add song function with the given name
+            // socket.io?
+           $http.get('https://api.soundcloud.com/tracks/' + track.id+ '/stream?client_id=337bccb696d7b8442deedde76fae5c10')
+               .success(function(data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+        //            console.log(status);
+        //            console.log(data);
+                    roomstateFactory.addSong(track);
+            //$scope.$apply();
+            //alert('Added song: ' + search.display[n].permalink_url);
+
+            }).
+            error(function(data, status, headers, config) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                var newDirective = angular.element('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Oops! Something went wrong!</div>');
+                var body = $document.find('#tiles').eq(0);
+                body.append(newDirective);
+                $compile(newDirective)($scope);
+                window.setTimeout(function() { 
+                    $(".alert").fadeOut('slow', function() {
+                        $(".alert").alert('close');
+                    });}, 5000);
+                console.log(status);
+            });
+    // roomstateFactory.addSong(track);
   }
 
   $scope.msToTime = function(duration) {
