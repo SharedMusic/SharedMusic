@@ -53,6 +53,7 @@
 
 		<script>
 			$(window).load(function(){
+				$('body').show();
 				$('#myModal').modal('show');
 				$(".wrapper").show();
 			});
@@ -63,6 +64,7 @@
 								results = regex.exec(location.search);
 						return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 				}
+				$('body').hide();
 				$('#roomID').hide();
 				$('.wrapper').hide();
 				$('.displaySearchButtom').hide();
@@ -228,7 +230,7 @@
 						<hr class="leftBar" style="margin-left: 12px;">
 					<div class="leftSubContainer">
 						<div class="songQueue" ng-controller="MusicController as musicList">
-							<div class="track" ng-repeat="song in musicList.queue track by $index">
+							<div class="track" ng-if="!$first" ng-repeat="song in musicList.queue track by $index">
 								<h1 class="track"><span class="trackTitle">{{song.title | cut:true:40:' ...'}}</span> <br/> by {{song.user.username | cut:true:20:' ...'}}</h1>
 								<hr ng-if="!$last" class="leftBar" style="margin-left: 0px; margin-right: 0px;">
 							</div>

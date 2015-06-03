@@ -16,7 +16,9 @@ body {
 	margin-right: auto;
 	left: 0;
 	right: 0;
-	opacity: 0.9;
+	background-color: #363636;
+	color: #EEEEEE;
+	font-family: 'Raleway', sans-serif;
 }
 
 ::-webkit-scrollbar {
