@@ -9,14 +9,14 @@ body {
 	background: #161616;
 }
 
-::-webkit-scrollbar { 
+::-webkit-scrollbar {
 	background: none;
 	width: 0px;
 	/*width: 6px;*/
 }
 
 /*
-::-webkit-scrollbar-thumb { 
+::-webkit-scrollbar-thumb {
 	background: #EEEEEE;
 	border-radius: 3px;
 
@@ -174,7 +174,7 @@ button#bootVoteButton {
 	line-height: 30px;
 	font-weight: 400;
 	color: #262626;
-	font-size: 15px;	
+	font-size: 15px;
 }
 
 p#bootVoteCount {
@@ -229,14 +229,14 @@ input.searchFilter::-webkit-input-placeholder {
 }
 
 input.searchFilter:-moz-placeholder { /* Firefox 18- */
-   color: #333333;  
+   color: #333333;
 }
 
 input.searchFilter::-moz-placeholder {  /* Firefox 19+ */
-   color: #333333;  
+   color: #333333;
 }
 
-input.searchFilter:-ms-input-placeholder {  
+input.searchFilter:-ms-input-placeholder {
    color: #333333;
 }
 
@@ -353,6 +353,7 @@ p.chatMessage {
 	margin: 0px;
 	font-size: 12px;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	word-wrap: break-word;
 }
 
 div.chatMessage {
@@ -466,15 +467,15 @@ input.welcomeInput::-webkit-input-placeholder {
 }
 
 input.welcomeInput:-moz-placeholder { /* Firefox 18- */
-   color: #EEEEEE;  
+   color: #EEEEEE;
 }
 
 input.welcomeInput::-moz-placeholder {  /* Firefox 19+ */
-   color: #EEEEEE;  
+   color: #EEEEEE;
 }
 
-input.welcomeInput:-ms-input-placeholder {  
-   color: #EEEEEE; 
+input.welcomeInput:-ms-input-placeholder {
+   color: #EEEEEE;
 }
 
 input.clearSearchButtom {
@@ -540,7 +541,7 @@ div.searchResContainer {
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
- 
+
 table {
 	margin-bottom: 0px;
 	border: none;
