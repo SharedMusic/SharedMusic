@@ -9,7 +9,7 @@ var average = function(array) {
 	return avg / array.length;
 }
 
-musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '$http', function($scope, roomstateFactory, $timeout, $http){
+musicPlayer.controller('MusicPlayer', ['$scope', '$document', '$compile', 'roomstateFactory', '$timeout', '$http', function($scope, $document, $compile, roomstateFactory, $timeout, $http){
 	var mP = this;
 	mP.currentSongEpoch = -1;
 	mP.currentSong = null;
@@ -77,8 +77,13 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 						clearInterval(mP.trackTimeUpdater);
 					}
 
+					var didPlay = false;
+
 					// load the song and set position before playing
 					mP.currentSong.load({
+						onplay: function() {
+							didPlay = true;
+						},
 						onload: function() {
 
 							mP.currentSong.setVolume(mP.volume);
@@ -89,7 +94,19 @@ musicPlayer.controller('MusicPlayer', ['$scope','roomstateFactory','$timeout', '
 
 								mP.currentSong.setPosition((new Date).getTime() - mP.currentSongEpoch);
 								mP.currentSong.play();
-
+								setTimeout(function() {
+									if (!didPlay) {
+										roomstateFactory.addBootVote();
+										var newDirective = angular.element('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Sorry, song is not playable.</div>');
+							            var body = $document.find('#searchResHeader').eq(0);
+							            body.append(newDirective);
+							            $compile(newDirective)($scope);
+							            window.setTimeout(function() { 
+							            $(".alert").fadeOut('slow', function() {
+							                $(".alert").alert('close');
+							            });}, 3000);
+									}
+								}, 700);
 								// Once the song starts to play, update the interval
 								mP.trackTimeUpdater = setInterval(function() {
 									mP.currentTrackTime = Math.max(0,
