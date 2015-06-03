@@ -42,7 +42,7 @@ function cleanTrack(track) {
 	return track;
 }
 
-exploreTiles.controller('TileCtrl', ['$scope', '$http', '$document', 'roomstateFactory', function($scope, $http, $document, roomstateFactory) {
+exploreTiles.controller('TileCtrl', ['$scope', '$http', '$document', '$compile', 'roomstateFactory', function($scope, $http, $document, $compile, roomstateFactory) {
 	$scope.tracks =	[];
 
   var tiles = [ {id: "t100-1", imageLen: 40, imageBorder: 30, width: 100, cls: "s100", left: "0", top: "0"},
