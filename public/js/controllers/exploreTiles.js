@@ -134,31 +134,31 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', '$document', '$compile',
   $scope.addTrack = function(track) {
     // call add song function with the given name
             // socket.io?
-           $http.get('https://api.soundcloud.com/tracks/' + track.id+ '/stream?client_id=337bccb696d7b8442deedde76fae5c10')
-               .success(function(data, status, headers, config) {
-                    // this callback will be called asynchronously
-                    // when the response is available
-        //            console.log(status);
-        //            console.log(data);
-                    roomstateFactory.addSong(track);
-            //$scope.$apply();
-            //alert('Added song: ' + search.display[n].permalink_url);
+        //    $http.get('https://api.soundcloud.com/tracks/' + track.id+ '/stream?client_id=337bccb696d7b8442deedde76fae5c10')
+        //        .success(function(data, status, headers, config) {
+        //             // this callback will be called asynchronously
+        //             // when the response is available
+        // //            console.log(status);
+        // //            console.log(data);
+        //             roomstateFactory.addSong(track);
+        //     //$scope.$apply();
+        //     //alert('Added song: ' + search.display[n].permalink_url);
 
-            }).
-            error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-                var newDirective = angular.element('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Sorry, song is not playable.</div>');
-                var body = $document.find('#tiles').eq(0);
-                body.append(newDirective);
-                $compile(newDirective)($scope);
-                window.setTimeout(function() { 
-                    $(".alert").fadeOut('slow', function() {
-                        $(".alert").alert('close');
-                    });}, 5000);
-                console.log(status);
-            });
-    // roomstateFactory.addSong(track);
+        //     }).
+        //     error(function(data, status, headers, config) {
+        //         // called asynchronously if an error occurs
+        //         // or server returns response with an error status.
+        //         var newDirective = angular.element('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Sorry, song is not playable.</div>');
+        //         var body = $document.find('#tiles').eq(0);
+        //         body.append(newDirective);
+        //         $compile(newDirective)($scope);
+        //         window.setTimeout(function() { 
+        //             $(".alert").fadeOut('slow', function() {
+        //                 $(".alert").alert('close');
+        //             });}, 5000);
+        //         console.log(status);
+        //     });
+    roomstateFactory.addSong(track);
   }
 
   $scope.msToTime = function(duration) {
