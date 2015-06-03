@@ -36,3 +36,5 @@ Updated documents for feature-complete can be found in documentation/updates_5-2
 For the feature-complete release there is an issue of being able to play song that cannot be streamed correctly that we are still working on, the issue can be found at https://github.com/SharedMusic/SharedMusic/issues/7
 
 Updated documents for release candidate can be found in documentation/updates_5-29
+
+Updated documents for final release can be found in documentation/updates_6/2
