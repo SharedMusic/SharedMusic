@@ -31,7 +31,7 @@ angular.module('search', ['socketio'])
 
         // Searches sound clound with the given query
         search.search = function(query) {
-				//clear filters on each new search	
+				//clear filters on each new search
 				search.genre = "";
 				search.title = "";
 				search.user = "";
@@ -39,7 +39,7 @@ angular.module('search', ['socketio'])
             SC.get('/tracks', { q: search.query, filter: 'streamable', limit: search.pageSize}, function(tracks) {
                 search.results = tracks;
                 search.display = tracks;
-	
+
 					//display nothing/clear results when blank search
 					if (query == "" ) {
 						search.results = []
@@ -50,13 +50,13 @@ angular.module('search', ['socketio'])
                $('.searchResContainer').css({top: "66px"});
                $('input.clearSearchButtom').fadeIn(400);
                $('.tiles').animate({top: "100%"}, 400);
-            });		
+            });
         };
 
         search.clearSearch = function() {
            $('input.clearSearchButtom').hide();
            $('input.displaySearchButtom').show();
-           $('.tiles').animate({top: "0px"}, 400);     
+           $('.tiles').animate({top: "0px"}, 400);
         };
 
         search.displaySearch = function() {
@@ -74,10 +74,10 @@ angular.module('search', ['socketio'])
             var temp = [];
             var results = search.results;
 
-				
+
 
             for (i = 0; i < results.length; i++) {
-	
+
 					 //bug fix: some genres are null, so filtering on null is erroring
 			  		 var genre = results[i].genre
 
@@ -101,7 +101,7 @@ angular.module('search', ['socketio'])
 
             search.display = temp;
         };
-	
+
 
         // Sorts the current displayed results by order of duration
         search.sortByDuration = function() {
@@ -118,10 +118,17 @@ angular.module('search', ['socketio'])
 
         // Converts the given time in milliseconds to a string representing that time in minutes and seconds
         search.millisToMinutesAndSeconds = function(millis) {
-            var minutes = Math.floor(millis / 60000);
-            var seconds = ((millis % 60000) / 1000).toFixed(0);
-            return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-        };
+          var hours = parseInt((millis/(1000*60*60))%24);
+      		var minutes = parseInt((millis/(1000*60))%60);
+      		var seconds = parseInt((millis/1000)%60);
+
+      		var time = ""
+      		if (hours > 0) {
+      			time = hours + ":" + (minutes < 10 ? '0' : '');
+      		}
+      		time = time + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+      		return time;
+      	};
 
         // Stub for adding search result to  the room
         search.addSong = function(n) {
@@ -136,7 +143,7 @@ angular.module('search', ['socketio'])
                     roomstateFactory.addSong(search.display[n]);
             //$scope.$apply();
             //alert('Added song: ' + search.display[n].permalink_url);
-        
+
             }).
             error(function(data, status, headers, config) {
                 // called asynchronously if an error occurs
@@ -148,6 +155,6 @@ angular.module('search', ['socketio'])
                 // $compile(newDirective)($scope);
                 console.log(status);
             });
-        
+
         };
     }]);

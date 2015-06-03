@@ -136,17 +136,16 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', 'roomstateFactory', func
   }
 
   $scope.msToTime = function(duration) {
-    var milliseconds = parseInt((duration%1000)/100)
-        , seconds = parseInt((duration/1000)%60)
-        , minutes = parseInt((duration/(1000*60))%60)
-        , hours = parseInt((duration/(1000*60*60))%24);
+		var hours = parseInt((duration/(1000*60*60))%24);
+		var minutes = parseInt((duration/(1000*60))%60);
+		var seconds = parseInt((duration/1000)%60);
 
-    if (seconds > 9) {
-      return minutes + ":" + seconds;
-    } else {
-      return minutes + ":0" + seconds;
-    }
-    
+		var time = ""
+		if (hours > 0) {
+			time = hours + ":" + (minutes < 10 ? '0' : '');
+		}
+		time = time + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+		return time;
   }
 
   $scope.albumArt = function(track) {
