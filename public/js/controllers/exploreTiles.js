@@ -148,7 +148,7 @@ exploreTiles.controller('TileCtrl', ['$scope', '$http', '$document', '$compile',
             error(function(data, status, headers, config) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
-                var newDirective = angular.element('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Oops! Something went wrong!</div>');
+                var newDirective = angular.element('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Sorry, song is not playable.</div>');
                 var body = $document.find('#tiles').eq(0);
                 body.append(newDirective);
                 $compile(newDirective)($scope);
