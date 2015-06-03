@@ -142,7 +142,9 @@
 				$('#copy').on('click', function() {
 					$('#myModal2').modal('show')
 				});
-				$('#shareURL').val(window.location.href)
+				var url = window.location.href
+				var url = url.substring(url.lastIndexOf("//") + 2)
+				$('#shareURL').val(url)
 				$('#shareURL').attr('readonly', true)
 
 			});
