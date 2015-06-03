@@ -149,10 +149,14 @@ angular.module('search', ['socketio'])
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
                 // TODO: Write new error handling here or edit current div to look pretty on the page
-                // var newDirective = angular.element('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>OH GOD AN ERROR OCCURED!</div>');
-                // var body = $document.find('body').eq(0);
-                // body.append(newDirective);
-                // $compile(newDirective)($scope);
+                var newDirective = angular.element('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Oops! Something went wrong!</div>');
+                var body = $document.find('#searchResHeader').eq(0);
+                body.append(newDirective);
+                $compile(newDirective)($scope);
+                window.setTimeout(function() { 
+                    $(".alert").fadeOut('slow', function() {
+                        $(".alert").alert('close');
+                    });}, 5000);
                 console.log(status);
             });
 

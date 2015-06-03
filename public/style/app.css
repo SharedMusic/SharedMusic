@@ -9,6 +9,16 @@ body {
 	background: #161616;
 }
 
+.alert{
+	z-index: 2000;
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	opacity: 0.9;
+}
+
 ::-webkit-scrollbar {
 	background: none;
 	width: 0px;
